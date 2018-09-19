@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+		<title>SwampHacks Dashboard</title>
+		<meta name="description" content="
+
+		SwampHacks is a 36 hour open coding event where students become creators.
+		In the time allotted, students from around the country come together at the
+		University of Florida to collaborate on projects, mingle in activities, and
+		network with sponsors for a fully immersive experience.
+
+		"/>
+		<!-- Stylesheets
+    ================================================== -->
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+		<!-- Favicon
+    ================================================== -->
+   	<link rel="icon" type="image/png" href="favicon.png" />
+		<!-- Icons & Fonts
+		================================================== -->
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<!-- MLH Badge
+		================================================== -->
+		<!-- <a id="mlh-trust-badge" style="display:block;max-width:100px;min-width:60px;position:absolute;right:50px;top:0;width:10%;z-index:0" href="https://mlh.io/seasons/na-2018/events?utm_source=na-2018&utm_medium=TrustBadge&utm_campaign=na-2018&utm_content=white" target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/2018/white.svg" alt="Major League Hacking 2017 Hackathon Season" style="width:100%"></a> -->
+	</head>
+
+  <body id="mainBody">
+
+	<!-- Begin Status Popups -->
+
+	<div id="confirmedPopup" class="hide">
+		<div class="pair">
+		<svg id="successAnimation" class="animated" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 70 70">
+		<path id="successAnimationResult" fill="white" d="M35,60 C21.1928813,60 10,48.8071187 10,35 C10,21.1928813 21.1928813,10 35,10 C48.8071187,10 60,21.1928813 60,35 C60,48.8071187 48.8071187,60 35,60 Z M23.6332378,33.2260427 L22.3667622,34.7739573 L34.1433655,44.40936 L47.776114,27.6305926 L46.223886,26.3694074 L33.8566345,41.59064 L23.6332378,33.2260427 Z"/>
+		<circle id="successAnimationCircle" cx="35" cy="35" r="24" stroke="white" stroke-width="2" stroke-linecap="round" fill="transparent"/>
+		<polyline id="successAnimationCheck" stroke="white" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
+		</svg>
+		<span class="popuptxt">Confirmed!</span>
+	</div>
+	</div>
+
+	<div id="confirmLogoutPopup" class="hide">
+		<div class="centerConfirm">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="popuptxt centertxt">Logout?</div>
+				</div>
+			</div>
+
+			<div class="row btn-row">
+				<div class="col-xs-6">
+					<button class="button green" id="confirmLogout" onclick="confirmLogoutClicked()">
+						<p>Yep</p>
+					</button>
+				</div>
+				<div class="col-xs-6">
+					<button class="button green" id="denyLogout" onclick="denyLogoutClicked()">
+						<p>Go Back</p>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- End Status Popups -->
+
+  <div id="layout" class="">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+          <!-- Icon -->
+          <!-- <span><img id="logosmall" class="" src="img/logoblue.svg"></img></span> -->
+          <span>SH</span>
+      </a>
+
+			<div class="stickyheader">
+				<span id="headertxt">Profile</span>
+			</div>
+
+      <div id="menu" class="">
+
+          <div class="pure-menu">
+
+              <a class="pure-menu-heading" href="#">
+                <img id="logo" class="" src="img/logoblue.svg"></img>
+              </a>
+
+              <div class="menu-items-con">
+
+                <ul class="pure-menu-list">
+
+                    <li id="op1" class="pure-menu-item top-ln pure-menu-selected">
+                      <a href="#" class="pure-menu-link" onclick="menuClick(1)">Dashboard</a>
+                    </li>
+
+										<li id="op5" class="pure-menu-item top-ln hide">
+                      <a href="#" class="pure-menu-link" onclick="menuClick(5)">SH Stats</a>
+                    </li>
+
+										<li id="op6" class="pure-menu-item top-ln hide">
+                      <a href="#" class="pure-menu-link" onclick="menuClick(6)">Send iOS Notif</a>
+                    </li>
+
+                    <li id="op2" class="pure-menu-item top-ln">
+                      <a href="#" class="pure-menu-link" onclick="menuClick(2)">Profile <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>
+                    </li>
+
+                    <li id="op3" class="pure-menu-item top-ln">
+                        <a href="#" class="pure-menu-link" onclick="menuClick(3)">Logout</a>
+                    </li>
+
+                    <li id="op4" class="pure-menu-item bottom-ln">
+                      <a href="http://live.swamphacks.com" target="_blank" class="pure-menu-link" onclick="menuClick(4)">Live!</a>
+                    </li>
+                </ul>
+
+              </div>
+
+							<div id="sign-in-link" class="hide">
+								<!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
+								<a href="checkin.html" target="_blank">Event Sign In</a>
+							</div>
+
+          </div>
+      </div>
+
+      <div id="dashboard" class="show">
+
+        <h1 class="header-main-type">Dashboard</h1>
+
+				<div class="container-fluid notif-con">
+					<div class="row">
+
+						<div class="col-md-12">
+							<h3 class="header-sub-type" id="welcomeMessage">Welcome, Albert!</h3>
+							<p class="descrip-txt"><br><b>Congratulations</b>, you're going to SwampHacks! <br><br>When you get the chance, <b>be sure to confirm your spot and fill out the necessary information in the profile tab on the left</b>. For any questions or concerns, feel free to email us at info@swamphacks.com.
+
+							As the event draws nearer, we'll be sending more emails to keep you in the loop about SwampHacks!
+
+							<br><br>Deadline to accept your spot:<b> January 12th, 2017</b>
+							</p>
+						</div>
+
+						<div class="col-md-12 notif top-margin">
+							<p class="notif-txt">Your Status: <span class="status green" id="dashStatus">ACCEPTED</span></p>
+						</div>
+
+						<div class="col-md-12 top-margin descrip-txt">
+							Let us know if you're coming by confirming your spot! Please remember to update
+							your status if you decide you cannot attend.
+						</div>
+
+						<div class="row">
+							<div class="col-md-12 top-margin" id="confirmCon">
+								<button id="confirmBtn" class="button green" onclick="confirmSpotBtnClicked()">
+									<p id="confirmSpot">Confirm my spot!</p>
+								</button>
+							</div>
+
+							<div class="col-md-12 top-margin" id="rejectCon">
+								<button class="button dark" id="rejectSpot" onclick="rejectSpotBtnClicked()">
+									<p>I can't go <i class="fa fa-frown-o" aria-hidden="true"></i></p>
+								</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+      </div>
+
+      <div id="info" class="hide">
+
+        <h1 class="header-main-type">Profile</h1>
+
+				<div class="container-fluid notif-con">
+					<div class="row">
+
+						<div class="col-md-12">
+							<!-- <h3 class="header-sub-type">Welcome, Albert!</h3> -->
+							<p class="descrip-txt">
+								Please fill out the apropriate fields.
+							</p>
+						</div>
+
+						<div class="row">
+							<form id="profileForm" class="" autocomplete="off">
+								<div id="shirtCol" class="col-md-6 top-margin">
+									<label class="form-lbl" for="q1" name="">T-Shirt Size *</label>
+									<!-- <input class="form-field" id="shirtSize" name="q1" type="text" placeholder="Medium" required/> -->
+									<select class="form-field" id="shirtSize" required>
+									  <option value="small">Small</option>
+									  <option value="medium">Medium</option>
+									  <option value="large">Large</option>
+									  <option value="extra-large">Extra Large</option>
+									</select>
+								</div>
+
+								<div id="dietCol" class="col-md-6 top-margin">
+									<label class="form-lbl" for="q1" name="">Dietary Restrictions *</label>
+									<!-- <input class="form-field" id="diet" name="q1" type="text" placeholder="Halal" required/> -->
+									<select class="form-field" id="diet" required>
+									  <option value="none">None</option>
+									  <option value="vegetarian">Vegetarian</option>
+									  <option value="vegan">Vegan</option>
+									  <option value="halal">Halal</option>
+									</select>
+								</div>
+
+								<div id="extraInfoCol" class="col-md-12 top-margin">
+									<label class="form-lbl" for="q1" name="">Anything else we should know?</label>
+									<input class="form-field" id="extraInfo" name="q1" type="text" placeholder=""/>
+								</div>
+
+								<div class="col-md-12 top-margin">
+									<label class="form-lbl" for="q1" name="">Email</label>
+									<input class="form-field" id="userEmail" name="q1" type="text" placeholder="" disabled/>
+								</div>
+
+								<div class="col-md-12 top-margin" id="teamCol">
+									<label class="form-lbl" for="q1" name="">Your Team</label>
+									<input class="form-field" id="userTeam" name="q1" type="text" placeholder="" disabled/>
+								</div>
+
+							</form>
+
+						</div>
+
+						<div class="col-md-12 top-margin descrip-txt">
+							 If you'd like to change anything later on, feel free to come back here and update your information!
+						</div>
+
+						<div class="col-md-12 top-margin descrip-txt hide" id="profileStatusTxt">
+							Please fill in all fields!
+						</div>
+
+						<div class="row">
+							<div class="col-md-12 top-margin">
+								<button id="updateBtn" class="button green" onclick="updateInfoBtnClicked()">
+									<p>Update Info</p>
+								</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+      </div>
+
+			<div id="notif" class="hide">
+
+        <h1 class="header-main-type">Send iOS Notif</h1>
+
+				<div class="container-fluid notif-con">
+					<div class="row">
+
+						<div class="row">
+							<form id="notifForm" class="" autocomplete="off">
+
+								<div class="col-md-12 top-margin">
+									<label class="form-lbl" for="q1" name="">Title</label>
+									<input class="form-field" id="notifTitle" name="q1" type="text" placeholder=""/>
+								</div>
+
+								<div class="col-md-12 top-margin">
+									<label class="form-lbl" for="q1" name="">Description</label>
+									<input class="form-field" id="notifDescription" name="q1" type="text" placeholder=""/>
+								</div>
+
+								<div class="col-md-12 top-margin">
+									<label class="form-lbl" for="q1" name="">Type</label>
+									<select class="form-field" id="notifType" required>
+									  <option value="food">Food</option>
+									  <option value="techtalk">Techtalk</option>
+									  <option value="social">Social</option>
+									  <option value="logistics">Logistics</option>
+									</select>
+								</div>
+
+							</form>
+
+						</div>
+
+						<div class="row">
+							<div class="col-md-12 top-margin">
+								<button class="button green" onclick="sendNotifClicked()">
+									<p>Send</p>
+								</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+      </div>
+
+      <div id="login" class="hide">
+
+        <h1 class="header-main-type">Stats</h1>
+
+				<div class="container-fluid notif-con">
+					<div class="row">
+
+					<div class="col-md-12">
+						<h3 class="header-sub-type">Overall Stats<span class="circle-ticker"></span><span class="live-ticker">LIVE</span></h3>
+					</div>
+
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Check Ins <span class="statusnew green" id="checkIns">--</span></p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 top-margin">
+						<h3 class="header-sub-type">Events Stats<span class="circle-ticker"></span><span class="live-ticker">LIVE</span></h3>
+
+						<p class="descrip-txt"><br>
+							Amount of people in each team.
+						</p>
+					</div>
+
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Dragonflies <span class="statusnew green" id="teamOneSize">--</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Turtles <span class="statusnew green" id="teamTwoSize">--</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Herons <span class="statusnew green" id="teamThreeSize">--</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Gators <span class="statusnew green" id="teamFourSize">--</span></p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 top-margin">
+						<p class="descrip-txt"><br>
+							Amount of points each team currently has.
+						</p>
+					</div>
+
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Dragonflies <span class="statusnew green" id="teamOnePoints">--</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Turtles <span class="statusnew green" id="teamTwoPoints">--</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Herons <span class="statusnew green" id="teamThreePoints">--</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Gators <span class="statusnew green" id="teamFourPoints">--</span></p>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="col-md-12 top-margin">
+						<h3 class="header-sub-type">T-Shirts</h3>
+
+						<p class="descrip-txt"><br>
+							The amount of accepted applicants who selected each size.
+						</p>
+					</div>
+
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Small <span class="statusnew green" id="smallShirts">--</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Medium <span class="statusnew green" id="mediumShirts">--</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Large <span class="statusnew green" id="largeShirts">--</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Extra Large <span class="statusnew green" id="exlargeShirts">--</span></p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 top-margin">
+						<h3 class="header-sub-type">Dietary Restrictions</h3>
+
+						<p class="descrip-txt"><br>
+							The amount of accepted applicants who selected each diet.
+						</p>
+					</div>
+
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Vegetarian <span class="statusnew green" id="veges">--</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Vegan <span class="statusnew green" id="vegs">--</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">Halal <span class="statusnew green" id="hals">--</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 top-margin">
+						<div class="padder">
+							<div class="notifnew">
+								<p class="notif-txt stat-txt">None <span class="statusnew green" id="nones">--</span></p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 top-margin">
+						<h3 class="header-sub-type">Top Schools</h3>
+
+						<p class="descrip-txt"><br>
+							The top ten schools by number of applicants.
+						</p>
+					</div>
+
+					<div class="col-md-12 top-margin">
+					<table class="table">
+					  <thead>
+					    <tr>
+					      <th scope="col" class="greenTxt descrip-txt">School</th>
+					      <th scope="col" class="righttab greenTxt descrip-txt">Applicants</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <td class="descrip-txt school-tab" id="school1">The University of Florida</td>
+					      <td class="descrip-txt righttab"><b id="schoolNum1">34</b></td>
+					    </tr>
+					    <tr>
+								<td class="descrip-txt school-tab" id="school2">The University of Florida</td>
+					      <td class="descrip-txt righttab"><b id="schoolNum2">234</b></td>
+					    </tr>
+							<tr>
+								<td class="descrip-txt school-tab" id="school3">The University of Florida</td>
+					      <td class="descrip-txt righttab"><b id="schoolNum3">234</b></td>
+					    </tr>
+							<tr>
+								<td class="descrip-txt school-tab" id="school4">The University of Florida</td>
+					      <td class="descrip-txt righttab"><b id="schoolNum4">234</b></td>
+					    </tr>
+							<tr>
+								<td class="descrip-txt school-tab" id="school5">The University of Florida</td>
+					      <td class="descrip-txt righttab"><b id="schoolNum5">234</b></td>
+					    </tr>
+							<tr>
+								<td class="descrip-txt school-tab" id="school6">The University of Florida</td>
+					      <td class="descrip-txt righttab"><b id="schoolNum6">234</b></td>
+					    </tr>
+							<tr>
+								<td class="descrip-txt school-tab" id="school7">The University of Florida</td>
+					      <td class="descrip-txt righttab"><b id="schoolNum7">234</b></td>
+					    </tr>
+							<tr>
+								<td class="descrip-txt school-tab" id="school8">The University of Florida</td>
+					      <td class="descrip-txt righttab"><b id="schoolNum8">234</b></td>
+					    </tr>
+							<tr>
+								<td class="descrip-txt school-tab" id="school9">The University of Florida</td>
+					      <td class="descrip-txt righttab"><b id="schoolNum9">234</b></td>
+					    </tr>
+							<tr>
+								<td class="descrip-txt school-tab" id="school10">The University of Florida</td>
+					      <td class="descrip-txt righttab"><b id="schoolNum10">234</b></td>
+					    </tr>
+					  </tbody>
+					</table>
+				</div>
+
+				</div>
+			</div>
+
+      </div>
+
+  </div>
+
+  <script src="js/menu.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/classie.js"></script>
+	<script src="js/jquerycsv.js"></script>
+
+  </body>
+
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
+	<script>
+
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyCkPM5Ta8WgzxpOP6O9WuLWD6Irkd6GAPc",
+			authDomain: "swamphacks-applicants.firebaseapp.com",
+			databaseURL: "https://swamphacks-applicants.firebaseio.com",
+			projectId: "swamphacks-applicants",
+			storageBucket: "swamphacks-applicants.appspot.com",
+			messagingSenderId: "622854578748"
+		};
+		firebase.initializeApp(config);
+
+	</script>
+
+  <script>
+
+		var ref = firebase.database().ref();
+		var usersRef = ref.child("applicants");
+		var acceptedRef = ref.child("accepted");
+		var checkedInRef = ref.child("confirmed");
+		var eventsDataRef = ref.child("eventsData");
+		var notifRef = ref.child("announcements");
+		var userObj = JSON.parse(localStorage.getItem('loggedInUser'));
+		var loggedInUserKey = localStorage.getItem('loggedInUserKey');
+		var selected = 1;
+		var schools = [];
+		var appliedSchools = [];
+		var schoolsAndCount = {};
+		var topTenSchools = {};
+
+		// Stats
+
+		var numSmalls = 0;
+		var numMeds = 0;
+		var numLarges = 0;
+		var numExLarges = 0;
+
+		var numVege = 0;
+		var numVegan = 0;
+		var numHalal = 0;
+		var numNone = 0;
+
+		if (userObj === null) {
+			window.location.href = "makeaccount.html";
+
+		} else {
+			$("#mainBody").css("visibility", "visible");
+
+			if (userObj.email === "andrewzhang@ufl.edu" || userObj.email === "pablogarces@ufl.edu" || userObj.email === "sponsors@swamphacks.com") {
+
+				$("#op5").removeClass("hide");
+				$("#op5").addClass("show");
+
+				$("#op6").removeClass("hide");
+				$("#op6").addClass("show");
+
+				getStats();
+				reloadStats();
+
+			}
+
+			if (userObj.isVolunteer !== undefined && userObj.isVolunteer === true) {
+
+				// Show link to event check in page
+				$("#sign-in-link").removeClass("hide");
+				$("#sign-in-link").addClass("show");
+
+			}
+		}
+
+		checkedInRef.on('value', function(snapshot) {
+
+      $("#checkIns").text(snapshot.numChildren());
+
+    });
+
+		eventsDataRef.on('value', function(snapshot) {
+
+			var info = snapshot.val();
+
+			// Sizes
+      $("#teamOneSize").text(info.people.dragonflies);
+			$("#teamTwoSize").text(info.people.turtles);
+			$("#teamThreeSize").text(info.people.herons);
+			$("#teamFourSize").text(info.people.gators);
+
+			// Points
+			$("#teamOnePoints").text(info.points.dragonflies);
+			$("#teamTwoPoints").text(info.points.turtles);
+			$("#teamThreePoints").text(info.points.herons);
+			$("#teamFourPoints").text(info.points.gators);
+
+    });
+
+		$("#welcomeMessage").text("Welcome, " + userObj.fname + "!");
+		$("#userEmail").val(userObj.email);
+
+		if (userObj.team !== null || userObj.team !== undefined) {
+			$("#userTeam").val(userObj.team);
+		} else {
+			$("#teamCol").addClass("hide");
+		}
+
+		document.getElementById("userEmail").disabled = true;
+		document.getElementById("userTeam").disabled = true;
+
+		$(".fa-exclamation-triangle").addClass("hide");
+		$(".fa-exclamation-triangle").removeClass("showIn");
+
+		if (userObj.dietaryRestriction === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
+			$("#profileStatusTxt").addClass("hide");
+			$("#updateBtn").addClass("disabled");
+			$("#confirmBtn").addClass("disabled");
+			$("#rejectSpot").addClass("disabled");
+		}
+
+		if (userObj.dietaryRestriction !== undefined) {
+
+			$("#diet").val(userObj.dietaryRestriction);
+
+		} else {
+			$("#dietCol").addClass("hide");
+		}
+
+		if (userObj.tshirtSize !== undefined) {
+
+			$("#shirtSize").val(userObj.tshirtSize);
+
+		} else {
+			$("#shirtCol").addClass("hide");
+		}
+
+		if (userObj.extraInfo !== undefined) {
+
+			$("#extraInfo").val(userObj.extraInfo);
+
+		} else {
+			$("#extraInfoCol").addClass("hide");
+		}
+
+		if (userObj.status !== undefined) {
+
+			$("#dashStatus").text(userObj.status);
+
+			if (userObj.status === "CONFIRMED") {
+				$("#dashStatus").addClass("green");
+				$("#dashStatus").removeClass("dark");
+
+				$("#confirmCon").addClass("hide");
+				$("#confirmCon").removeClass("show");
+				$("#rejectCon").addClass("show");
+				$("#rejectCon").removeClass("hide");
+			} else if (userObj.status === "NOT ATTENDING")  {
+				$("#dashStatus").removeClass("green");
+				$("#dashStatus").addClass("dark");
+
+				$("#confirmCon").addClass("show");
+				$("#confirmCon").removeClass("hide");
+				$("#rejectCon").addClass("hide");
+				$("#rejectCon").removeClass("show");
+			}
+
+		}
+
+		function rejectSpotBtnClicked() {
+
+			if (userObj.dietaryRestriction === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
+
+			} else {
+
+				$("#dashStatus").text("NOT ATTENDING");
+				$("#dashStatus").addClass("dark");
+				$("#dashStatus").removeClass("green");
+				$("#confirmCon").addClass("show");
+				$("#confirmCon").removeClass("hide");
+				$("#rejectCon").addClass("hide");
+				$("#rejectCon").removeClass("show");
+
+				var loggedInUserRef = acceptedRef.child(loggedInUserKey);
+
+				loggedInUserRef.update({
+					status: "NOT ATTENDING"
+				});
+
+				acceptedRef.orderByChild("email").equalTo(userObj.email).on("value", function(snapshot) {
+
+					 // Getting the info of the found user and storing it in local storage
+					 snapshot.forEach(function(childSnapshot) {
+
+						 var key = childSnapshot.key;
+						 var childData = childSnapshot.val();
+						 localStorage.setItem('loggedInUser', JSON.stringify(childData));
+						 localStorage.setItem('loggedInUserKey', key);
+
+						 userObj = JSON.parse(localStorage.getItem('loggedInUser'));
+						 loggedInUserKey = localStorage.getItem('loggedInUserKey');
+
+					 });
+
+				});
+
+			}
+
+		}
+
+		function confirmSpotBtnClicked() {
+
+			if (userObj.dietaryRestriction === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
+
+			} else {
+
+				var delay = 3000;
+
+				if (userObj.status !== "CONFIRMED") {
+
+					// Show the popup
+					$("#confirmedPopup").removeClass("hide");
+					$("#confirmedPopup").addClass("showflex");
+
+					setTimeout(function() {
+
+						$("#confirmedPopup").removeClass("showflex");
+						$("#confirmedPopup").addClass("hide");
+
+					}, delay);
+
+				}
+
+				$("#dashStatus").text("CONFIRMED");
+				$("#dashStatus").addClass("green");
+				$("#dashStatus").removeClass("dark");
+				$("#confirmCon").addClass("hide");
+				$("#confirmCon").removeClass("show");
+				$("#rejectCon").addClass("show");
+				$("#rejectCon").removeClass("hide");
+
+				var loggedInUserRef = acceptedRef.child(loggedInUserKey);
+
+				loggedInUserRef.update({
+					status: "CONFIRMED"
+				});
+
+				acceptedRef.orderByChild("email").equalTo(userObj.email).on("value", function(snapshot) {
+
+					 // Getting the info of the found user and storing it in local storage
+					 snapshot.forEach(function(childSnapshot) {
+
+						 var key = childSnapshot.key;
+						 var childData = childSnapshot.val();
+						 localStorage.setItem('loggedInUser', JSON.stringify(childData));
+						 localStorage.setItem('loggedInUserKey', key);
+
+						 userObj = JSON.parse(localStorage.getItem('loggedInUser'));
+						 loggedInUserKey = localStorage.getItem('loggedInUserKey');
+
+					 });
+
+				});
+
+			}
+
+		}
+
+		function updateInfoBtnClicked() {
+
+			if (userObj.dietaryRestriction === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
+
+			} else {
+
+				var dietaryRestriction = $("#diet").val();
+				var tshirtSize = $("#shirtSize").val();
+				var extraInfo = $("#extraInfo").val();
+
+				if (dietaryRestriction !== "" && tshirtSize !== "") {
+
+					var loggedInUserRef = acceptedRef.child(loggedInUserKey);
+
+					if (extraInfo !== "") {
+
+						loggedInUserRef.update({
+							dietaryRestriction: dietaryRestriction,
+							tshirtSize: tshirtSize,
+							extraInfo: extraInfo
+						});
+
+					} else {
+
+						loggedInUserRef.update({
+							dietaryRestriction: dietaryRestriction,
+							tshirtSize: tshirtSize
+						});
+
+					}
+
+					acceptedRef.orderByChild("email").equalTo(userObj.email).on("value", function(snapshot) {
+
+						 // Getting the info of the found user and storing it in local storage
+						 snapshot.forEach(function(childSnapshot) {
+
+							 var key = childSnapshot.key;
+							 var childData = childSnapshot.val();
+							 localStorage.setItem('loggedInUser', JSON.stringify(childData));
+							 localStorage.setItem('loggedInUserKey', key);
+
+							 userObj = JSON.parse(localStorage.getItem('loggedInUser'));
+					 		 loggedInUserKey = localStorage.getItem('loggedInUserKey');
+
+						 });
+
+					});
+
+					// SUCCESS
+					$("#profileStatusTxt").text("Info Updated!");
+					$("#profileStatusTxt").addClass("show");
+					$("#profileStatusTxt").addClass("greenTxt");
+					$("#profileStatusTxt").removeClass("redTxt");
+					$(".fa-exclamation-triangle").addClass("hide");
+
+				} else {
+
+					// ERROR
+					$("#profileStatusTxt").text("Please fill in your t-shirt size and dietary restriction!");
+					$("#profileStatusTxt").addClass("show");
+					$("#profileStatusTxt").addClass("redTxt");
+					$("#profileStatusTxt").removeClass("greenTxt");
+
+				}
+
+			}
+
+		}
+
+    function menuClick(item) {
+
+			selected = item;
+
+			$("#layout").removeClass("active");
+			$("#menu").removeClass("active");
+			$("#menuLink").removeClass("active");
+
+
+      // Hiding and showing the appropriate info
+      if (item === 1) {
+
+        $("#op1").addClass("pure-menu-selected");
+        $("#op2").removeClass("pure-menu-selected");
+        $("#op3").removeClass("pure-menu-selected");
+				$("#op5").removeClass("pure-menu-selected");
+				$("#op6").removeClass("pure-menu-selected");
+
+        $("#dashboard").addClass("show");
+        $("#dashboard").removeClass("hide");
+
+        $("#info").addClass("hide");
+        $("#info").removeClass("show");
+
+        $("#login").addClass("hide");
+        $("#login").removeClass("show");
+
+				$("#notif").addClass("hide");
+        $("#notif").removeClass("show");
+
+				if (userObj.status !== undefined) {
+
+					$("#dashStatus").text(userObj.status);
+
+					if (userObj.status === "CONFIRMED") {
+						$("#dashStatus").addClass("green");
+						$("#dashStatus").removeClass("dark");
+						$("#confirmCon").addClass("hide");
+						$("#confirmCon").removeClass("show");
+						$("#rejectCon").addClass("show");
+						$("#rejectCon").removeClass("hide");
+					} else if (userObj.status === "NOT ATTENDING")  {
+						$("#dashStatus").removeClass("green");
+						$("#dashStatus").addClass("dark");
+						$("#confirmCon").addClass("show");
+						$("#confirmCon").removeClass("hide");
+						$("#rejectCon").addClass("hide");
+						$("#rejectCon").removeClass("show");
+					}
+
+				}
+
+      } else if (item === 2) {
+
+        $("#op2").addClass("pure-menu-selected");
+        $("#op3").removeClass("pure-menu-selected");
+        $("#op1").removeClass("pure-menu-selected");
+				$("#op5").removeClass("pure-menu-selected");
+				$("#op6").removeClass("pure-menu-selected");
+
+        $("#dashboard").addClass("hide");
+        $("#dashboard").removeClass("show");
+
+        $("#info").addClass("show");
+        $("#info").removeClass("hide");
+
+        $("#login").addClass("hide");
+        $("#login").removeClass("show");
+
+				$("#notif").addClass("hide");
+        $("#notif").removeClass("show");
+
+				$("#userEmail").val(userObj.email);
+
+				if (userObj.dietaryRestriction !== undefined) {
+
+					$("#diet").val(userObj.dietaryRestriction);
+
+				}
+
+				if (userObj.tshirtSize !== undefined) {
+
+					$("#shirtSize").val(userObj.tshirtSize);
+
+				}
+
+				if (userObj.extraInfo !== undefined) {
+
+					$("#extraInfo").val(userObj.extraInfo);
+
+				}
+
+				$("#profileStatusTxt").addClass("hide");
+				$("#profileStatusTxt").removeClass("show");
+
+      } else if (item === 3) {
+
+				// Show the confirm logout popup
+				$("#confirmLogoutPopup").removeClass("hide");
+				$("#confirmLogoutPopup").addClass("showflex");
+
+      } else if (item === 5) {
+
+				$("#op5").addClass("pure-menu-selected");
+        $("#op2").removeClass("pure-menu-selected");
+        $("#op1").removeClass("pure-menu-selected");
+				$("#op6").removeClass("pure-menu-selected");
+
+        $("#dashboard").addClass("hide");
+        $("#dashboard").removeClass("show");
+
+        $("#info").addClass("hide");
+        $("#info").removeClass("show");
+
+				$("#login").addClass("show");
+        $("#login").removeClass("hide");
+
+				$("#notif").addClass("hide");
+        $("#notif").removeClass("show");
+
+				appliedSchools = [];
+				schoolsAndCount = {};
+				topTenSchools = {};
+
+				getStats();
+				reloadStats();
+				checkAgainstList();
+
+			} else if (item === 6) {
+
+				$("#op6").addClass("pure-menu-selected");
+				$("#op2").removeClass("pure-menu-selected");
+				$("#op1").removeClass("pure-menu-selected");
+				$("#op3").removeClass("pure-menu-selected");
+				$("#op5").removeClass("pure-menu-selected");
+
+				$("#dashboard").addClass("hide");
+        $("#dashboard").removeClass("show");
+
+        $("#info").addClass("hide");
+        $("#info").removeClass("show");
+
+				$("#login").addClass("hide");
+        $("#login").removeClass("show");
+
+				$("#notif").addClass("show");
+        $("#notif").removeClass("hide");
+
+			}
+    }
+
+		function denyLogoutClicked() {
+
+			// Hide the confirm logout popup
+			$("#confirmLogoutPopup").removeClass("showflex");
+			$("#confirmLogoutPopup").addClass("hide");
+
+		}
+
+		function confirmLogoutClicked() {
+
+			firebase.auth().signOut().then(function() {
+				// Sign-out successful.
+				localStorage.setItem('loggedInUser', null);
+				localStorage.setItem('loggedInUserKey', null);
+
+				window.location.href = "login.html";
+
+			}, function(error) {
+				// An error happened.
+			});
+
+		}
+
+		function reloadStats() {
+
+			$("#smallShirts").text(numSmalls);
+			$("#mediumShirts").text(numMeds);
+			$("#largeShirts").text(numLarges);
+			$("#exlargeShirts").text(numExLarges);
+
+			$("#veges").text(numVege);
+			$("#vegs").text(numVegan);
+			$("#hals").text(numHalal);
+			$("#nones").text(numNone);
+
+		}
+
+		function getStats() {
+
+			numSmalls = 0;
+			numMeds = 0;
+			numLarges = 0;
+			numExLarges = 0;
+
+			numVege = 0;
+			numVegan = 0;
+			numHalal = 0;
+			numNone = 0;
+
+			acceptedRef.orderByChild("tshirtSize").equalTo("small").on("value", function(snapshot) {
+
+				 snapshot.forEach(function(childSnapshot) {
+
+					 numSmalls = numSmalls + 1;
+
+				 });
+
+			});
+
+			acceptedRef.orderByChild("tshirtSize").equalTo("medium").on("value", function(snapshot) {
+
+				 snapshot.forEach(function(childSnapshot) {
+
+					 numMeds = numMeds + 1;
+
+				 });
+
+			});
+
+			acceptedRef.orderByChild("tshirtSize").equalTo("large").on("value", function(snapshot) {
+
+				 snapshot.forEach(function(childSnapshot) {
+
+					 numLarges = numLarges + 1;
+
+				 });
+
+			});
+
+			acceptedRef.orderByChild("tshirtSize").equalTo("extraLarge").on("value", function(snapshot) {
+
+				 snapshot.forEach(function(childSnapshot) {
+
+					 numExLarges = numExLarges + 1;
+
+				 });
+
+			});
+
+			acceptedRef.orderByChild("dietaryRestriction").equalTo("none").on("value", function(snapshot) {
+
+				 snapshot.forEach(function(childSnapshot) {
+
+					 numNone = numNone + 1;
+
+				 });
+
+			});
+
+			acceptedRef.orderByChild("dietaryRestriction").equalTo("vegetarian").on("value", function(snapshot) {
+
+				 snapshot.forEach(function(childSnapshot) {
+
+					 numVege = numVege + 1;
+
+				 });
+
+			});
+
+			acceptedRef.orderByChild("dietaryRestriction").equalTo("vegan").on("value", function(snapshot) {
+
+				 snapshot.forEach(function(childSnapshot) {
+
+					 numVegan = numVegan + 1;
+
+				 });
+
+			});
+
+			acceptedRef.on('value', function(snapshot) {
+
+				var index = 0;
+
+				snapshot.forEach(function(childSnapshot) {
+
+				index = index + 1;
+
+ 			  var currSchool = childSnapshot.val().school;
+
+				appliedSchools[index] = currSchool;
+
+ 			  });
+
+			})
+
+		}
+
+		function getSchools() {
+
+			$(document).ready(function() {
+				 "use strict";
+					$.ajax({
+							type: "GET",
+							url: "https://raw.githubusercontent.com/MLH/mlh-policies/master/schools.csv",
+							dataType: "text",
+							success: function(data) {
+								processData(data);
+
+							}
+					 });
+			});
+
+		}
+
+		function checkAgainstList() {
+
+			var iterator = function (element) {
+			    schoolsAndCount[element] = (schoolsAndCount[element] || 0) + 1;
+			}
+
+			if (appliedSchools.forEach) {
+			    appliedSchools.forEach(function (element) {
+			        iterator(element);
+			    });
+			} else {
+			    for (var i = 0; i < appliedSchools.length; i++) {
+			        iterator(appliedSchools[i]);
+			    }
+			}
+
+			// Create items array
+			var items = Object.keys(schoolsAndCount).map(function(key) {
+			    return [key, schoolsAndCount[key]];
+			});
+
+			// Sort the array based on the second element
+			items.sort(function(first, second) {
+			    return second[1] - first[1];
+			});
+
+			topTenSchools = items.slice(0, 10);
+
+			if (topTenSchools !== undefined) {
+
+				$("#school1").text(topTenSchools[0][0]);
+				$("#school2").text(topTenSchools[1][0]);
+				$("#school3").text(topTenSchools[2][0]);
+				$("#school4").text(topTenSchools[3][0]);
+				$("#school5").text(topTenSchools[4][0]);
+				$("#school6").text(topTenSchools[5][0]);
+				$("#school7").text(topTenSchools[6][0]);
+				$("#school8").text(topTenSchools[7][0]);
+				$("#school9").text(topTenSchools[8][0]);
+				$("#school10").text(topTenSchools[9][0]);
+
+				$("#schoolNum1").text(topTenSchools[0][1]);
+				$("#schoolNum2").text(topTenSchools[1][1]);
+				$("#schoolNum3").text(topTenSchools[2][1]);
+				$("#schoolNum4").text(topTenSchools[3][1]);
+				$("#schoolNum5").text(topTenSchools[4][1]);
+				$("#schoolNum6").text(topTenSchools[5][1]);
+				$("#schoolNum7").text(topTenSchools[6][1]);
+				$("#schoolNum8").text(topTenSchools[7][1]);
+				$("#schoolNum9").text(topTenSchools[8][1]);
+				$("#schoolNum10").text(topTenSchools[9][1]);
+
+			}
+		}
+
+		function processData(data) {
+
+				"use strict";
+				schools = $.csv.toArrays(data);
+
+		}
+
+		function fixTitle() {
+
+			var $this = $(".stickyheader");
+			var headOff = $(".header-main-type").offset().top;
+			var scrollTop = $(window).scrollTop();
+
+			if (selected === 2) {
+
+				$("#headertxt").text("Profile");
+
+			} else if (selected === 1) {
+
+				$("#headertxt").text("Dashboard");
+			} else if (selected == 5) {
+
+				$("#headertxt").text("Stats");
+
+			} else if (selected == 6) {
+
+				$("#headertxt").text("Send iOS Notif");
+
+			}
+
+			if (scrollTop > (84 - 50)) {
+
+					$(".header-main-type").css("opacity", "0");
+					$(".header-main-type").css("transform", "scale(0.6)");
+					$this.css("opacity", "1");
+
+			} else {
+
+				$(".header-main-type").css("opacity", "1");
+				$(".header-main-type").css("transform", "scale(1)");
+				$this.css("opacity", "0");
+			}
+		}
+
+		function sendNotifClicked() {
+
+			var title = $("#notifTitle").val();
+			var description = $("#notifDescription").val();
+			var type = $("#notifType").val();
+			var currentUnixTime = Math.round((new Date()).getTime() / 1000);
+
+			notifRef.push({
+				name: title,
+				description: description,
+				type: type,
+				time: currentUnixTime
+			});
+		}
+
+		$(document).ready(function () {
+			$(window).scroll(fixTitle);
+		});
+
+  </script>
+
+</html>

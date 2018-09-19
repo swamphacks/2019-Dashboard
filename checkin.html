@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+		<title>SwampHacks 2018 - Check In</title>
+		<meta name="description" content="
+
+		SwampHacks is a 36 hour open coding event where students become creators.
+		In the time allotted, students from around the country come together at the
+		University of Florida to collaborate on projects, mingle in activities, and
+		network with sponsors for a fully immersive experience.
+
+		"/>
+		<!-- Stylesheets
+    ================================================== -->
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+		<!-- Favicon
+    ================================================== -->
+   	<link rel="icon" type="image/png" href="favicon.png" />
+		<!-- Icons & Fonts
+		================================================== -->
+		<link rel="stylesheet" href="css/font-awesome.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<!-- MLH Badge
+		================================================== -->
+		<!-- <a id="mlh-trust-badge" style="display:block;max-width:100px;min-width:60px;position:absolute;right:50px;top:0;width:10%;z-index:0" href="https://mlh.io/seasons/na-2018/events?utm_source=na-2018&utm_medium=TrustBadge&utm_campaign=na-2018&utm_content=white" target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/2018/white.svg" alt="Major League Hacking 2017 Hackathon Season" style="width:100%"></a> -->
+	</head>
+
+  <body>
+
+	<div id="animationWindow" class="hide">
+		<div class="loader"></div>
+	</div>
+
+  <div id="layout" class="">
+
+      <div id="menuLogin" class="show">
+
+				<div class="pure-menu-heading" href="#">
+					<h1 id="mainheader">swamp<b>hacks IV</b></h1>
+					<!-- <img id="logo" class="" src="img/logoblue.svg"></img> -->
+				</div>
+
+				<div class="btngroup hide">
+					<span id="statusWithBtn" class="">Please fill in all fields!</span> <span onclick="resendEmailClicked()" class="resend" id="resendBtn">Resend it?</span>
+				</div>
+
+				<div id="loginStatusTxt" class="hide">
+					Please fill in all fields!
+				</div>
+
+				<div class="menu-items-con-login">
+
+					<div class="row log">
+						<form id="loginForm" class="" autocomplete="off">
+
+							<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Full Name</label>
+								<input class="form-field" id="fullname" name="q1" type="text" placeholder="" required/>
+							</div>
+
+							<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Email</label>
+								<input class="form-field" id="email" name="q1" type="text" placeholder="" required/>
+							</div>
+
+							<!-- <div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Password</label>
+								<i class="fa fa-lock pass-visibility" aria-hidden="true" id="pv3" onclick="showPassPressed(password, pv3)"></i>
+								<input class="form-field" id="password" name="q1" type="password" placeholder="" required/>
+							</div> -->
+
+							<div class="col-md-12 top-margin">
+								<button id="loginBtnCheckIn" class="button green" onclick="loginBtnClicked()"><a href=""><p class="loginbtn">Check In</p></a></button>
+							</div>
+
+						</form>
+
+						<div class="margin-buffer">
+
+							<div class="col-md-12 top-margin">
+								<button class="button txtbtnouter"><a href="eventregistration.html"><p class="textbtn"><b>or Create Account</b></p></a></button>
+							</div>
+
+							<!-- <div class="col-md-12 top-margin">
+								<button class="button txtbtnouter" onclick="addAnnouncement()"><a><p class="textbtn"><b>Add Events Data in DB</b></p></a></button>
+							</div> -->
+
+							<div class="col-md-12 descrip-txt login-txt">
+								Please check in with the email you applied with!
+							</div>
+
+						</div>
+
+
+					</div>
+
+				</div>
+
+      </div>
+
+      <div id="login-side">
+				<!-- <img class="clock" src="img/clock.jpg"></img> -->
+				<!-- <div class="imgcon">
+					<img class="colorlogo" src="img/colorlogo.svg"></img>
+				</div> -->
+
+				<!-- <div id="table-con">
+
+				</div> -->
+
+				<div class="top-blk">
+
+					<div id="top-txt" class="top-txt">CHECK</div>
+
+				</div>
+				<div class="bottom-blk">
+
+					<div id="bottom-txt" class="bottom-txt">IN</div>
+
+				</div>
+
+      </div>
+
+  </div>
+
+
+
+
+  <script src="js/menu.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/classie.js"></script>
+
+  </body>
+
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyCkPM5Ta8WgzxpOP6O9WuLWD6Irkd6GAPc",
+			authDomain: "swamphacks-applicants.firebaseapp.com",
+			databaseURL: "https://swamphacks-applicants.firebaseio.com",
+			projectId: "swamphacks-applicants",
+			storageBucket: "swamphacks-applicants.appspot.com",
+			messagingSenderId: "622854578748"
+		};
+		firebase.initializeApp(config);
+	</script>
+
+  <script>
+
+		var ref = firebase.database().ref();
+		var usersRef = ref.child("applicants");
+		var checkedInRef = ref.child("confirmed");
+		var acceptedRef = ref.child("accepted");
+		var eventsRef = ref.child("events");
+		var sponsorRef = ref.child("sponsors");
+		var announcementsRef = ref.child("announcements");
+    var userObj = JSON.parse(localStorage.getItem('loggedInUser'));
+		var loggedInUserKey = localStorage.getItem('loggedInUserKey');
+		var checkedInUser;
+		var clickedBtn = false;
+		var topSchoolsDisplay = ["GT", "UF", "FSU", "WATERLOO", "FIU", "USF", "UCF", "FIT", "GSU", "IIT", "UM", "DUKE", "UA", "UTD", "FPOLY", "ERAU", "NU", "ALL"];
+		$("#loginForm").submit(function() { return false; });
+
+		loopInfo(topSchoolsDisplay);
+
+		if (userObj === null || userObj === undefined || userObj.isVolunteer === undefined || userObj.isVolunteer === false) {
+
+      // Only volunteers and admin can access this page
+      window.location.href = "index.html";
+
+    }
+
+		function loopInfo(text) {
+
+			$("#top-txt").text("CHECK");
+			$("#bottom-txt").text("IN");
+
+			setTimeout(function() {
+				loopText(topSchoolsDisplay);
+			}, 10000);
+
+		}
+
+		function loopText(text) {
+
+			var i = 0;
+			$("#top-txt").text("WELCOME");
+
+    	function printEntry() {
+				$("#bottom-txt").text(text[i]);
+        i++; // Increment the position
+        if (i < text.length) { // If there are more chars, schedule another
+          setTimeout(printEntry, 800);
+        } else {
+					setTimeout(function() {
+					  loopInfo();
+					}, 10000);
+				}
+    	}
+
+    	printEntry(); // Print the first entry/char
+
+		}
+
+    function loginBtnClicked() {
+
+			var email = $("#email").val();
+			var fullName = $("#fullname").val();
+
+			if (email !== "" && fullName !== "") {
+
+				// Show the loader
+				$("#animationWindow").removeClass("hide");
+				$("#animationWindow").addClass("showflex");
+
+				var delay = 5000;
+				var smallDelay = 500;
+
+				 setTimeout(function() {
+					 // Delay before checking
+					 acceptedRef.orderByChild("email").equalTo(email).on("value", function(snapshot) {
+
+							// Getting the info of the found user and storing it in local storage
+							snapshot.forEach(function(childSnapshot) {
+
+								var key = childSnapshot.key;
+								var childData = childSnapshot.val();
+
+								localStorage.setItem('checkedInUser', JSON.stringify(childData));
+								localStorage.setItem('checkedInUserKey', key);
+
+								checkedInUser = childData;
+
+							});
+
+					 });
+
+					 setTimeout(function() {
+
+						 if (checkedInUser !== undefined) {
+
+							 checkedInRef.orderByChild("email").equalTo(email).on("value", function(snapshot) {
+
+									// Getting the info of the found user and storing it in local storage
+
+									if (snapshot.val() === null || snapshot.val() === undefined) {
+
+										// SUCCESS
+										var checkIn = "Checked in ";
+									 $("#loginStatusTxt").text(checkIn.concat(checkedInUser.fname).concat("!"));
+									 $("#loginStatusTxt").addClass("show");
+
+									 clickedBtn === true;
+
+									 setTimeout(function() {
+
+										 var pushKey = checkedInRef.push().key;
+
+										 checkedInRef.update({
+												[pushKey] : checkedInUser
+										 });
+
+										 // Reload form for next check in
+										 location.reload();
+
+									 }, delay);
+
+								 } else {
+
+									 // Already checked in
+									 var checkIn = "Checked in ";
+									 //$("#loginStatusTxt").text(checkIn.concat(checkedInUser.fname).concat("!"));
+									 $("#loginStatusTxt").text("Already checked in!");
+									 $("#loginStatusTxt").addClass("show");
+
+									 setTimeout(function() {
+
+										 // Reload form for next check in
+										 location.reload();
+
+									 }, delay);
+
+								 }
+
+							 });
+
+						 } else {
+
+							 $("#loginStatusTxt").text("That info is not in our system.");
+							 $("#loginStatusTxt").addClass("show");
+
+							 setTimeout(function() {
+
+								 // Reload form for next check in
+								 location.reload();
+
+							 }, delay);
+
+						 }
+
+						 // Hide the loader
+						 $("#animationWindow").removeClass("showflex");
+						 $("#animationWindow").addClass("hide");
+
+					 }, 1000);
+
+				 }, smallDelay);
+
+			} else {
+
+				$("#loginStatusTxt").text("Please fill in all fields.");
+				$("#loginStatusTxt").addClass("show");
+
+				$(".btngroup").addClass("hide");
+				$(".btngroup").removeClass("show");
+
+			}
+
+		}
+
+		var points = {
+
+			gators: 0,
+			dragonflies: 0,
+			turtles: 0,
+			herons: 0
+
+		}
+
+		var people = {
+
+			gators: 0,
+			dragonflies: 0,
+			turtles: 0,
+			herons: 0
+
+		}
+
+		var pointsOverall = {
+
+			gators: 0,
+			dragonflies: 0,
+			turtles: 0,
+			herons: 0
+
+		}
+
+		var peopleOverall = {
+
+			gators: 0,
+			dragonflies: 0,
+			turtles: 0,
+			herons: 0
+
+		}
+
+		var attendants = {
+
+			people: people,
+			points: points
+
+		}
+
+		var eventsData = {
+
+			people: peopleOverall,
+			points: pointsOverall
+
+		}
+
+		function addEventsClicked() {
+
+			eventsRef.push({
+
+				name: "Closing Ceremonies",
+				image: "",
+				description: "",
+				startTime: "1516563600",
+				endTime: "1516568400",
+				location: "",
+				type: "Logistics",
+				company: "",
+				day: "Sunday",
+				attendants: attendants
+
+			});
+
+		}
+
+		var rep1 = {
+			image: "",
+			name: "FName LName"
+		}
+
+		var rep2 = {
+			image: "",
+			name: "FName LName"
+		}
+
+		var reps = {
+
+			rep1,
+			rep2
+
+		}
+
+		var AmericanExpress = {
+
+			description: "",
+			link: "https://www.americanexpress.com/",
+			location: "New York City, NY",
+			logo: "",
+			name: "American Express",
+			tier: "Turtle",
+			priority: 0,
+			reps: reps
+
+		}
+
+		var announcements = {
+
+			test: "string"
+		}
+
+		function addAnnouncement() {
+
+			announcementsRef.push({
+
+				name: "Title Three",
+				time: 1516563600,
+				description: "Description text three",
+				type: "food"
+
+			});
+
+
+		}
+
+		function addSponsor() {
+
+			ref.update({
+
+				announcements
+
+			});
+
+		}
+
+		function generate_table() {
+		  // get the reference for the body
+		  var body = document.getElementById("table-con")
+
+		  // creates a <table> element and a <tbody> element
+		  var tbl = document.createElement("table");
+		  var tblBody = document.createElement("tbody");
+
+			acceptedRef.once("value", function(data) {
+
+				data.forEach(function(child){
+					// creates a table row
+					var row = document.createElement("tr");
+
+					var cell = document.createElement("td");
+					var cellText = document.createTextNode(child.val().email);
+
+					cell.appendChild(cellText);
+					row.appendChild(cell);
+
+					// add the row to the end of the table body
+					tblBody.appendChild(row);
+    		});
+
+			});
+
+		  // put the <tbody> in the <table>
+		  tbl.appendChild(tblBody);
+		  // appends <table> into <body>
+		  body.appendChild(tbl);
+		  // sets the border attribute of tbl to 2;
+		  tbl.setAttribute("border", "none");
+		  tbl.setAttribute("width", "100%");
+		}
+
+  </script>
+
+</html>
