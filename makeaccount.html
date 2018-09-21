@@ -243,7 +243,8 @@
 
 										setTimeout(function() {
 
-											window.location.href = "login.html";
+											// window.location.href = "login.html";
+											window.location.href = "application.html";
 
 										}, delay);
 
@@ -293,15 +294,16 @@
 									// Login user
 									firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
 										 // User signed in
+										if (user && user.emailVerified) {
+											var delay = 500;
+											var smallDelay = 500;
 
-										 var delay = 500;
-										 var smallDelay = 500;
+											setTimeout(function() {
 
-										 setTimeout(function() {
+												window.location.href = "index.html";
 
-											 window.location.href = "index.html";
-
-										 }, delay);
+											}, delay);
+										}
 
 									}).catch(function(error) {
 
