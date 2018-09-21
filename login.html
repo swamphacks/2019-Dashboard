@@ -40,7 +40,7 @@
       <div id="menuLogin" class="">
 
 				<div class="pure-menu-heading" href="#">
-					<h1 id="mainheader">swamp<b>hacks IV</b></h1>
+					<h1 id="mainheader">swamp<b>hacks V</b></h1>
 					<!-- <img id="logo" class="" src="img/logoblue.svg"></img> -->
 				</div>
 
@@ -124,25 +124,14 @@
 	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-database.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
 	<script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
-	<script>
-		// Initialize Firebase
-		var config = {
-			apiKey: "AIzaSyCkPM5Ta8WgzxpOP6O9WuLWD6Irkd6GAPc",
-			authDomain: "swamphacks-applicants.firebaseapp.com",
-			databaseURL: "https://swamphacks-applicants.firebaseio.com",
-			projectId: "swamphacks-applicants",
-			storageBucket: "swamphacks-applicants.appspot.com",
-			messagingSenderId: "622854578748"
-		};
-		firebase.initializeApp(config);
-	</script>
+	<script src="firebaseconfig.js"></script>
 
   <script>
 
 		var ref = firebase.database().ref();
-		var usersRef = ref.child("applicants");
-		var acceptedRef = ref.child("accepted");
-		var confirmedRef = ref.child("confirmed");
+		// var usersRef = ref.child("applicants");
+		// var acceptedRef = ref.child("accepted");
+		// var confirmedRef = ref.child("confirmed");
 		$("form").submit(function() { return false; });
 
     function loginBtnClicked() {
@@ -159,44 +148,58 @@
 				// Login user
 				firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
 					 // User signed in
-
+					if (!user.emailVerified) {
+						// Hide the loader
+						$("#animationWindow").removeClass("showflex");
+						$("#animationWindow").addClass("hide");
+						// Display error message
+						$("#loginStatusTxt").text("Email not verified!");
+						$("#loginStatusTxt").addClass("show");
+						//exit function
+						return;
+					}
 					 var delay = 2000;
 					 var smallDelay = 500;
-
+					
 						setTimeout(function() {
-							// Delay before checking
-							acceptedRef.orderByChild("email").equalTo(email).on("value", function(snapshot) {
-
-								 // Getting the info of the found user and storing it in local storage
-								 snapshot.forEach(function(childSnapshot) {
-
-									 var key = childSnapshot.key;
-									 var childData = childSnapshot.val();
-									 localStorage.setItem('loggedInUser', JSON.stringify(childData));
-	 								 localStorage.setItem('loggedInUserKey', key);
-
-								 });
-
+							var userRef = firebase.database().ref("users/"+user.uid);
+							userRef.once('value').then(function(snapshot) {
+								localStorage.setItem('loggedInUser', JSON.stringify(snapshot.val()));
+	 							localStorage.setItem('loggedInUserKey', user.uid);
 							});
+							// Delay before checking
+							// acceptedRef.orderByChild("email").equalTo(email).on("value", function(snapshot) {
 
-							if (JSON.parse(localStorage.getItem('loggedInUser')) === null || JSON.parse(localStorage.getItem('loggedInUser')) === undefined) {
+							// 	 // Getting the info of the found user and storing it in local storage
+							// 	 snapshot.forEach(function(childSnapshot) {
 
-								confirmedRef.orderByChild("email").equalTo(email).on("value", function(snapshot) {
+							// 		 var key = childSnapshot.key;
+							// 		 var childData = childSnapshot.val();
+							// 		 localStorage.setItem('loggedInUser', JSON.stringify(childData));
+	 						// 		 localStorage.setItem('loggedInUserKey', key);
 
-									// Getting the info of the found user and storing it in local storage
-									snapshot.forEach(function(childSnapshot) {
+							// 	 });
 
-										var key = childSnapshot.key;
-										var childData2 = childSnapshot.val();
+							// });
 
-										localStorage.setItem('loggedInUser', JSON.stringify(childData2));
-										localStorage.setItem('loggedInUserKey', key);
+							// if (JSON.parse(localStorage.getItem('loggedInUser')) === null || JSON.parse(localStorage.getItem('loggedInUser')) === undefined) {
 
-									});
+							// 	confirmedRef.orderByChild("email").equalTo(email).on("value", function(snapshot) {
 
-							 });
+							// 		// Getting the info of the found user and storing it in local storage
+							// 		snapshot.forEach(function(childSnapshot) {
 
-							}
+							// 			var key = childSnapshot.key;
+							// 			var childData2 = childSnapshot.val();
+
+							// 			localStorage.setItem('loggedInUser', JSON.stringify(childData2));
+							// 			localStorage.setItem('loggedInUserKey', key);
+
+							// 		});
+
+							//  });
+
+							// }
 
 							setTimeout(function() {
 

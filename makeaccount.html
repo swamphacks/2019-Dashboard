@@ -40,7 +40,7 @@
       <div id="menuLogin" class="">
 
 				<div class="pure-menu-heading" href="#">
-					<h1 id="mainheader">swamp<b>hacks IV</b></h1>
+					<h1 id="mainheader">swamp<b>hacks V</b></h1>
 					<!-- <img id="logo" class="" src="img/logoblue.svg"></img> -->
 				</div>
 
@@ -70,7 +70,7 @@
 							</div>
 
 							<div class="col-md-12 top-margin">
-								<button class="button green" id="createAccountBtn" onclick=""><a href=""><p class="makeactbtn">Create Account</p></a></button>
+								<button class="button green" id="createAccountBtn"><a href=""><p class="makeactbtn">Create Account</p></a></button>
 							</div>
 
 						</form>
@@ -126,27 +126,16 @@
 	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-database.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
 	<script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
-	<script>
-		// Initialize Firebase
-		var config = {
-			apiKey: "AIzaSyCkPM5Ta8WgzxpOP6O9WuLWD6Irkd6GAPc",
-			authDomain: "swamphacks-applicants.firebaseapp.com",
-			databaseURL: "https://swamphacks-applicants.firebaseio.com",
-			projectId: "swamphacks-applicants",
-			storageBucket: "swamphacks-applicants.appspot.com",
-			messagingSenderId: "622854578748"
-		};
-		firebase.initializeApp(config);
-	</script>
+	<script src="firebaseconfig.js"></script>
 
 	<script>
 
 		var ref = firebase.database().ref();
-		var usersRef = ref.child("applicants");
-		var acceptedRef = ref.child("accepted");
+		// var usersRef = ref.child("applicants");
+		// var acceptedRef = ref.child("accepted");
 		var userVerified = false;
 		var firstClick = true;
-		var userExists;
+		var userExists = true;
 		var repeatCheck = true;
 
 		function checkIfUserExists(email) {
@@ -189,7 +178,6 @@
 		}
 
 		$("form").submit(function() {
-
 			repeatCheck = true;
 			createActBtnClicked();
 			return false;
@@ -205,7 +193,7 @@
 
 				if ((confirmPassword === password)) {
 
-					checkIfUserExists(email);
+					//checkIfUserExists(email);
 
 					if (repeatCheck) {
 
@@ -221,7 +209,7 @@
 							$("#animationWindow").removeClass("showflex");
 							$("#animationWindow").addClass("hide");
 
-							createActBtnClicked();
+							//createActBtnClicked();
 
 						}, 600);
 
@@ -233,19 +221,25 @@
 					setTimeout(function() {
 
 					if (userExists === true) {
-
+							var emailSent = false;
 							// Creating user in firebase
 							firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
 
 									// You can save the user data here.
+									if (user) {
+										var userEmail = user.email;
+										var key = user.uid;
+										ref.child('users/'+key).set({'email': userEmail});
+									} else {
 
+									}
 									firebase.auth().currentUser.sendEmailVerification().then(function() {
 
 										// STATUS
 										$("#loginStatusTxt").text("Verification email sent. Click the link and sign in!");
 										$("#loginStatusTxt").addClass("show");
-
-										var delay = 3000;
+										this.emailSent = true;
+										var delay = 5000;
 
 										setTimeout(function() {
 
@@ -253,7 +247,7 @@
 
 										}, delay);
 
-									}, function(error) {
+									}.bind(this), function(error) {
 
 										if (error !== null) {  }
 
@@ -265,38 +259,31 @@
 									var errorMessage = error.message;
 
 									// Handling different types of errors
-
-									if (errorCode.includes("weak-password")) {
-
+									if (!this.emailSent) {
+										if (errorCode.includes("weak-password")) {
 										// ERROR
 										$("#loginStatusTxt").text("Password should be at least 6 characters!");
 										$("#loginStatusTxt").addClass("show");
-
-									} else if (errorCode.includes("email-already-in-use")) {
-
+										} else if (errorCode.includes("email-already-in-use")) {
 										// ERROR
 										$("#loginStatusTxt").text("Email already in use! Please Login.");
 										$("#loginStatusTxt").addClass("show");
-
-									} else if (errorCode.includes("invalid-email")) {
-
+										} else if (errorCode.includes("invalid-email")) {
 										// ERROR
 										$("#loginStatusTxt").text("Invalid email!");
 										$("#loginStatusTxt").addClass("show");
-
-									} else {
-
+										} else {
 										// ERROR
 										$("#loginStatusTxt").text("Unknown error making your account. Try again");
 										$("#loginStatusTxt").addClass("show");
-									}
-
-							});
+										}
+									} 
+									this.emailSent = false;
+							}.bind(this));
 
 							firebase.auth().onAuthStateChanged(function(user) {
-
+								if (!user) {return;}
 								if (user.emailVerified) {
-
 									userVerified = true;
 
 									// Show the loader
@@ -337,11 +324,11 @@
 
 								} else {
 
-									userVerified = true;
+									//userVerified = true;
 
 									// ERROR
-									$("#loginStatusTxt").text("Email not verified!");
-									$("#loginStatusTxt").addClass("show");
+									// $("#loginStatusTxt").text("Email not verified!");
+									// $("#loginStatusTxt").addClass("show");
 								}
 							});
 
