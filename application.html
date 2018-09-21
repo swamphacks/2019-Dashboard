@@ -52,64 +52,75 @@
                         </div>
 
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Gender</label>
+                                <label class="form-lbl" for="q1" name="">Gender</label> <br>
                                 <!-- TODO: make select for this -->
-                                <input class="form-field" id="gender" name="q1" type="text" placeholder=""/>
+                                <input id="gender" name="gender" type="radio" value="Male"/> Male <br>
+                                <input id="gender" name="gender" type="radio" value="Female"/> Female <br>
+                                <input id="gender" name="gender" type="radio" value="None-binary/third gender"/> None-binary/third gender <br>
+                                <input id="gender" name="gender" type="radio" value="Other"/> Other <br>
                         </div>
 
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Race</label>
-                                <!-- TODO: make checkbox for this -->
-                                <input class="form-field" id="race" name="q1" type="text" placeholder=""/>
+                                <label class="form-lbl" for="q1" name="">Race/Ethnicity</label> <br>
+                                <input id="race" name="race" type="checkbox" value="Non-Hispanic White"/> Non-Hispanic White <br>
+                                <input id="race" name="race" type="checkbox" value="Black or African American"/> Black or African American <br>
+                                <input id="race" name="race" type="checkbox" value="Latinx or Hispanic American"/> Latinx or Hispanic American <br>
+                                <input id="race" name="race" type="checkbox" value="South Asian or Indian American"/> South Asian or Indian American <br>
+                                <input id="race" name="race" type="checkbox" value="East Asian or Asian American"/> East Asian or Asian American <br>
+                                <input id="race" name="race" type="checkbox" value="Middle Eastern or Arab American"/> Middle Eastern or Arab American <br>
+                                <input id="race" name="race" type="checkbox" value="Native American or Alaskan Native"/> Native American or Alaskan Native <br>
+                                <input id="race" name="race" type="checkbox" value="Hawaiian or Pacific Islander"/> Hawaiian or Pacific Islander <br>
+                                <input id="race" name="race" type="checkbox" value="Other"/> Other <br>
                         </div>
 
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Ethnicity</label>
-                                <!-- TODO: make checkbox for this -->
-                                <input class="form-field" id="ethnicity" name="q1" type="text" placeholder=""/>
-                        </div>
-
-                        <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Your School</label>
+                                <label class="form-lbl" for="q1" name="">Your School</label> <br>
+                                <select name="schools">
+                                        <option value="University of Florida">University of Florida</option>
+                                        <option value="University of South Florida">University of South Florida</option>
+                                        <option value="University of Central Florida">University of Central Florida</option>
+                                        <option value="MIT">MIT</option>
+                                </select> <br>
                                 <!-- TODO: make select for this, get school list -->
-                                <label class="form-lbl" for="q1" name="">What year are you?</label>
-                                <input class="form-field" id="schoolYear" name="q1" type="text" placeholder=""/>
+                                <label class="form-lbl" for="q1" name="">What year are you?</label> <br>
+                                <select name="schoolYear">
+                                        <option value="Freshman">Freshman</option>
+                                        <option value="Sophmore">Sophmore</option>
+                                        <option value="Junior">Junior</option>
+                                        <option value="Senior">Senior</option>
+                                        <option value="PHD/Master">PHD/Master</option>
+                                </select> <br>
                         </div>
 
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Is this your first time hacking?</label>
+                                <label class="form-lbl" for="q1" name="">Is this your first time hacking?</label> <br>
                                 <!-- TODO: make select for this -->
-                                <input class="form-field" id="firstTimeHacker" name="q1" type="text" placeholder=""/>
-                        </div>
-
-                        <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Is this your first time hacking?</label>
-                                <!-- TODO: make select for this -->
-                                <input class="form-field" id="firstTimeHacker" name="q1" type="text" placeholder=""/>
+                                <input id="firstTimeHacker" name="firstTimeHacker" type="radio" value="yes"/> Yes
+                                <input id="firstTimeHacker" name="firstTimeHacker" type="radio" value="no"/> No <br>
                         </div>
 
                         <div class="col-md-12 top-margin">
                                 <label class="form-lbl" for="q1" name="">Resume</label>
                                 <!-- TODO: make file explorer for this -->
-                                <input class="form-field" id="resume" name="q1" type="text" placeholder=""/>
+                                <input id="resume" name="q1" type="file" placeholder="Choose File"/>
                         </div>
 
                         <div class="col-md-12 top-margin">
                                 <label class="form-lbl" for="q1" name="">Github Profile</label>
                                 <!-- TODO: make select for this -->
-                                <input class="form-field" id="github" name="q1" type="text" placeholder=""/>
+                                <input class="form-field" id="github" name="github" type="text" placeholder=""/>
                         </div>
 
                         <div class="col-md-12 top-margin">
                                 <label class="form-lbl" for="q1" name="">LinkedIn Profile</label>
                                 <!-- TODO: make select for this -->
-                                <input class="form-field" id="linkedin" name="q1" type="text" placeholder=""/>
+                                <input class="form-field" id="linkedin" name="linkedin" type="text" placeholder=""/>
                         </div>
 
                         <div id="shirtCol" class="col-md-12 top-margin">
                             <label class="form-lbl" for="q1" name="">T-Shirt Size *</label>
                             <!-- <input class="form-field" id="shirtSize" name="q1" type="text" placeholder="Medium" required/> -->
-                            <select class="form-field" id="shirtSize" required>
+                            <select class="form-field" id="shirtSize" name="shirtSize" required>
                                 <option value="small">Small</option>
                                 <option value="medium">Medium</option>
                                 <option value="large">Large</option>
@@ -120,7 +131,7 @@
                         <div id="dietCol" class="col-md-12 top-margin">
                             <label class="form-lbl" for="q1" name="">Dietary Restrictions *</label>
                             <!-- <input class="form-field" id="diet" name="q1" type="text" placeholder="Halal" required/> -->
-                            <select class="form-field" id="diet" required>
+                            <select class="form-field" id="diet" name="diet" required>
                                 <option value="none">None</option>
                                 <option value="vegetarian">Vegetarian</option>
                                 <option value="vegan">Vegan</option>
@@ -131,43 +142,45 @@
                         <div class="col-md-12 top-margin">
                                 <label class="form-lbl" for="q1" name="">Do you need transportation to SwampHacks?(FYI carpool and buses w/ 400 mile radius) - outside that we do a travel reimbursement</label>
                                 <!-- TODO: make select for this -->
-                                <input class="form-field" id="transportation" name="q1" type="text" placeholder=""/>
+                                <br>
+                                <input id="transportation" name="transportation" type="radio" value="yes"/> Yes
+                                <input id="transportation" name="transportation" type="radio" value="no"/> No <br>
                         </div>
                         
                         <div class="col-md-12 top-margin">
                                 <label class="form-lbl" for="q1" name="">Why would you like to participate in SwampHacks?</label>
-                                <!-- TODO: make text box for this -->
-                                <input class="form-field" id="interest" name="q1" type="text" placeholder=""/>
+                                <!-- TODO: disable size adjustment by user -->
+                                <textarea class="form-field form-textbox" id="interest" name="interest" type="text" placeholder="" rows="5" cols="20"></textarea>
                         </div>
 
                         <div class="col-md-12 top-margin">
                                 <label class="form-lbl" for="q1" name="">What’s an everyday problem that tech could solve?</label>
-                                <!-- TODO: make text box for this -->
-                                <input class="form-field" id="everydayProblem" name="q1" type="text" placeholder=""/>
+                                <!-- TODO: disable size adjustment by user -->
+                                <textarea class="form-field form-textbox" id="everydayProblem" name="everydayProblem" type="text" placeholder="" rows="5" cols="20"></textarea>
                         </div>
 
                         <div class="col-md-12 top-margin">
                                 <label class="form-lbl" for="q1" name="">What do you hope to gain out of SwampHacks?</label>
-                                <!-- TODO: make text box for this -->
-                                <input class="form-field" id="hopes" name="q1" type="text" placeholder=""/>
+                                <!-- TODO: disable size adjustment by user -->
+                                <textarea class="form-field form-textbox" id="hopes" name="hopes" type="text" placeholder="" rows="5" cols="20"></textarea>
                         </div>
 
                         <div class="col-md-12 top-margin">
                                 <label class="form-lbl" for="q1" name="">Other comments? - what workshops, mentors, activities, etc. would you want to see?</label>
-                                <!-- TODO: make text box for this -->
-                                <input class="form-field" id="comments" name="q1" type="text" placeholder=""/>
+                                <!-- TODO: disable size adjustment by user -->
+                                <textarea class="form-field form-textbox" id="comments" name="comments" type="text" placeholder="" rows="5" cols="20"></textarea>
                         </div>
 
                         <div class="col-md-12 top-margin">
                                 <label class="form-lbl" for="q1" name="">How did you hear about SwampHacks? </label>
-                                <!-- TODO: make text box for this -->
-                                <input class="form-field" id="news" name="q1" type="text" placeholder=""/>
+                                <!-- TODO: disable size adjustment by user -->
+                                <textarea class="form-field form-textbox" id="news" name="news" type="text" placeholder="" rows="5" cols="20"></textarea>
                         </div>
 
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Do you agree to the MLH Code of Conduct?</label>
+                                <label class="form-lbl" for="q1" name="">Do you agree to the MLH Code of Conduct?</label> 
                                 <!-- TODO: add link to it and a checkbox maybe -->
-                                <input class="form-field" id="codeOfConduct" name="q1" type="text" placeholder=""/>
+                               <br> <input id="codeOfConduct" name="codeOfConduct" type="checkbox" value=""/> I agree <br>
                         </div>
 
                     </form>
@@ -184,7 +197,7 @@
 
                 <div class="row">
                     <div class="col-md-12 top-margin">
-                        <button id="submitBtn" class="button green" onclick="updateInfoBtnClicked()">
+                        <button id="submitBtn" class="button green" onclick="submit()">
                             <p>Submit</p>
                         </button>
                     </div>
@@ -192,5 +205,58 @@
 
             </div>
         </div>
+
+        <script src="js/jquery.js"></script>
+        <script src="js/classie.js"></script>
     </body>
+
+    <script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
+    <script src="firebaseconfig.js"></script>
+    
+    <script>
+        // add user information to database
+        var ref = firebase.database().ref();
+        
+        function submit() {
+            // Get form values
+            var fname = $("#firstName").val();
+            var lname = $("#lastName").val();
+            var gender = $('input[name="gender"]:checked').val(); //returns undefined if none clicked
+            // array of all race/ethnicities selected
+            var raceEthnicity = $('input[name="race"]:checked').map(function() {
+                return this.value;
+            }).get();
+            var school = $('select[name="schools"]').val();
+            var schoolYear = $('select[name="schoolYear"]').val();
+            var firstTimeHacker = $('input[name="firstTimeHacker"]:checked').val();
+            // TODO: resume
+            var githubProfile = $('input[name="github"]').val();
+            var linkedinProfile = $('input[name="linkedin"]').val();
+            var shirtSize = $('select[name="shirtSize"]').val();
+            var diet = $('select[name="diet"]').val();
+            var transportation = $('input[name="transportation"]:checked').val();
+            var interestReason = $('textarea[name="interest"]').val();
+            var everydayProblem = $('textarea[name="everydayProblem"]').val();
+            var hopeToGain =  $('textarea[name="hope"]').val();
+            var comments =  $('textarea[name="comments"]').val();
+            var hearAbout =  $('textarea[name="news"]').val();
+            var codeOfConduct = $('input[name="codeOfConduct"]:checked').val();
+
+            var user = {
+
+            };
+            
+            firebase.auth().onAuthStateChanged(function(currentUser) {
+			if (currentUser && currentUser.emailVerified) {
+                console.log(currentUser);
+			} else {
+				console.log("not signed in");
+			}
+		});
+        }
+    </script>
 </html>

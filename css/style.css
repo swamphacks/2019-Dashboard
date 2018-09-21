@@ -577,6 +577,13 @@ td b {
   color: #e6e6e6;
 }
 
+.form-textbox {
+  height: 100px;
+  min-height: 50px;
+  max-height: 300px;
+  resize: none;
+}
+
 .log {
   width: 100%;
 }
