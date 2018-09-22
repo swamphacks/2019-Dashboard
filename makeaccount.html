@@ -230,6 +230,7 @@
 										var userEmail = user.email;
 										var key = user.uid;
 										ref.child('users/'+key).set({'email': userEmail});
+										localStorage.setItem('loggedInUserKey', key);
 									} else {
 
 									}
@@ -239,7 +240,7 @@
 										$("#loginStatusTxt").text("Verification email sent. Click the link and sign in!");
 										$("#loginStatusTxt").addClass("show");
 										this.emailSent = true;
-										var delay = 5000;
+										var delay = 2000;
 
 										setTimeout(function() {
 
@@ -297,6 +298,11 @@
 										if (user && user.emailVerified) {
 											var delay = 500;
 											var smallDelay = 500;
+											var userRef = firebase.database().ref("users/"+user.uid);
+											userRef.once('value').then(function(snapshot) {
+												localStorage.setItem('loggedInUser', JSON.stringify(snapshot.val()));
+												localStorage.setItem('loggedInUserKey', user.uid);
+											});
 
 											setTimeout(function() {
 

@@ -148,39 +148,34 @@
                         </div>
                         
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Why would you like to participate in SwampHacks?</label>
-                                <!-- TODO: disable size adjustment by user -->
+                                <label class="form-lbl" for="q1" name="">Why would you like to participate in SwampHacks?</label>                      
                                 <textarea class="form-field form-textbox" id="interest" name="interest" type="text" placeholder="" rows="5" cols="20"></textarea>
                         </div>
 
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">What’s an everyday problem that tech could solve?</label>
-                                <!-- TODO: disable size adjustment by user -->
+                                <label class="form-lbl" for="q1" name="">What’s an everyday problem that tech could solve?</label>                               
                                 <textarea class="form-field form-textbox" id="everydayProblem" name="everydayProblem" type="text" placeholder="" rows="5" cols="20"></textarea>
                         </div>
 
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">What do you hope to gain out of SwampHacks?</label>
-                                <!-- TODO: disable size adjustment by user -->
+                                <label class="form-lbl" for="q1" name="">What do you hope to gain out of SwampHacks?</label>                            
                                 <textarea class="form-field form-textbox" id="hopes" name="hopes" type="text" placeholder="" rows="5" cols="20"></textarea>
                         </div>
 
                         <div class="col-md-12 top-margin">
                                 <label class="form-lbl" for="q1" name="">Other comments? - what workshops, mentors, activities, etc. would you want to see?</label>
-                                <!-- TODO: disable size adjustment by user -->
                                 <textarea class="form-field form-textbox" id="comments" name="comments" type="text" placeholder="" rows="5" cols="20"></textarea>
                         </div>
 
                         <div class="col-md-12 top-margin">
                                 <label class="form-lbl" for="q1" name="">How did you hear about SwampHacks? </label>
-                                <!-- TODO: disable size adjustment by user -->
                                 <textarea class="form-field form-textbox" id="news" name="news" type="text" placeholder="" rows="5" cols="20"></textarea>
                         </div>
 
                         <div class="col-md-12 top-margin">
                                 <label class="form-lbl" for="q1" name="">Do you agree to the MLH Code of Conduct?</label> 
                                 <!-- TODO: add link to it and a checkbox maybe -->
-                               <br> <input id="codeOfConduct" name="codeOfConduct" type="checkbox" value=""/> I agree <br>
+                               <br> <input id="codeOfConduct" name="codeOfConduct" type="checkbox" value="true"/> I agree <br>
                         </div>
 
                     </form>
@@ -220,43 +215,105 @@
     <script>
         // add user information to database
         var ref = firebase.database().ref();
-        
+        const userId = localStorage.getItem('loggedInUserKey');
+        if (!userId) {
+            window.location.href = "makeaccount.html";
+        }
+
+        function storeResume(userId) {
+            const storageRef = firebase.storage().ref();
+            const resume = $('#resume').get(0).files[0];
+            if(!resume) {return;}
+            const metadata = {contentType: resume.type};
+            const task = storageRef.child("resumes/"+userId).put(resume, metadata);
+            task
+                // .then(snapshot => snapshot.ref.getDownloadURL())
+                // .then((url) => {
+                //     resumeUrl = url;
+                // })
+                .catch((error) => {
+                    // A full list of error codes is available at
+                    // https://firebase.google.com/docs/storage/web/handle-errors
+                    switch (error.code) {
+                    case 'storage/unauthorized':
+                        // User doesn't have permission to access the object
+                        break;
+                    case 'storage/canceled':
+                        // User canceled the upload
+                        break;
+                    case 'storage/unknown':
+                        // Unknown error occurred, inspect error.serverResponse
+                        break;
+                    }
+                });
+        }
+        // TODO: add required fields, check edge cases
         function submit() {
             // Get form values
-            var fname = $("#firstName").val();
-            var lname = $("#lastName").val();
-            var gender = $('input[name="gender"]:checked').val(); //returns undefined if none clicked
+            const fname = $("#firstName").val();
+            const lname = $("#lastName").val();
+            const gender = $('input[name="gender"]:checked').val(); //returns undefined if none clicked
             // array of all race/ethnicities selected
-            var raceEthnicity = $('input[name="race"]:checked').map(function() {
+            const raceEthnicity = $('input[name="race"]:checked').map(function() {
                 return this.value;
             }).get();
-            var school = $('select[name="schools"]').val();
-            var schoolYear = $('select[name="schoolYear"]').val();
-            var firstTimeHacker = $('input[name="firstTimeHacker"]:checked').val();
-            // TODO: resume
-            var githubProfile = $('input[name="github"]').val();
-            var linkedinProfile = $('input[name="linkedin"]').val();
-            var shirtSize = $('select[name="shirtSize"]').val();
-            var diet = $('select[name="diet"]').val();
-            var transportation = $('input[name="transportation"]:checked').val();
-            var interestReason = $('textarea[name="interest"]').val();
-            var everydayProblem = $('textarea[name="everydayProblem"]').val();
-            var hopeToGain =  $('textarea[name="hope"]').val();
-            var comments =  $('textarea[name="comments"]').val();
-            var hearAbout =  $('textarea[name="news"]').val();
-            var codeOfConduct = $('input[name="codeOfConduct"]:checked').val();
-
-            var user = {
-
-            };
+            const school = $('select[name="schools"]').val();
+            const schoolYear = $('select[name="schoolYear"]').val();
+            const firstTimeHacker = $('input[name="firstTimeHacker"]:checked').val();
+            const githubProfile = $('input[name="github"]').val();
+            const linkedinProfile = $('input[name="linkedin"]').val();
+            const shirtSize = $('select[name="shirtSize"]').val();
+            const diet = $('select[name="diet"]').val();
+            const transportation = $('input[name="transportation"]:checked').val();
+            const interestReason = $('textarea[name="interest"]').val();
+            const everydayProblem = $('textarea[name="everydayProblem"]').val();
+            const hopeToGain =  $('textarea[name="hopes"]').val();
+            const comments =  $('textarea[name="comments"]').val();
+            const hearAbout =  $('textarea[name="news"]').val();
+            const codeOfConduct = $('input[name="codeOfConduct"]:checked').val();
             
-            firebase.auth().onAuthStateChanged(function(currentUser) {
-			if (currentUser && currentUser.emailVerified) {
-                console.log(currentUser);
-			} else {
-				console.log("not signed in");
-			}
-		});
+            if (codeOfConduct) {
+                // store resume in database
+                storeResume(userId);
+                //get user email
+                ref.child("users/"+userId).once('value').then(function(snapshot){
+                    const email = snapshot.val().email;
+                    //create user obj
+                    const user = {
+                        email: email,
+                        fname: fname,
+                        lname: lname,
+                        gender: gender,
+                        raceEthnicity: raceEthnicity,
+                        school: school,
+                        schoolYear: schoolYear,
+                        firstTimeHacker: firstTimeHacker,
+                        githubProfile: githubProfile,
+                        tshirtSize: shirtSize,
+                        dietaryRestrictions: diet,
+                        transportation: transportation,
+                        interestReason: interestReason,
+                        everydayProblem: everydayProblem,
+                        hopeToGain: hopeToGain,
+                        hearAbout: hearAbout,
+                        extraInfo: comments,
+                        isVolunteer: false,
+                        status: "PENDING"
+                    };
+                    //save user on database
+                    var userRef = ref.child("users");
+                    var updates = {};
+                    updates[userId] = user;
+                    userRef.update(updates).then(function() {
+                        //notify user that the application was successful
+                    });
+                    //send to log in page
+                    const delay = 2000;
+                    setTimeout(function(){
+                        window.location.href = "login.html";
+                    }, delay);
+                });
+            }
         }
     </script>
 </html>
