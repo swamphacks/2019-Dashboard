@@ -663,16 +663,16 @@
 		$(".fa-exclamation-triangle").addClass("hide");
 		$(".fa-exclamation-triangle").removeClass("showIn");
 
-		if (userObj.dietaryRestriction === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
+		if (userObj.dietaryRestrictions === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
 			$("#profileStatusTxt").addClass("hide");
 			$("#updateBtn").addClass("disabled");
 			$("#confirmBtn").addClass("disabled");
 			$("#rejectSpot").addClass("disabled");
 		}
 
-		if (userObj.dietaryRestriction !== undefined) {
+		if (userObj.dietaryRestrictions !== undefined) {
 
-			$("#diet").val(userObj.dietaryRestriction);
+			$("#diet").val(userObj.dietaryRestrictions);
 
 		} else {
 			$("#dietCol").addClass("hide");
@@ -720,7 +720,7 @@
 
 		function rejectSpotBtnClicked() {
 
-			if (userObj.dietaryRestriction === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
+			if (userObj.dietaryRestrictions === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
 
 			} else {
 
@@ -761,7 +761,7 @@
 
 		function confirmSpotBtnClicked() {
 
-			if (userObj.dietaryRestriction === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
+			if (userObj.dietaryRestrictions === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
 
 			} else {
 
@@ -819,22 +819,22 @@
 
 		function updateInfoBtnClicked() {
 
-			if (userObj.dietaryRestriction === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
+			if (userObj.dietaryRestrictions === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
 
 			} else {
 
-				var dietaryRestriction = $("#diet").val();
+				var dietaryRestrictions = $("#diet").val();
 				var tshirtSize = $("#shirtSize").val();
 				var extraInfo = $("#extraInfo").val();
 
-				if (dietaryRestriction !== "" && tshirtSize !== "") {
+				if (dietaryRestrictions !== "" && tshirtSize !== "") {
 
 					var loggedInUserRef = acceptedRef.child(loggedInUserKey);
 
 					if (extraInfo !== "") {
 
 						loggedInUserRef.update({
-							dietaryRestriction: dietaryRestriction,
+							dietaryRestrictions: dietaryRestrictions,
 							tshirtSize: tshirtSize,
 							extraInfo: extraInfo
 						});
@@ -842,7 +842,7 @@
 					} else {
 
 						loggedInUserRef.update({
-							dietaryRestriction: dietaryRestriction,
+							dietaryRestrictions: dietaryRestrictions,
 							tshirtSize: tshirtSize
 						});
 
@@ -960,9 +960,9 @@
 
 				$("#userEmail").val(userObj.email);
 
-				if (userObj.dietaryRestriction !== undefined) {
+				if (userObj.dietaryRestrictions !== undefined) {
 
-					$("#diet").val(userObj.dietaryRestriction);
+					$("#diet").val(userObj.dietaryRestrictions);
 
 				}
 
@@ -1126,7 +1126,7 @@
 
 			});
 
-			acceptedRef.orderByChild("dietaryRestriction").equalTo("none").on("value", function(snapshot) {
+			acceptedRef.orderByChild("dietaryRestrictions").equalTo("none").on("value", function(snapshot) {
 
 				 snapshot.forEach(function(childSnapshot) {
 
@@ -1136,7 +1136,7 @@
 
 			});
 
-			acceptedRef.orderByChild("dietaryRestriction").equalTo("vegetarian").on("value", function(snapshot) {
+			acceptedRef.orderByChild("dietaryRestrictions").equalTo("vegetarian").on("value", function(snapshot) {
 
 				 snapshot.forEach(function(childSnapshot) {
 
@@ -1146,7 +1146,7 @@
 
 			});
 
-			acceptedRef.orderByChild("dietaryRestriction").equalTo("vegan").on("value", function(snapshot) {
+			acceptedRef.orderByChild("dietaryRestrictions").equalTo("vegan").on("value", function(snapshot) {
 
 				 snapshot.forEach(function(childSnapshot) {
 
