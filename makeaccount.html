@@ -229,7 +229,7 @@
 									if (user) {
 										var userEmail = user.email;
 										var key = user.uid;
-										ref.child('users/'+key).set({'email': userEmail});
+										ref.child('users/'+key).set({'email': userEmail, 'applied': false});
 										localStorage.setItem('loggedInUserKey', key);
 									} else {
 
