@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
-		<title>SwampHacks Dashboard - Login</title>
+		<title>SwampHacks Application</title>
 		<meta name="description" content="
 
 		SwampHacks is a 36 hour open coding event where students become creators.
@@ -42,40 +42,40 @@
                 <div class="row">
                     <form id="profileForm" class="" autocomplete="off">
                         <div class="col-md-6 top-margin">
-                            <label class="form-lbl" for="q1" name="">First name</label>
-                            <input class="form-field" id="firstName" name="q1" type="text" placeholder=""/>
+                            <label class="form-lbl" for="q1" name="">First name</label> <span class="required redTxt">* Required</span>
+                            <input class="form-field" id="firstName" name="q1" type="text" placeholder="" required/>
                         </div>
 
                         <div class="col-md-6 top-margin">
-                            <label class="form-lbl" for="q1" name="">Last name</label>
-                            <input class="form-field" id="lastName" name="q1" type="text" placeholder=""/>
+                            <label class="form-lbl" for="q1" name="">Last name</label> <span class="required redTxt">* Required</span>
+                            <input class="form-field" id="lastName" name="q1" type="text" placeholder="" required/>
                         </div>
 
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Gender</label> <br>
+                                <label class="form-lbl" for="q1" name="">Gender</label> <span class="required redTxt">* Required</span><br>
                                 <!-- TODO: make select for this -->
-                                <input id="gender" name="gender" type="radio" value="Male"/> Male <br>
-                                <input id="gender" name="gender" type="radio" value="Female"/> Female <br>
-                                <input id="gender" name="gender" type="radio" value="None-binary/third gender"/> None-binary/third gender <br>
-                                <input id="gender" name="gender" type="radio" value="Other"/> Other <br>
+                                <input id="gender" name="gender" type="radio" value="Male" required/> Male <br>
+                                <input id="gender" name="gender" type="radio" value="Female" required/> Female <br>
+                                <input id="gender" name="gender" type="radio" value="None-binary/third gender" required/> None-binary/third gender <br>
+                                <input id="gender" name="gender" type="radio" value="Other" required/> Other <br>
                         </div>
 
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Race/Ethnicity</label> <br>
-                                <input id="race" name="race" type="checkbox" value="Non-Hispanic White"/> Non-Hispanic White <br>
-                                <input id="race" name="race" type="checkbox" value="Black or African American"/> Black or African American <br>
-                                <input id="race" name="race" type="checkbox" value="Latinx or Hispanic American"/> Latinx or Hispanic American <br>
-                                <input id="race" name="race" type="checkbox" value="South Asian or Indian American"/> South Asian or Indian American <br>
-                                <input id="race" name="race" type="checkbox" value="East Asian or Asian American"/> East Asian or Asian American <br>
-                                <input id="race" name="race" type="checkbox" value="Middle Eastern or Arab American"/> Middle Eastern or Arab American <br>
-                                <input id="race" name="race" type="checkbox" value="Native American or Alaskan Native"/> Native American or Alaskan Native <br>
-                                <input id="race" name="race" type="checkbox" value="Hawaiian or Pacific Islander"/> Hawaiian or Pacific Islander <br>
-                                <input id="race" name="race" type="checkbox" value="Other"/> Other <br>
+                                <label class="form-lbl" for="q1" name="">Race/Ethnicity</label> <span class="required redTxt">* Required</span><br>
+                                <input id="race" name="race" type="checkbox" value="Non-Hispanic White" required/> Non-Hispanic White <br>
+                                <input id="race" name="race" type="checkbox" value="Black or African American" required/> Black or African American <br>
+                                <input id="race" name="race" type="checkbox" value="Latinx or Hispanic American" required/> Latinx or Hispanic American <br>
+                                <input id="race" name="race" type="checkbox" value="South Asian or Indian American" required/> South Asian or Indian American <br>
+                                <input id="race" name="race" type="checkbox" value="East Asian or Asian American" required/> East Asian or Asian American <br>
+                                <input id="race" name="race" type="checkbox" value="Middle Eastern or Arab American" required/> Middle Eastern or Arab American <br>
+                                <input id="race" name="race" type="checkbox" value="Native American or Alaskan Native" required/> Native American or Alaskan Native <br>
+                                <input id="race" name="race" type="checkbox" value="Hawaiian or Pacific Islander" required/> Hawaiian or Pacific Islander <br>
+                                <input id="race" name="race" type="checkbox" value="Other" required/> Other <br>
                         </div>
 
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Your School</label> <br>
-                                <select name="schools">
+                                <label class="form-lbl" for="q1" name="">Your School</label> <span class="required redTxt">* Required</span><br>
+                                <select name="schools" required>
                                         <option value="University of Florida">University of Florida</option>
                                         <option value="University of South Florida">University of South Florida</option>
                                         <option value="University of Central Florida">University of Central Florida</option>
@@ -83,7 +83,7 @@
                                 </select> <br>
                                 <!-- TODO: make select for this, get school list -->
                                 <label class="form-lbl" for="q1" name="">What year are you?</label> <br>
-                                <select name="schoolYear">
+                                <select name="schoolYear" required>
                                         <option value="Freshman">Freshman</option>
                                         <option value="Sophmore">Sophmore</option>
                                         <option value="Junior">Junior</option>
@@ -93,20 +93,20 @@
                         </div>
 
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Is this your first time hacking?</label> <br>
+                                <label class="form-lbl" for="q1" name="">Is this your first time hacking?</label> <span class="required redTxt">* Required</span><br>
                                 <!-- TODO: make select for this -->
-                                <input id="firstTimeHacker" name="firstTimeHacker" type="radio" value="yes"/> Yes
-                                <input id="firstTimeHacker" name="firstTimeHacker" type="radio" value="no"/> No <br>
+                                <input id="firstTimeHacker" name="firstTimeHacker" type="radio" value="yes" required/> Yes
+                                <input id="firstTimeHacker" name="firstTimeHacker" type="radio" value="no" required/> No <br>
                         </div>
 
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Resume</label>
+                                <label class="form-lbl" for="q1" name="">Resume</label> <span class="required redTxt">* Required</span>
                                 <!-- TODO: make file explorer for this -->
-                                <input id="resume" name="q1" type="file" placeholder="Choose File"/>
+                                <input id="resume" name="q1" type="file" placeholder="Choose File" required/>
                         </div>
 
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Github Profile</label>
+                                <label class="form-lbl" for="q1" name="">Github Profile</label> 
                                 <!-- TODO: make select for this -->
                                 <input class="form-field" id="github" name="github" type="text" placeholder=""/>
                         </div>
@@ -118,7 +118,7 @@
                         </div>
 
                         <div id="shirtCol" class="col-md-12 top-margin">
-                            <label class="form-lbl" for="q1" name="">T-Shirt Size *</label>
+                            <label class="form-lbl" for="q1" name="">T-Shirt Size</label> <span class="required redTxt">* Required</span>
                             <!-- <input class="form-field" id="shirtSize" name="q1" type="text" placeholder="Medium" required/> -->
                             <select class="form-field" id="shirtSize" name="shirtSize" required>
                                 <option value="small">Small</option>
@@ -129,7 +129,7 @@
                         </div>
     
                         <div id="dietCol" class="col-md-12 top-margin">
-                            <label class="form-lbl" for="q1" name="">Dietary Restrictions *</label>
+                            <label class="form-lbl" for="q1" name="">Dietary Restrictions</label>  <span class="required redTxt">* Required</span>
                             <!-- <input class="form-field" id="diet" name="q1" type="text" placeholder="Halal" required/> -->
                             <select class="form-field" id="diet" name="diet" required>
                                 <option value="none">None</option>
@@ -141,10 +141,11 @@
 
                         <div class="col-md-12 top-margin">
                                 <label class="form-lbl" for="q1" name="">Do you need transportation to SwampHacks?(FYI carpool and buses w/ 400 mile radius) - outside that we do a travel reimbursement</label>
+                                <span class="required redTxt">* Required</span>
                                 <!-- TODO: make select for this -->
                                 <br>
-                                <input id="transportation" name="transportation" type="radio" value="yes"/> Yes
-                                <input id="transportation" name="transportation" type="radio" value="no"/> No <br>
+                                <input id="transportation" name="transportation" type="radio" value="yes" required/> Yes
+                                <input id="transportation" name="transportation" type="radio" value="no" required/> No <br>
                         </div>
                         
                         <div class="col-md-12 top-margin">
@@ -173,9 +174,9 @@
                         </div>
 
                         <div class="col-md-12 top-margin">
-                                <label class="form-lbl" for="q1" name="">Do you agree to the MLH Code of Conduct?</label> 
+                                <label class="form-lbl" for="q1" name="">Do you agree to the MLH Code of Conduct?</label> <span class="required redTxt">* Required</span>
                                 <!-- TODO: add link to it and a checkbox maybe -->
-                               <br> <input id="codeOfConduct" name="codeOfConduct" type="checkbox" value="true"/> I agree <br>
+                               <br> <input id="codeOfConduct" name="codeOfConduct" type="checkbox" value="true" required/> I agree <br>
                         </div>
 
                     </form>
@@ -192,9 +193,7 @@
 
                 <div class="row">
                     <div class="col-md-12 top-margin">
-                        <button id="submitBtn" class="button green" onclick="submit()">
-                            <p>Submit</p>
-                        </button>
+                        <button class="button green" onclick="submit()"><p class="makeactbtn">Submit</p></button>
                     </div>
                 </div>
 
@@ -247,7 +246,52 @@
                     }
                 });
         }
-        // TODO: add required fields, check edge cases
+
+        function checkRequiredFields(fname, lname, gender, raceEthnicity, resume, firstTimeHacker, transportation, codeOfConduct) {
+            var canSubmit = true;
+            if (fname == "") {
+                canSubmit = false;
+                // mark as required
+                console.log('fname');
+            }
+            if (lname == "") {
+                canSubmit = false;
+                // mark as required
+                console.log('lname');
+            }
+            if (!gender) {
+                canSubmit = false;
+                // mark as required
+                console.log('gender');
+            }
+            if (!raceEthnicity) {
+                canSubmit = false;
+                // mark as required
+                console.log('raceEthnicity');
+            }
+            if (!resume) {
+                canSubmit = false;
+                // mark as required
+                console.log('resume');
+            }
+            if (!firstTimeHacker) {
+                canSubmit = false;
+                // mark as required
+                console.log('firstTimeHacker');
+            }
+            if (!transportation) {
+                canSubmit = false;
+                // mark as required
+                console.log('transportation');
+            }
+            if (!codeOfConduct) {
+                canSubmit = false;
+                // mark as required
+                console.log('codeOfConduct');
+            }
+            return canSubmit;
+        }
+        // TODO: Show user what fields they are missing and alerting user that their application was successful if it was
         function submit() {
             // Get form values
             const fname = $("#firstName").val();
@@ -271,14 +315,17 @@
             const comments =  $('textarea[name="comments"]').val();
             const hearAbout =  $('textarea[name="news"]').val();
             const codeOfConduct = $('input[name="codeOfConduct"]:checked').val();
+
+            var canSubmit = checkRequiredFields(fname, lname, gender, raceEthnicity,
+                $('#resume').get(0).files[0], firstTimeHacker, transportation, codeOfConduct);
             
-            if (codeOfConduct) {
+            if (canSubmit) {
                 // store resume in database
                 storeResume(userId);
-                //get user email
+                // get user email
                 ref.child("users/"+userId).once('value').then(function(snapshot){
                     const email = snapshot.val().email;
-                    //create user obj
+                    // create user obj
                     const user = {
                         email: email,
                         fname: fname,
@@ -300,14 +347,15 @@
                         isVolunteer: false,
                         status: "PENDING"
                     };
-                    //save user on database
+                    // save user on database
                     var userRef = ref.child("users");
                     var updates = {};
                     updates[userId] = user;
+                    // Show loading screen
                     userRef.update(updates).then(function() {
                         //notify user that the application was successful
                     });
-                    //send to log in page
+                    // send to log in page
                     const delay = 2000;
                     setTimeout(function(){
                         window.location.href = "login.html";

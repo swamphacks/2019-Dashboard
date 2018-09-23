@@ -13,6 +13,8 @@
 		network with sponsors for a fully immersive experience.
 
 		"/>
+		<script src="js/qrcode-generator/jquery.min.js"></script>
+		<script src="js/qrcode-generator/qrcode.js"></script>
 		<!-- Stylesheets
     ================================================== -->
     <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -134,7 +136,12 @@
 
 				<div class="container-fluid notif-con">
 					<div class="row">
-
+						<div class="col-md-12">
+							<!-- Qr Code -->
+							<div id="qrcode"></div>
+						</div>
+					</div>
+					<div class="row">
 						<div class="col-md-12">
 							<h3 class="header-sub-type" id="welcomeMessage">Welcome, Albert!</h3>
 							<p class="descrip-txt"><br><b>Congratulations</b>, you're going to SwampHacks! <br><br>When you get the chance, <b>be sure to confirm your spot and fill out the necessary information in the profile tab on the left</b>. For any questions or concerns, feel free to email us at info@swamphacks.com.
@@ -535,7 +542,7 @@
   <script src="js/menu.js"></script>
   <script src="js/jquery.js"></script>
   <script src="js/classie.js"></script>
-	<script src="js/jquerycsv.js"></script>
+  <script src="js/jquerycsv.js"></script>
 
   </body>
 
@@ -580,6 +587,18 @@
 				window.location.href = "makeaccount.html";
 			}
 		});
+
+		// create qr code
+		var qrcode = new QRCode(document.getElementById("qrcode"), {
+			text: loggedInUserKey,
+			width: 128,
+			height: 128,
+			colorDark : "#000000",
+			colorLight : "#ffffff",
+			correctLevel : QRCode.CorrectLevel.H
+		});
+		// align in center
+		$("#qrcode > img").css({"margin":"auto"});
 
 		$("#mainBody").css("visibility", "visible");
 		// TODO: Make userObj when they sign in

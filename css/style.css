@@ -68,6 +68,10 @@
   cursor: pointer;
 }
 
+.required {
+  float: right;
+}
+
 #layout {
   position: relative;
   left: 0;
