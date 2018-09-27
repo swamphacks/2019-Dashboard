@@ -68,8 +68,8 @@
   cursor: pointer;
 }
 
-.required {
-  float: right;
+.requiredField {
+  border-color: red !important;
 }
 
 #layout {

@@ -82,7 +82,7 @@
 			<div class="stickyheader">
 				<span id="headertxt">Profile</span>
 			</div>
-
+	  <!-- %%%%%%%%%%%%%% Menu %%%%%%%%%%%%%% -->
       <div id="menu" class="">
 
           <div class="pure-menu">
@@ -94,21 +94,20 @@
               <div class="menu-items-con">
 
                 <ul class="pure-menu-list">
+					<li id="op0" class="pure-menu-item top-ln pure-menu-selected">
+							<a href="#" class="pure-menu-link" onclick="menuClick(0)">Application</a>
+					</li>
 
-                    <li id="op1" class="pure-menu-item top-ln pure-menu-selected">
+                    <li id="op1" class="pure-menu-item top-ln">
                       <a href="#" class="pure-menu-link" onclick="menuClick(1)">Dashboard</a>
                     </li>
 
-										<li id="op5" class="pure-menu-item top-ln hide">
+					<li id="op5" class="pure-menu-item top-ln hide">
                       <a href="#" class="pure-menu-link" onclick="menuClick(5)">SH Stats</a>
                     </li>
 
-										<li id="op6" class="pure-menu-item top-ln hide">
+					<li id="op6" class="pure-menu-item top-ln hide">
                       <a href="#" class="pure-menu-link" onclick="menuClick(6)">Send iOS Notif</a>
-                    </li>
-
-                    <li id="op2" class="pure-menu-item top-ln">
-                      <a href="#" class="pure-menu-link" onclick="menuClick(2)">Profile <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>
                     </li>
 
                     <li id="op3" class="pure-menu-item top-ln">
@@ -122,15 +121,192 @@
 
               </div>
 
-							<div id="sign-in-link" class="hide">
-								<!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
-								<a href="checkin.html" target="_blank">Event Sign In</a>
-							</div>
+			<div id="sign-in-link" class="hide">
+				<!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
+				<a href="checkin.html" target="_blank">Event Sign In</a>
+			</div>
 
           </div>
-      </div>
+	  </div>
+	  <!-- %%%%%%%%%%%%%% Application %%%%%%%%%%%%%% -->
+	  <div id="application" class="show">
+		<h1 class="header-main-type">Application</h1>
 
-      <div id="dashboard" class="show">
+		<div class="container-fluid notif-con">
+			<div class="row">
+				<div class="col-md-12">
+					<!-- <h3 class="header-sub-type">Welcome, Albert!</h3> -->
+					<p class="descrip-txt"> 
+						Please fill out the apropriate fields.
+					</p>
+					<p class="redTxt">
+						* Required
+					</p>
+				</div>
+
+				<div class="row">
+					<form id="profileForm" class="" autocomplete="off">
+						<div class="col-md-6 top-margin">
+							<label class="form-lbl" for="q1" name="">First name</label> <span class="redTxt"> * </span>
+							<input class="form-field" id="firstName" name="q1" type="text" placeholder="" />
+						</div>
+
+						<div class="col-md-6 top-margin">
+							<label class="form-lbl" for="q1" name="">Last name</label> <span class="redTxt">* </span>
+							<input class="form-field" id="lastName" name="q1" type="text" placeholder="" />
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Gender</label> <span class="redTxt">* </span><br>
+								
+								<input id="gender" name="gender" type="radio" value="Male" /> Male <br>
+								<input id="gender" name="gender" type="radio" value="Female" /> Female <br>
+								<input id="gender" name="gender" type="radio" value="None-binary/third gender" /> None-binary/third gender <br>
+								<input id="gender" name="gender" type="radio" value="Other" /> Other <br>
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Race/Ethnicity</label> <span class="redTxt">* </span><br>
+								<input id="race" name="race" type="checkbox" value="Non-Hispanic White" /> Non-Hispanic White <br>
+								<input id="race" name="race" type="checkbox" value="Black or African American" /> Black or African American <br>
+								<input id="race" name="race" type="checkbox" value="Latinx or Hispanic American" /> Latinx or Hispanic American <br>
+								<input id="race" name="race" type="checkbox" value="South Asian or Indian American" /> South Asian or Indian American <br>
+								<input id="race" name="race" type="checkbox" value="East Asian or Asian American" /> East Asian or Asian American <br>
+								<input id="race" name="race" type="checkbox" value="Middle Eastern or Arab American" /> Middle Eastern or Arab American <br>
+								<input id="race" name="race" type="checkbox" value="Native American or Alaskan Native" /> Native American or Alaskan Native <br>
+								<input id="race" name="race" type="checkbox" value="Hawaiian or Pacific Islander" /> Hawaiian or Pacific Islander <br>
+								<input id="race" name="race" type="checkbox" value="Other" /> Other <br>
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Your School</label> <span class=" redTxt">* </span><br>
+								<select name="schools" >
+										<option value="University of Florida">University of Florida</option>
+										<option value="University of South Florida">University of South Florida</option>
+										<option value="University of Central Florida">University of Central Florida</option>
+										<option value="MIT">MIT</option>
+								</select> <br>
+								
+								<label class="form-lbl" for="q1" name="">What year are you?</label> <br>
+								<select name="schoolYear" >
+										<option value="Freshman">Freshman</option>
+										<option value="Sophmore">Sophmore</option>
+										<option value="Junior">Junior</option>
+										<option value="Senior">Senior</option>
+										<option value="PHD/Master">PHD/Master</option>
+								</select> <br>
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Is this your first time hacking?</label> <span class=" redTxt">* </span><br>
+								<!-- TODO: make select for this -->
+								<input id="firstTimeHacker" name="firstTimeHacker" type="radio" value="yes" /> Yes
+								<input id="firstTimeHacker" name="firstTimeHacker" type="radio" value="no" /> No <br>
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Resume</label> <span class=" redTxt">* </span>
+								<!-- TODO: make file explorer for this -->
+								<input id="resume" name="q1" type="file" placeholder="Choose File" />
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Github Profile</label> 
+								<!-- TODO: make select for this -->
+								<input class="form-field" id="github" name="github" type="text" placeholder=""/>
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">LinkedIn Profile</label>
+								<!-- TODO: make select for this -->
+								<input class="form-field" id="linkedin" name="linkedin" type="text" placeholder=""/>
+						</div>
+
+						<div id="shirtCol" class="col-md-12 top-margin">
+							<label class="form-lbl" for="q1" name="">T-Shirt Size</label> <span class=" redTxt">* </span>
+							<!-- <input class="form-field" id="shirtSize" name="q1" type="text" placeholder="Medium" /> -->
+							<select class="form-field" id="shirtSize" name="shirtSize" >
+								<option value="small">Small</option>
+								<option value="medium">Medium</option>
+								<option value="large">Large</option>
+								<option value="extra-large">Extra Large</option>
+							</select>
+						</div>
+	
+						<div id="dietCol" class="col-md-12 top-margin">
+							<label class="form-lbl" for="q1" name="">Dietary Restrictions</label>  <span class=" redTxt">* </span>
+							<!-- <input class="form-field" id="diet" name="q1" type="text" placeholder="Halal" /> -->
+							<select class="form-field" id="diet" name="diet" >
+								<option value="none">None</option>
+								<option value="vegetarian">Vegetarian</option>
+								<option value="vegan">Vegan</option>
+								<option value="halal">Halal</option>
+							</select>
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Do you need transportation to SwampHacks?(FYI carpool and buses w/ 400 mile radius) - outside that we do a travel reimbursement</label>
+								<span class=" redTxt">* </span>
+								<!-- TODO: make select for this -->
+								<br>
+								<input id="transportation" name="transportation" type="radio" value="yes" /> Yes
+								<input id="transportation" name="transportation" type="radio" value="no" /> No <br>
+						</div>
+						
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Why would you like to participate in SwampHacks?</label>                      
+								<textarea class="form-field form-textbox" id="interest" name="interest" type="text" placeholder="" rows="5" cols="20"></textarea>
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">What’s an everyday problem that tech could solve?</label>                               
+								<textarea class="form-field form-textbox" id="everydayProblem" name="everydayProblem" type="text" placeholder="" rows="5" cols="20"></textarea>
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">What do you hope to gain out of SwampHacks?</label>                            
+								<textarea class="form-field form-textbox" id="hopes" name="hopes" type="text" placeholder="" rows="5" cols="20"></textarea>
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Other comments? - what workshops, mentors, activities, etc. would you want to see?</label>
+								<textarea class="form-field form-textbox" id="comments" name="comments" type="text" placeholder="" rows="5" cols="20"></textarea>
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">How did you hear about SwampHacks? </label>
+								<textarea class="form-field form-textbox" id="news" name="news" type="text" placeholder="" rows="5" cols="20"></textarea>
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Do you agree to the MLH Code of Conduct?</label> <span class=" redTxt">* </span>
+								<!-- TODO: add link to it and a checkbox maybe -->
+								<br> <input id="codeOfConduct" name="codeOfConduct" type="checkbox" value="true" /> I agree <br>
+						</div>
+
+					</form>
+
+				</div>
+
+				<!-- <div class="col-md-12 top-margin descrip-txt">
+						If you'd like to change anything later on, feel free to come back here and update your information!
+				</div> -->
+
+				<div class="col-md-12 top-margin descrip-txt hide" id="profileStatusTxt">
+					Please fill in all fields!
+				</div>
+
+				<div class="row">
+					<div class="col-md-12 top-margin">
+						<button class="button green" onclick="submitApplication()"><p class="makeactbtn">Submit</p></button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	  </div>
+	  <!-- %%%%%%%%%%%%%% Dashboard %%%%%%%%%%%%%% -->
+      <div id="dashboard" class="hide">
 
         <h1 class="header-main-type">Dashboard</h1>
 
@@ -179,86 +355,8 @@
 				</div>
 
       </div>
-
-      <div id="info" class="hide">
-
-        <h1 class="header-main-type">Profile</h1>
-
-				<div class="container-fluid notif-con">
-					<div class="row">
-
-						<div class="col-md-12">
-							<!-- <h3 class="header-sub-type">Welcome, Albert!</h3> -->
-							<p class="descrip-txt">
-								Please fill out the apropriate fields.
-							</p>
-						</div>
-
-						<div class="row">
-							<form id="profileForm" class="" autocomplete="off">
-								<div id="shirtCol" class="col-md-6 top-margin">
-									<label class="form-lbl" for="q1" name="">T-Shirt Size *</label>
-									<!-- <input class="form-field" id="shirtSize" name="q1" type="text" placeholder="Medium" required/> -->
-									<select class="form-field" id="shirtSize" required>
-									  <option value="small">Small</option>
-									  <option value="medium">Medium</option>
-									  <option value="large">Large</option>
-									  <option value="extra-large">Extra Large</option>
-									</select>
-								</div>
-
-								<div id="dietCol" class="col-md-6 top-margin">
-									<label class="form-lbl" for="q1" name="">Dietary Restrictions *</label>
-									<!-- <input class="form-field" id="diet" name="q1" type="text" placeholder="Halal" required/> -->
-									<select class="form-field" id="diet" required>
-									  <option value="none">None</option>
-									  <option value="vegetarian">Vegetarian</option>
-									  <option value="vegan">Vegan</option>
-									  <option value="halal">Halal</option>
-									</select>
-								</div>
-
-								<div id="extraInfoCol" class="col-md-12 top-margin">
-									<label class="form-lbl" for="q1" name="">Anything else we should know?</label>
-									<input class="form-field" id="extraInfo" name="q1" type="text" placeholder=""/>
-								</div>
-
-								<div class="col-md-12 top-margin">
-									<label class="form-lbl" for="q1" name="">Email</label>
-									<input class="form-field" id="userEmail" name="q1" type="text" placeholder="" disabled/>
-								</div>
-
-								<div class="col-md-12 top-margin" id="teamCol">
-									<label class="form-lbl" for="q1" name="">Your Team</label>
-									<input class="form-field" id="userTeam" name="q1" type="text" placeholder="" disabled/>
-								</div>
-
-							</form>
-
-						</div>
-
-						<div class="col-md-12 top-margin descrip-txt">
-							 If you'd like to change anything later on, feel free to come back here and update your information!
-						</div>
-
-						<div class="col-md-12 top-margin descrip-txt hide" id="profileStatusTxt">
-							Please fill in all fields!
-						</div>
-
-						<div class="row">
-							<div class="col-md-12 top-margin">
-								<button id="updateBtn" class="button green" onclick="updateInfoBtnClicked()">
-									<p>Update Info</p>
-								</button>
-							</div>
-						</div>
-
-					</div>
-				</div>
-
-      </div>
-
-			<div id="notif" class="hide">
+	  	<!-- %%%%%%%%%%%%%% Notification %%%%%%%%%%%%%% -->
+		<div id="notif" class="hide">
 
         <h1 class="header-main-type">Send iOS Notif</h1>
 
@@ -280,7 +378,7 @@
 
 								<div class="col-md-12 top-margin">
 									<label class="form-lbl" for="q1" name="">Type</label>
-									<select class="form-field" id="notifType" required>
+									<select class="form-field" id="notifType" >
 									  <option value="food">Food</option>
 									  <option value="techtalk">Techtalk</option>
 									  <option value="social">Social</option>
@@ -304,7 +402,7 @@
 				</div>
 
       </div>
-
+	  <!-- %%%%%%%%%%%%%% Stats %%%%%%%%%%%%%% -->
       <div id="login" class="hide">
 
         <h1 class="header-main-type">Stats</h1>
@@ -563,7 +661,7 @@
 		var checkedInRef = ref.child("confirmed");
 		var eventsDataRef = ref.child("eventsData");
 		var notifRef = ref.child("announcements");
-		var selected = 1;
+		var selected = 0;
 		var schools = [];
 		var appliedSchools = [];
 		var schoolsAndCount = {};
@@ -584,9 +682,39 @@
 		firebase.auth().onAuthStateChanged(function(currentUser) {
 			if (currentUser && currentUser.emailVerified) {
 			} else {
-				window.location.href = "makeaccount.html";
+				window.location.href = "login.html";
 			}
 		});
+
+		if (userObj.applied) {
+			// Show dashboard first
+			selected = 1;
+
+			$("#op1").addClass("pure-menu-selected");
+			$("#op0").removeClass("pure-menu-selected");
+			$("#op2").removeClass("pure-menu-selected");
+			$("#op3").removeClass("pure-menu-selected");
+			$("#op5").removeClass("pure-menu-selected");
+			$("#op6").removeClass("pure-menu-selected");
+
+			$("#dashboard").addClass("show");
+			$("#dashboard").removeClass("hide");
+			
+			$("#application").addClass("hide");
+			$("#application").removeClass("show");
+
+			$("#info").addClass("hide");
+			$("#info").removeClass("show");
+
+			$("#login").addClass("hide");
+			$("#login").removeClass("show");
+
+			$("#notif").addClass("hide");
+			$("#notif").removeClass("show");
+
+			// Fill application page with user information
+			addApplicationInfo();
+		}
 
 		// create qr code
 		var qrcode = new QRCode(document.getElementById("qrcode"), {
@@ -601,7 +729,7 @@
 		$("#qrcode > img").css({"margin":"auto"});
 
 		$("#mainBody").css("visibility", "visible");
-		// TODO: Make userObj when they sign in
+
 		if (userObj.email === "debrianfigueroa@ufl.edu" || userObj.email === "pablogarces@ufl.edu" || userObj.email === "sponsors@swamphacks.com") {
 
 			$("#op5").removeClass("hide");
@@ -646,9 +774,13 @@
 			$("#teamThreePoints").text(info.points.herons);
 			$("#teamFourPoints").text(info.points.gators);
 
-    	});
-
-		$("#welcomeMessage").text("Welcome, " + userObj.fname + "!");
+		});
+		// Set Welcome message
+		if (!userObj.fname) {
+			$("#welcomeMessage").text("Welcome, " + userObj.email + "!");
+		} else {
+			$("#welcomeMessage").text("Welcome, " + userObj.fname + "!");
+		}
 		$("#userEmail").val(userObj.email);
 
 		if (userObj.team !== null || userObj.team !== undefined) {
@@ -885,6 +1017,172 @@
 			}
 
 		}
+	// %%%%%%%%%%%%% Application Functions %%%%%%%%%%%%% //
+	function addApplicationInfo() {
+
+	}
+
+    function storeResume(userId) {
+		const storageRef = firebase.storage().ref();
+		const resume = $('#resume').get(0).files[0];
+		if(!resume) {return;}
+		const metadata = {contentType: resume.type};
+		const task = storageRef.child("resumes/"+userId).put(resume, metadata);
+		task
+			// .then(snapshot => snapshot.ref.getDownloadURL())
+			// .then((url) => {
+			//     resumeUrl = url;
+			// })
+			.catch((error) => {
+				// A full list of error codes is available at
+				// https://firebase.google.com/docs/storage/web/handle-errors
+				switch (error.code) {
+				case 'storage/unauthorized':
+					// User doesn't have permission to access the object
+					break;
+				case 'storage/canceled':
+					// User canceled the upload
+					break;
+				case 'storage/unknown':
+					// Unknown error occurred, inspect error.serverResponse
+					break;
+				}
+			});
+        }
+
+        function checkFields(fname, lname, gender, raceEthnicity, resume, firstTimeHacker, transportation, codeOfConduct) {
+            var canSubmit = true;
+            if (fname == "") {
+                canSubmit = false;
+                // mark as 
+				console.log('fname');
+				$("#firstName").addClass("requiredField");
+            }
+            if (lname == "") {
+                canSubmit = false;
+                // mark as 
+				console.log('lname');
+				$("#lastName").addClass("requiredField");
+            }
+            if (!gender) {
+                canSubmit = false;
+                // mark as 
+				console.log('gender');
+				// TODO
+				$("#gender").addClass("requiredField");
+            }
+            if (!raceEthnicity) {
+                canSubmit = false;
+                // mark as 
+				console.log('raceEthnicity');
+				// TODO
+				$("#raceEthnicity").addClass("requiredField");
+            }
+            if (!resume) {
+                canSubmit = false;
+                // mark as 
+				console.log('resume');
+				// TODO
+				$("#resume").addClass("requiredField");
+            }
+            if (!firstTimeHacker) {
+                canSubmit = false;
+                // mark as 
+				console.log('firstTimeHacker');
+				// TODO
+				$("#firstTimeHacker").addClass("requiredField");
+            }
+            if (!transportation) {
+                canSubmit = false;
+                // mark as 
+				console.log('transportation');
+				// TODO
+				$("#transportation").addClass("requiredField");
+            }
+            if (!codeOfConduct) {
+                canSubmit = false;
+                // mark as 
+				console.log('codeOfConduct');
+				// TODO
+				$("#codeOfConduct").addClass("requiredField");
+            }
+            return canSubmit;
+        }
+        // TODO: Show user what fields they are missing and alerting user that their application was successful if it was
+        function submitApplication() {
+            // Get form values
+            const fname = $("#firstName").val();
+            const lname = $("#lastName").val();
+            const gender = $('input[name="gender"]:checked').val(); //returns undefined if none clicked
+            // array of all race/ethnicities selected
+            const raceEthnicity = $('input[name="race"]:checked').map(function() {
+                return this.value;
+            }).get();
+            const school = $('select[name="schools"]').val();
+            const schoolYear = $('select[name="schoolYear"]').val();
+            const firstTimeHacker = $('input[name="firstTimeHacker"]:checked').val();
+            const githubProfile = $('input[name="github"]').val();
+            const linkedinProfile = $('input[name="linkedin"]').val();
+            const shirtSize = $('select[name="shirtSize"]').val();
+            const diet = $('select[name="diet"]').val();
+            const transportation = $('input[name="transportation"]:checked').val();
+            const interestReason = $('textarea[name="interest"]').val();
+            const everydayProblem = $('textarea[name="everydayProblem"]').val();
+            const hopeToGain =  $('textarea[name="hopes"]').val();
+            const comments =  $('textarea[name="comments"]').val();
+            const hearAbout =  $('textarea[name="news"]').val();
+            const codeOfConduct = $('input[name="codeOfConduct"]:checked').val();
+
+            var canSubmit = checkFields(fname, lname, gender, raceEthnicity,
+                $('#resume').get(0).files[0], firstTimeHacker, transportation, codeOfConduct);
+            
+            if (canSubmit) {
+                // store resume in database
+                storeResume(loggedInUserKey);
+                // get user email
+                ref.child("users/"+loggedInUserKey).once('value').then(function(snapshot){
+                    const email = snapshot.val().email;
+                    // create user obj
+                    const user = {
+                        email: email,
+                        fname: fname,
+                        lname: lname,
+                        gender: gender,
+                        raceEthnicity: raceEthnicity,
+                        school: school,
+                        schoolYear: schoolYear,
+                        firstTimeHacker: firstTimeHacker,
+                        githubProfile: githubProfile,
+                        tshirtSize: shirtSize,
+                        dietaryRestrictions: diet,
+                        transportation: transportation,
+                        interestReason: interestReason,
+                        everydayProblem: everydayProblem,
+                        hopeToGain: hopeToGain,
+                        hearAbout: hearAbout,
+                        extraInfo: comments,
+                        isVolunteer: false,
+                        status: "PENDING",
+                        applied: true
+                    };
+                    // save user on database
+                    var userRef = ref.child("users");
+                    var updates = {};
+                    updates[loggedInUserKey] = user;
+                    // TODO: Show loading screen
+                    userRef.update(updates).then(function() {
+						// update user data
+						userObj = user;
+						//  $("#welcomeMessage").text("Welcome, " + userObj.fname + "!");
+                        // TODO: notify user that the application was successful
+                    });
+                });
+            }
+        }
+
+	// %%%%%%%%%%%%% End of Application Functions %%%%%%%%%%%%% //
+
+	// %%%%%%%%%%%%% Menu Functions %%%%%%%%%%%%%
 
     function menuClick(item) {
 
@@ -895,115 +1193,90 @@
 			$("#menuLink").removeClass("active");
 
 
-      // Hiding and showing the appropriate info
-      if (item === 1) {
-
-        $("#op1").addClass("pure-menu-selected");
-        $("#op2").removeClass("pure-menu-selected");
+	  // Hiding and showing the appropriate info
+	  if (item === 0) {
+		$("#op0").addClass("pure-menu-selected");
+		$("#op1").removeClass("pure-menu-selected");
         $("#op3").removeClass("pure-menu-selected");
-				$("#op5").removeClass("pure-menu-selected");
-				$("#op6").removeClass("pure-menu-selected");
+		$("#op5").removeClass("pure-menu-selected");
+		$("#op6").removeClass("pure-menu-selected");
 
-        $("#dashboard").addClass("show");
-        $("#dashboard").removeClass("hide");
-
-        $("#info").addClass("hide");
-        $("#info").removeClass("show");
-
-        $("#login").addClass("hide");
-        $("#login").removeClass("show");
-
-				$("#notif").addClass("hide");
-        $("#notif").removeClass("show");
-
-				if (userObj.status !== undefined) {
-
-					$("#dashStatus").text(userObj.status);
-
-					if (userObj.status === "CONFIRMED") {
-						$("#dashStatus").addClass("green");
-						$("#dashStatus").removeClass("dark");
-						$("#confirmCon").addClass("hide");
-						$("#confirmCon").removeClass("show");
-						$("#rejectCon").addClass("show");
-						$("#rejectCon").removeClass("hide");
-					} else if (userObj.status === "NOT ATTENDING")  {
-						$("#dashStatus").removeClass("green");
-						$("#dashStatus").addClass("dark");
-						$("#confirmCon").addClass("show");
-						$("#confirmCon").removeClass("hide");
-						$("#rejectCon").addClass("hide");
-						$("#rejectCon").removeClass("show");
-					}
-
-				}
-
-      } else if (item === 2) {
-
-        $("#op2").addClass("pure-menu-selected");
-        $("#op3").removeClass("pure-menu-selected");
-        $("#op1").removeClass("pure-menu-selected");
-				$("#op5").removeClass("pure-menu-selected");
-				$("#op6").removeClass("pure-menu-selected");
+		$("#application").addClass("show");
+        $("#application").removeClass("hide");
 
         $("#dashboard").addClass("hide");
         $("#dashboard").removeClass("show");
 
-        $("#info").addClass("show");
-        $("#info").removeClass("hide");
+        $("#login").addClass("hide");
+        $("#login").removeClass("show");
+
+		$("#notif").addClass("hide");
+        $("#notif").removeClass("show");
+	  } else if (item === 1) {
+
+		$("#op1").addClass("pure-menu-selected");
+		$("#op0").removeClass("pure-menu-selected");
+        $("#op3").removeClass("pure-menu-selected");
+		$("#op5").removeClass("pure-menu-selected");
+		$("#op6").removeClass("pure-menu-selected");
+
+        $("#dashboard").addClass("show");
+		$("#dashboard").removeClass("hide");
+		
+		$("#application").addClass("hide");
+        $("#application").removeClass("show");
 
         $("#login").addClass("hide");
         $("#login").removeClass("show");
 
-				$("#notif").addClass("hide");
+		$("#notif").addClass("hide");
         $("#notif").removeClass("show");
 
-				$("#userEmail").val(userObj.email);
+		if (userObj.status !== undefined) {
 
-				if (userObj.dietaryRestrictions !== undefined) {
+			$("#dashStatus").text(userObj.status);
 
-					$("#diet").val(userObj.dietaryRestrictions);
+			if (userObj.status === "CONFIRMED") {
+				$("#dashStatus").addClass("green");
+				$("#dashStatus").removeClass("dark");
+				$("#confirmCon").addClass("hide");
+				$("#confirmCon").removeClass("show");
+				$("#rejectCon").addClass("show");
+				$("#rejectCon").removeClass("hide");
+			} else if (userObj.status === "NOT ATTENDING")  {
+				$("#dashStatus").removeClass("green");
+				$("#dashStatus").addClass("dark");
+				$("#confirmCon").addClass("show");
+				$("#confirmCon").removeClass("hide");
+				$("#rejectCon").addClass("hide");
+				$("#rejectCon").removeClass("show");
+			}
 
-				}
-
-				if (userObj.tshirtSize !== undefined) {
-
-					$("#shirtSize").val(userObj.tshirtSize);
-
-				}
-
-				if (userObj.extraInfo !== undefined) {
-
-					$("#extraInfo").val(userObj.extraInfo);
-
-				}
-
-				$("#profileStatusTxt").addClass("hide");
-				$("#profileStatusTxt").removeClass("show");
+		}
 
       } else if (item === 3) {
 
-				// Show the confirm logout popup
-				$("#confirmLogoutPopup").removeClass("hide");
-				$("#confirmLogoutPopup").addClass("showflex");
+		// Show the confirm logout popup
+		$("#confirmLogoutPopup").removeClass("hide");
+		$("#confirmLogoutPopup").addClass("showflex");
 
       } else if (item === 5) {
 
-				$("#op5").addClass("pure-menu-selected");
-        $("#op2").removeClass("pure-menu-selected");
+		$("#op5").addClass("pure-menu-selected");
+		$("#op0").removeClass("pure-menu-selected");
         $("#op1").removeClass("pure-menu-selected");
-				$("#op6").removeClass("pure-menu-selected");
+		$("#op6").removeClass("pure-menu-selected");
+
+		$("#application").addClass("hide");
+        $("#application").removeClass("show");
 
         $("#dashboard").addClass("hide");
         $("#dashboard").removeClass("show");
 
-        $("#info").addClass("hide");
-        $("#info").removeClass("show");
-
-				$("#login").addClass("show");
+		$("#login").addClass("show");
         $("#login").removeClass("hide");
 
-				$("#notif").addClass("hide");
+		$("#notif").addClass("hide");
         $("#notif").removeClass("show");
 
 				appliedSchools = [];
@@ -1014,27 +1287,27 @@
 				reloadStats();
 				checkAgainstList();
 
-			} else if (item === 6) {
+	  } else if (item === 6) {
 
-				$("#op6").addClass("pure-menu-selected");
-				$("#op2").removeClass("pure-menu-selected");
-				$("#op1").removeClass("pure-menu-selected");
-				$("#op3").removeClass("pure-menu-selected");
-				$("#op5").removeClass("pure-menu-selected");
+		$("#op6").addClass("pure-menu-selected");
+		$("#op0").removeClass("pure-menu-selected");
+		$("#op1").removeClass("pure-menu-selected");
+		$("#op3").removeClass("pure-menu-selected");
+		$("#op5").removeClass("pure-menu-selected");
 
-				$("#dashboard").addClass("hide");
+		$("#application").addClass("hide");
+        $("#application").removeClass("show");
+
+		$("#dashboard").addClass("hide");
         $("#dashboard").removeClass("show");
 
-        $("#info").addClass("hide");
-        $("#info").removeClass("show");
-
-				$("#login").addClass("hide");
+		$("#login").addClass("hide");
         $("#login").removeClass("show");
 
-				$("#notif").addClass("show");
+		$("#notif").addClass("show");
         $("#notif").removeClass("hide");
 
-			}
+	  }
     }
 
 		function denyLogoutClicked() {
@@ -1259,10 +1532,8 @@
 			var headOff = $(".header-main-type").offset().top;
 			var scrollTop = $(window).scrollTop();
 
-			if (selected === 2) {
-
-				$("#headertxt").text("Profile");
-
+			if (selected === 0) {
+				$("#headertxt").text("Application");
 			} else if (selected === 1) {
 
 				$("#headertxt").text("Dashboard");
@@ -1308,6 +1579,45 @@
 		$(document).ready(function () {
 			$(window).scroll(fixTitle);
 		});
+
+				// function checkIfUserExists(email) {
+
+				// 	var cD;
+				// 	var k;
+
+				// 	acceptedRef.orderByChild("email").equalTo(email).on("value", function(snapshot) {
+
+				// 		snapshot.forEach(function(childSnapshot) {
+
+				// 			var key = childSnapshot.key;
+				// 			var childData = childSnapshot.val();
+				// 			cD = childData;
+				// 			k = key;
+
+				// 		});
+
+				// 	});
+
+				// 	if (cD !== undefined) {
+
+				// 	localStorage.setItem('loggedInUser', JSON.stringify(cD));
+				// 	localStorage.setItem('loggedInUserKey', k);
+
+				// 	userExists = true;
+				// 	return true;
+
+				// 	} else if (cD === undefined) {
+
+				// 	userExists = false;
+				// 	return false;
+
+				// 	} else {
+
+				// 	userExists = false;
+				// 	return false;
+				// 	}
+
+				// 	}
 
   </script>
 

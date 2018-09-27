@@ -138,45 +138,6 @@
 		var userExists = true;
 		var repeatCheck = true;
 
-		function checkIfUserExists(email) {
-
-			var cD;
-			var k;
-
-			acceptedRef.orderByChild("email").equalTo(email).on("value", function(snapshot) {
-
-				 snapshot.forEach(function(childSnapshot) {
-
-					 var key = childSnapshot.key;
-					 var childData = childSnapshot.val();
-					 cD = childData;
-					 k = key;
-
-				 });
-
-			});
-
-			if (cD !== undefined) {
-
-			 localStorage.setItem('loggedInUser', JSON.stringify(cD));
-			 localStorage.setItem('loggedInUserKey', k);
-
-			 userExists = true;
-			 return true;
-
-		 } else if (cD === undefined) {
-
-			 userExists = false;
-			 return false;
-
-		 } else {
-
-			 userExists = false;
-			 return false;
-		 }
-
-		}
-
 		$("form").submit(function() {
 			repeatCheck = true;
 			createActBtnClicked();
@@ -244,8 +205,8 @@
 
 										setTimeout(function() {
 
-											// window.location.href = "login.html";
-											window.location.href = "application.html";
+											window.location.href = "login.html";
+											// window.location.href = "application.html";
 
 										}, delay);
 
@@ -381,7 +342,6 @@
 			}
 
 		}
-
 
 	</script>
 

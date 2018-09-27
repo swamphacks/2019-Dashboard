@@ -74,6 +74,9 @@
 						</form>
 
 						<div class="margin-buffer">
+							<div class="col-md-12 top-margin">
+								<button class="button" onclick="googleSignIn()"><p class="textbtn"><b>Google Sign In</b></p></button>
+							</div>
 
 							<div class="col-md-12 top-margin">
 								<button class="button txtbtnouter"><a href="makeaccount.html"><p class="textbtn"><b>or Create Account</b></p></a></button>
@@ -332,42 +335,6 @@
 
 		}
 
-		function checkIfUserExists(email) {
-
-			var cD;
-			var k;
-
-			acceptedRef.orderByChild("email").equalTo(email).on("value", function(snapshot) {
-
-				 snapshot.forEach(function(childSnapshot) {
-
-					 var key = childSnapshot.key;
-					 var childData = childSnapshot.val();
-					 cD = childData;
-					 k = key;
-
-				 });
-
-			});
-
-			if (cD !== undefined) {
-
-			 localStorage.setItem('loggedInUser', JSON.stringify(cD));
-			 localStorage.setItem('loggedInUserKey', k);
-
-			 return true;
-
-		 } else if (cD === undefined) {
-
-			 return false;
-
-		 } else {
-
-			 return false;
-		 }
-
-		}
-
 		function showPassPressed(field, icon) {
 
 			if (field.type === "password") {
@@ -379,6 +346,41 @@
 				$(icon).addClass("fa-lock");
 				$(icon).removeClass("fa-unlock-alt");
 			}
+
+		}
+
+		function googleSignIn() {
+			var provider = new firebase.auth.GoogleAuthProvider();
+			provider.addScope('email');
+			firebase.auth().signInWithPopup(provider).then(function(result) {
+				if (!result.user) {return;}
+				const email = result.user.email;
+				const emailVerified = result.user.emailVerified;
+				const userId = result.user.uid;
+				// Save login info in local storage
+				var userRef = firebase.database().ref("users/"+result.user.uid);
+				userRef.once('value').then(function(snapshot) {
+					localStorage.setItem('loggedInUserKey', result.user.uid);
+					console.log(snapshot.val());
+					if (!snapshot.val()) {
+						// create user in database
+						var user = {email: email, applied: false};
+						ref.child('users/'+result.user.uid).set(user);
+						localStorage.setItem('loggedInUser', JSON.stringify(user));
+					} else {
+						localStorage.setItem('loggedInUser', JSON.stringify(snapshot.val()));
+					}
+				});
+				const delay = 2000;
+				setTimeout(function() {
+
+					window.location.href = "index.html";
+
+				}, delay);
+			});
+		}
+
+		function facebookSignIn() {
 
 		}
 
