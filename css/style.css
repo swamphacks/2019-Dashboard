@@ -72,6 +72,12 @@
   border-color: red !important;
 }
 
+.requiredCheckbox {
+  border-color: red !important;
+  border-width: 1px;
+  border-style: solid;
+}
+
 #layout {
   position: relative;
   left: 0;

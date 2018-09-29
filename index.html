@@ -83,7 +83,7 @@
 				<span id="headertxt">Profile</span>
 			</div>
 	  <!-- %%%%%%%%%%%%%% Menu %%%%%%%%%%%%%% -->
-      <div id="menu" class="">
+      <div id="menu" class="hide">
 
           <div class="pure-menu">
 
@@ -156,16 +156,16 @@
 							<input class="form-field" id="lastName" name="q1" type="text" placeholder="" />
 						</div>
 
-						<div class="col-md-12 top-margin">
+						<div class="col-md-12 top-margin" id="genderContainer">
 								<label class="form-lbl" for="q1" name="">Gender</label> <span class="redTxt">* </span><br>
 								
-								<input id="gender" name="gender" type="radio" value="Male" /> Male <br>
-								<input id="gender" name="gender" type="radio" value="Female" /> Female <br>
-								<input id="gender" name="gender" type="radio" value="None-binary/third gender" /> None-binary/third gender <br>
-								<input id="gender" name="gender" type="radio" value="Other" /> Other <br>
+								<input id="genderMale" name="gender" type="radio" value="Male" /> Male <br>
+								<input id="genderFemale" name="gender" type="radio" value="Female" /> Female <br>
+								<input id="genderNone-binary/third gender" name="gender" type="radio" value="None-binary/third gender" /> None-binary/third gender <br>
+								<input id="genderOther" name="gender" type="radio" value="Other" /> Other <br>
 						</div>
 
-						<div class="col-md-12 top-margin">
+						<div class="col-md-12 top-margin" id="raceContainer">
 								<label class="form-lbl" for="q1" name="">Race/Ethnicity</label> <span class="redTxt">* </span><br>
 								<input id="race" name="race" type="checkbox" value="Non-Hispanic White" /> Non-Hispanic White <br>
 								<input id="race" name="race" type="checkbox" value="Black or African American" /> Black or African American <br>
@@ -180,15 +180,15 @@
 
 						<div class="col-md-12 top-margin">
 								<label class="form-lbl" for="q1" name="">Your School</label> <span class=" redTxt">* </span><br>
-								<select name="schools" >
+								<select class="form-field" name="schools">
+										<option value="MIT">MIT</option>
 										<option value="University of Florida">University of Florida</option>
 										<option value="University of South Florida">University of South Florida</option>
 										<option value="University of Central Florida">University of Central Florida</option>
-										<option value="MIT">MIT</option>
 								</select> <br>
 								
 								<label class="form-lbl" for="q1" name="">What year are you?</label> <br>
-								<select name="schoolYear" >
+								<select class="form-field" name="schoolYear">
 										<option value="Freshman">Freshman</option>
 										<option value="Sophmore">Sophmore</option>
 										<option value="Junior">Junior</option>
@@ -197,28 +197,24 @@
 								</select> <br>
 						</div>
 
-						<div class="col-md-12 top-margin">
+						<div class="col-md-12 top-margin" id="hackerContainer">
 								<label class="form-lbl" for="q1" name="">Is this your first time hacking?</label> <span class=" redTxt">* </span><br>
-								<!-- TODO: make select for this -->
-								<input id="firstTimeHacker" name="firstTimeHacker" type="radio" value="yes" /> Yes
-								<input id="firstTimeHacker" name="firstTimeHacker" type="radio" value="no" /> No <br>
+								<input id="firstTimeHackeryes" name="firstTimeHacker" type="radio" value="yes" /> Yes
+								<input id="firstTimeHackerno" name="firstTimeHacker" type="radio" value="no" /> No <br>
 						</div>
 
-						<div class="col-md-12 top-margin">
+						<div class="col-md-12 top-margin" id="resumeContainer">
 								<label class="form-lbl" for="q1" name="">Resume</label> <span class=" redTxt">* </span>
-								<!-- TODO: make file explorer for this -->
 								<input id="resume" name="q1" type="file" placeholder="Choose File" />
 						</div>
 
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">Github Profile</label> 
-								<!-- TODO: make select for this -->
+								<label class="form-lbl" for="q1" name="">Github Profile</label>
 								<input class="form-field" id="github" name="github" type="text" placeholder=""/>
 						</div>
 
 						<div class="col-md-12 top-margin">
 								<label class="form-lbl" for="q1" name="">LinkedIn Profile</label>
-								<!-- TODO: make select for this -->
 								<input class="form-field" id="linkedin" name="linkedin" type="text" placeholder=""/>
 						</div>
 
@@ -244,13 +240,12 @@
 							</select>
 						</div>
 
-						<div class="col-md-12 top-margin">
+						<div class="col-md-12 top-margin" id="transportationContainer">
 								<label class="form-lbl" for="q1" name="">Do you need transportation to SwampHacks?(FYI carpool and buses w/ 400 mile radius) - outside that we do a travel reimbursement</label>
 								<span class=" redTxt">* </span>
-								<!-- TODO: make select for this -->
 								<br>
-								<input id="transportation" name="transportation" type="radio" value="yes" /> Yes
-								<input id="transportation" name="transportation" type="radio" value="no" /> No <br>
+								<input id="transportationyes" name="transportation" type="radio" value="yes" /> Yes
+								<input id="transportationno" name="transportation" type="radio" value="no" /> No <br>
 						</div>
 						
 						<div class="col-md-12 top-margin">
@@ -278,7 +273,7 @@
 								<textarea class="form-field form-textbox" id="news" name="news" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
-						<div class="col-md-12 top-margin">
+						<div class="col-md-12 top-margin" id="codeOfConductContainer">
 								<label class="form-lbl" for="q1" name="">Do you agree to the MLH Code of Conduct?</label> <span class=" redTxt">* </span>
 								<!-- TODO: add link to it and a checkbox maybe -->
 								<br> <input id="codeOfConduct" name="codeOfConduct" type="checkbox" value="true" /> I agree <br>
@@ -687,6 +682,8 @@
 		});
 
 		if (userObj.applied) {
+			// Show side menu
+			$("#menu").addClass("show");
 			// Show dashboard first
 			selected = 1;
 
@@ -788,9 +785,6 @@
 		} else {
 			$("#teamCol").addClass("hide");
 		}
-
-		document.getElementById("userEmail").disabled = true;
-		document.getElementById("userTeam").disabled = true;
 
 		$(".fa-exclamation-triangle").addClass("hide");
 		$(".fa-exclamation-triangle").removeClass("showIn");
@@ -1018,8 +1012,96 @@
 
 		}
 	// %%%%%%%%%%%%% Application Functions %%%%%%%%%%%%% //
-	function addApplicationInfo() {
+	function disableFields() {
+		$("#firstName").addClass("disabled");
+		$("#firstName").prop("disabled", true);
 
+		$("#lastName").addClass("disabled");
+		$("#lastName").prop("disabled", true);
+
+		$("input[name='gender']").each(function(index, radio) {
+			radio.disabled = true;
+		});
+
+		$('input:checkbox[id^="race"]').each(function(index, checkbox) {
+			checkbox.disabled = true;
+		});
+
+		$('select[name="schools"]').addClass("disabled");
+		$('select[name="schools"]').prop("disabled", true);
+
+		$('select[name="schoolYear"]').addClass("disabled");
+		$('select[name="schoolYear"]').prop("disabled", true);
+
+		$("input[name='firstTimeHacker']").each(function(index, radio) {
+			radio.disabled = true;
+		});
+
+		$("#github").addClass("disabled");
+		$("#github").prop("disabled", true);
+
+		$("#linkedin").addClass("disabled");
+		$("#linkedin").prop("disabled", true);
+
+		$('select[name="shirtSize"]').addClass("disabled");
+		$('select[name="shirtSize"]').prop("disabled", true);
+
+		$('select[name="diet"]').addClass("disabled");
+		$('select[name="diet"]').prop("disabled", true);
+
+		$("input[name='transportation']").each(function(index, radio) {
+			radio.disabled = true;
+		});
+
+		$("#interest").addClass("disabled");
+		$("#interest").prop("disabled", true);
+
+		$("#everydayProblem").addClass("disabled");
+		$("#everydayProblem").prop("disabled", true);
+
+		$("#hopes").addClass("disabled");
+		$("#hopes").prop("disabled", true);
+
+		$("#comments").addClass("disabled");
+		$("#comments").prop("disabled", true);
+
+		$("#news").addClass("disabled");
+		$("#news").prop("disabled", true);
+
+		$('input:checkbox[id^="codeOfConduct"]')[0].disabled = true;
+	}
+
+	function addApplicationInfo() {
+		$("#firstName").val(userObj.fname);
+		$("#lastName").val(userObj.lname);
+		$("#gender"+userObj.gender).prop("checked", true);
+		// Check all the necessary checkboxes
+		$('input:checkbox[id^="race"]').each(function(index, checkbox) {
+			var value = checkbox.value;
+			for (var index in userObj.raceEthnicity) {
+				if (userObj.raceEthnicity[index] == value) {
+					checkbox.checked = true;
+					break;
+				}
+			}
+		});
+		$('select[name="schools"]').val(userObj.school);
+		$('select[name="schoolYear"]').val(userObj.schoolYear);
+		$("#firstTimeHacker"+userObj.firstTimeHacker).prop("checked", true);
+		// hide resume field
+		$("#resumeContainer").addClass("hide");
+		$("#github").val(userObj.githubProfile);
+		$("#linkedin").val(userObj.linkedinProfile);
+		$('select[name="shirtSize"]').val(userObj.tshirtSize);
+		$('select[name="diet"]').val(userObj.dietaryRestrictions);
+		$("#transportation"+userObj.transportation).prop("checked", true);
+		$("#interest").val(userObj.interestReason);
+		$("#everydayProblem").val(userObj.everydayProblem);
+		$("#hopes").val(userObj.hopeToGain);
+		$("#comments").val(userObj.extraInfo);
+		$("#news").val(userObj.hearAbout);
+		$('input:checkbox[id^="codeOfConduct"]')[0].checked = true;
+		disableFields();
 	}
 
     function storeResume(userId) {
@@ -1055,56 +1137,42 @@
             if (fname == "") {
                 canSubmit = false;
                 // mark as 
-				console.log('fname');
 				$("#firstName").addClass("requiredField");
             }
             if (lname == "") {
                 canSubmit = false;
                 // mark as 
-				console.log('lname');
 				$("#lastName").addClass("requiredField");
             }
             if (!gender) {
                 canSubmit = false;
                 // mark as 
-				console.log('gender');
-				// TODO
-				$("#gender").addClass("requiredField");
+				$("#genderContainer").addClass("requiredCheckbox");
             }
             if (!raceEthnicity) {
                 canSubmit = false;
                 // mark as 
-				console.log('raceEthnicity');
-				// TODO
-				$("#raceEthnicity").addClass("requiredField");
+				$("#raceContainer").addClass("requiredCheckbox");
             }
             if (!resume) {
                 canSubmit = false;
                 // mark as 
-				console.log('resume');
-				// TODO
-				$("#resume").addClass("requiredField");
+				$("#resumeContainer").addClass("requiredCheckbox");
             }
             if (!firstTimeHacker) {
                 canSubmit = false;
                 // mark as 
-				console.log('firstTimeHacker');
-				// TODO
-				$("#firstTimeHacker").addClass("requiredField");
+				$("#hackerContainer").addClass("requiredCheckbox");
             }
             if (!transportation) {
                 canSubmit = false;
                 // mark as 
-				console.log('transportation');
-				// TODO
-				$("#transportation").addClass("requiredField");
+				$("#transportationContainer").addClass("requiredCheckbox");
             }
             if (!codeOfConduct) {
                 canSubmit = false;
                 // mark as 
-				console.log('codeOfConduct');
-				// TODO
-				$("#codeOfConduct").addClass("requiredField");
+				$("#codeOfConductContainer").addClass("requiredCheckbox");
             }
             return canSubmit;
         }
@@ -1120,7 +1188,8 @@
             }).get();
             const school = $('select[name="schools"]').val();
             const schoolYear = $('select[name="schoolYear"]').val();
-            const firstTimeHacker = $('input[name="firstTimeHacker"]:checked').val();
+			const firstTimeHacker = $('input[name="firstTimeHacker"]:checked').val();
+			const resumeName = $('#resume').get(0).files[0].name;
             const githubProfile = $('input[name="github"]').val();
             const linkedinProfile = $('input[name="linkedin"]').val();
             const shirtSize = $('select[name="shirtSize"]').val();
@@ -1151,8 +1220,10 @@
                         raceEthnicity: raceEthnicity,
                         school: school,
                         schoolYear: schoolYear,
-                        firstTimeHacker: firstTimeHacker,
-                        githubProfile: githubProfile,
+						firstTimeHacker: firstTimeHacker,
+						resumeName: resumeName,
+						githubProfile: githubProfile,
+						linkedinProfile: linkedinProfile,
                         tshirtSize: shirtSize,
                         dietaryRestrictions: diet,
                         transportation: transportation,
