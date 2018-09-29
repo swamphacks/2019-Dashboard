@@ -16,13 +16,13 @@
 		<!-- Stylesheets
     ================================================== -->
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-		<link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<!-- <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"> -->
 		<!-- Favicon
     ================================================== -->
    	<link rel="icon" type="image/png" href="favicon.png" />
 		<!-- Icons & Fonts
 		================================================== -->
-		<link rel="stylesheet" href="css/font-awesome.css">
+		<!-- <link rel="stylesheet" href="css/font-awesome.css"> -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<!-- MLH Badge
 		================================================== -->
@@ -354,6 +354,10 @@
 			provider.addScope('email');
 			firebase.auth().signInWithPopup(provider).then(function(result) {
 				if (!result.user) {return;}
+				// Show the loader
+				$("#animationWindow").removeClass("hide");
+				$("#animationWindow").addClass("showflex");
+
 				const email = result.user.email;
 				const emailVerified = result.user.emailVerified;
 				const userId = result.user.uid;
@@ -373,6 +377,9 @@
 				});
 				const delay = 2000;
 				setTimeout(function() {
+					// Hide the loader
+					$("#animationWindow").removeClass("showflex");
+					$("#animationWindow").addClass("hide");
 
 					window.location.href = "index.html";
 

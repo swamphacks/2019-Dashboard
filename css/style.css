@@ -345,6 +345,45 @@
   overflow-y: scroll;
 }
 
+.spacer {
+  margin-top: 100px;
+}
+
+.timeline {
+  height: 5px;
+  width: 30%;
+  margin-left: -4px;
+  /* background-color: #6DBFE7; */
+  background-color: gray;
+  display: inline-block;
+}
+
+.timelineDescText {
+  position: absolute;
+  bottom: 25px;
+  margin-left: -25px;
+  max-width: 25px;
+  text-align: center;
+}
+
+.timelineStatusText {
+  position: absolute;
+  bottom: -50px;
+  width: 150px;
+  text-align: center;
+  margin-left: -60px;
+}
+
+.timeLineCircles {
+  width: 25px;
+  height: 25px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 50%;
+  margin-left: 50%;
+  margin-top: -10px;
+}
+
 #info {
   width: 100%;
   height: 100%;
@@ -452,6 +491,14 @@
 
 .green {
   background: #6C9668;
+}
+
+.lime {
+  background: limegreen;
+}
+
+.lightGreen {
+  background: lightgreen;
 }
 
 .red {

@@ -18,13 +18,13 @@
 		<!-- Stylesheets
     ================================================== -->
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-		<link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<!-- <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"> -->
 		<!-- Favicon
     ================================================== -->
    	<link rel="icon" type="image/png" href="favicon.png" />
 		<!-- Icons & Fonts
 		================================================== -->
-		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<!-- MLH Badge
 		================================================== -->
@@ -94,13 +94,13 @@
               <div class="menu-items-con">
 
                 <ul class="pure-menu-list">
+					<li id="op1" class="pure-menu-item top-ln">
+							<a href="#" class="pure-menu-link" onclick="menuClick(1)">Dashboard</a>
+					</li>
+
 					<li id="op0" class="pure-menu-item top-ln pure-menu-selected">
 							<a href="#" class="pure-menu-link" onclick="menuClick(0)">Application</a>
 					</li>
-
-                    <li id="op1" class="pure-menu-item top-ln">
-                      <a href="#" class="pure-menu-link" onclick="menuClick(1)">Dashboard</a>
-                    </li>
 
 					<li id="op5" class="pure-menu-item top-ln hide">
                       <a href="#" class="pure-menu-link" onclick="menuClick(5)">SH Stats</a>
@@ -293,7 +293,7 @@
 
 				<div class="row">
 					<div class="col-md-12 top-margin">
-						<button class="button green" onclick="submitApplication()"><p class="makeactbtn">Submit</p></button>
+						<button id="submitBtn" class="button green" onclick="submitApplication()"><p class="makeactbtn">Submit</p></button>
 					</div>
 				</div>
 
@@ -315,32 +315,63 @@
 					<div class="row">
 						<div class="col-md-12">
 							<h3 class="header-sub-type" id="welcomeMessage">Welcome, Albert!</h3>
-							<p class="descrip-txt"><br><b>Congratulations</b>, you're going to SwampHacks! <br><br>When you get the chance, <b>be sure to confirm your spot and fill out the necessary information in the profile tab on the left</b>. For any questions or concerns, feel free to email us at info@swamphacks.com.
+							<div class="spacer"></div>
+							<!-- Timeline -->
+							<div class="timeline" id="appliedTimeline">
+								<div class="timeLineCircles" id="appliedCircle">
+									<!-- Description -->
+									<p class="timelineDescText">Application Submission</p>
+									<!-- Status -->
+									<p id="appliedTimelineText" class="timelineStatusText">Not Completed</p>
+									<!-- Icon -->
+								</div>
+							</div>
+							<div class="timeline" id="statusTimeline">
+								<div class="timeLineCircles" id="statusCircle">
+									<!-- Description -->
+									<p class="timelineDescText">Acceptance</p>
+									<!-- Status -->
+									<p id="statusTimelineText" class="timelineStatusText">Not Completed</p>
+									<!-- Icon -->
+								</div>
+							</div>
+							<div class="timeline" id="confirmedTimeline">
+								<div class="timeLineCircles" id="confirmedCircle">
+									<!-- Description -->
+									<p class="timelineDescText">Confirmation</p>
+									<!-- Status -->
+									<p id="confirmedTimelineText" class="timelineStatusText">Not Completed</p>
+									<!-- Icon -->
+								</div>
+							</div>
 
-							As the event draws nearer, we'll be sending more emails to keep you in the loop about SwampHacks!
+
+							<!-- <p class="descrip-txt"><br><b>Congratulations</b>, you're going to SwampHacks! <br><br>When you get the chance, <b>be sure to confirm your spot and fill out the necessary information in the profile tab on the left</b>. For any questions or concerns, feel free to email us at info@swamphacks.com. -->
+
+							<!-- As the event draws nearer, we'll be sending more emails to keep you in the loop about SwampHacks!
 
 							<br><br>Deadline to accept your spot:<b> January 12th, 2017</b>
-							</p>
+							</p> -->
 						</div>
 
-						<div class="col-md-12 notif top-margin">
+						<!-- <div class="col-md-12 notif top-margin">
 							<p class="notif-txt">Your Status: <span class="status green" id="dashStatus">ACCEPTED</span></p>
-						</div>
+						</div> -->
 
-						<div class="col-md-12 top-margin descrip-txt">
+						<!-- <div class="col-md-12 top-margin descrip-txt">
 							Let us know if you're coming by confirming your spot! Please remember to update
 							your status if you decide you cannot attend.
-						</div>
+						</div> -->
 
 						<div class="row">
 							<div class="col-md-12 top-margin" id="confirmCon">
-								<button id="confirmBtn" class="button green" onclick="confirmSpotBtnClicked()">
+								<button id="confirmBtn" class="button green hide" onclick="confirmSpotBtnClicked()">
 									<p id="confirmSpot">Confirm my spot!</p>
 								</button>
 							</div>
 
 							<div class="col-md-12 top-margin" id="rejectCon">
-								<button class="button dark" id="rejectSpot" onclick="rejectSpotBtnClicked()">
+								<button class="button dark hide" id="rejectSpot" onclick="rejectSpotBtnClicked()">
 									<p>I can't go <i class="fa fa-frown-o" aria-hidden="true"></i></p>
 								</button>
 							</div>
@@ -684,6 +715,7 @@
 		if (userObj.applied) {
 			// Show side menu
 			$("#menu").addClass("show");
+			// $("#menuLink").addClass("show");
 			// Show dashboard first
 			selected = 1;
 
@@ -709,6 +741,11 @@
 			$("#notif").addClass("hide");
 			$("#notif").removeClass("show");
 
+			// update timeline
+			$("#appliedTimeline").addClass("lime");
+			$("#appliedCircle").addClass("lightGreen");
+			$("#appliedTimelineText").text("Completed!");
+
 			// Fill application page with user information
 			addApplicationInfo();
 		}
@@ -727,7 +764,7 @@
 
 		$("#mainBody").css("visibility", "visible");
 
-		if (userObj.email === "debrianfigueroa@ufl.edu" || userObj.email === "pablogarces@ufl.edu" || userObj.email === "sponsors@swamphacks.com") {
+		if (userObj.email === "debrianfigueroa@ufl.edu" || userObj.email === "sponsors@swamphacks.com") {
 
 			$("#op5").removeClass("hide");
 			$("#op5").addClass("show");
@@ -796,50 +833,68 @@
 			$("#rejectSpot").addClass("disabled");
 		}
 
-		if (userObj.dietaryRestrictions !== undefined) {
+		// if (userObj.dietaryRestrictions !== undefined) {
 
-			$("#diet").val(userObj.dietaryRestrictions);
+		// 	$("#diet").val(userObj.dietaryRestrictions);
 
-		} else {
-			$("#dietCol").addClass("hide");
-		}
+		// } else {
+		// 	$("#dietCol").addClass("hide");
+		// }
 
-		if (userObj.tshirtSize !== undefined) {
+		// if (userObj.tshirtSize !== undefined) {
 
-			$("#shirtSize").val(userObj.tshirtSize);
+		// 	$("#shirtSize").val(userObj.tshirtSize);
 
-		} else {
-			$("#shirtCol").addClass("hide");
-		}
+		// } else {
+		// 	$("#shirtCol").addClass("hide");
+		// }
 
-		if (userObj.extraInfo !== undefined) {
+		// if (userObj.extraInfo !== undefined) {
 
-			$("#extraInfo").val(userObj.extraInfo);
+		// 	$("#extraInfo").val(userObj.extraInfo);
 
-		} else {
-			$("#extraInfoCol").addClass("hide");
-		}
+		// } else {
+		// 	$("#extraInfoCol").addClass("hide");
+		// }
 
 		if (userObj.status !== undefined) {
-
-			$("#dashStatus").text(userObj.status);
+			var statusText = userObj.status.toLowerCase();
+			// Capitalize First Letter
+			statusText = statusText.charAt(0).toUpperCase() + statusText.slice(1);
+			$("#statusTimelineText").text(statusText);
 
 			if (userObj.status === "CONFIRMED") {
-				$("#dashStatus").addClass("green");
-				$("#dashStatus").removeClass("dark");
+				// update timeline
+				$("#confirmedTimeline").addClass("lime");
+				$("#confirmedCircle").addClass("lightGreen");
+				$("#confirmedTimelineText").text("Confirmed");
+				// $("#dashStatus").addClass("green");
+				// $("#dashStatus").removeClass("dark");
 
-				$("#confirmCon").addClass("hide");
-				$("#confirmCon").removeClass("show");
-				$("#rejectCon").addClass("show");
-				$("#rejectCon").removeClass("hide");
+				// $("#confirmCon").addClass("hide");
+				// $("#confirmCon").removeClass("show");
+				// $("#rejectCon").addClass("show");
+				// $("#rejectCon").removeClass("hide");
+			} else if (userObj.status === "ACCEPTED") {
+				// update timeline
+				$("#statusTimeline").addClass("lime");
+				$("#statusCircle").addClass("lightGreen");
+				$("#statusTimelineText").text("Accepted!");			
+			} else if (userObj.status === "NOT ACCEPTED") {
+				// update timeline
+				$("#statusTimeline").addClass("red");
+				$("#statusCircle").addClass("red");
+				$("#statusTimelineText").text("Not Accepted");	
 			} else if (userObj.status === "NOT ATTENDING")  {
-				$("#dashStatus").removeClass("green");
-				$("#dashStatus").addClass("dark");
+				// update timeline
+				$("#confirmedTimelineText").text("Not Attending");	
+				// $("#dashStatus").removeClass("green");
+				// $("#dashStatus").addClass("dark");
 
-				$("#confirmCon").addClass("show");
-				$("#confirmCon").removeClass("hide");
-				$("#rejectCon").addClass("hide");
-				$("#rejectCon").removeClass("show");
+				// $("#confirmCon").addClass("show");
+				// $("#confirmCon").removeClass("hide");
+				// $("#rejectCon").addClass("hide");
+				// $("#rejectCon").removeClass("show");
 			}
 
 		}
@@ -1069,6 +1124,9 @@
 		$("#news").prop("disabled", true);
 
 		$('input:checkbox[id^="codeOfConduct"]')[0].disabled = true;
+
+		$("#submitBtn").addClass("disabled");
+		$("#submitBtn").prop("disabled", true);
 	}
 
 	function addApplicationInfo() {
