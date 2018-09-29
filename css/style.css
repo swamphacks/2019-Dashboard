@@ -490,6 +490,13 @@
   opacity: 0.7;
 }
 
+.google {
+  background-color: #4885ed;
+  color: white;
+  font-size: 1.2em;
+  font-family: 'Poppins', sans-serif;
+}
+
 .green {
   background: #6C9668;
 }
@@ -1318,7 +1325,7 @@ td b {
     font-family: 'Montserrat-Regular', serif;
     color: #1C3444;
     transition: 0.3s;
-    padding-top: 2em;
+    padding-top: 1em;
   }
 
   #loginForm,
