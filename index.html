@@ -83,7 +83,7 @@
 				<span id="headertxt">Profile</span>
 			</div>
 	  <!-- %%%%%%%%%%%%%% Menu %%%%%%%%%%%%%% -->
-      <div id="menu" class="hide">
+      <div id="menu" class="">
 
           <div class="pure-menu">
 
@@ -93,7 +93,7 @@
 
               <div class="menu-items-con">
 
-                <ul class="pure-menu-list">
+                <ul class="pure-menu-list hide" id="menuList">
 					<li id="op1" class="pure-menu-item top-ln">
 							<a href="#" class="pure-menu-link" onclick="menuClick(1)">Dashboard</a>
 					</li>
@@ -713,9 +713,20 @@
 			}
 		});
 
-		if (userObj.applied) {
+		if (userObj.email === "debrianfigueroa@ufl.edu" || userObj.email === "sponsors@swamphacks.com") {
+			$("#op5").removeClass("hide");
+			$("#op5").addClass("show");
+
+			$("#op6").removeClass("hide");
+			$("#op6").addClass("show");
+
+			getStats();
+			reloadStats();
+		}
+
+		if (userObj.applied || userObj.email === "sponsors@swamphacks.com") {
 			// Show side menu
-			$("#menu").addClass("show");
+			$("#menuList").addClass("show");
 			// $("#menuLink").addClass("show");
 			// Show dashboard first
 			selected = 1;
@@ -764,19 +775,6 @@
 		$("#qrcode > img").css({"margin":"auto"});
 
 		$("#mainBody").css("visibility", "visible");
-
-		if (userObj.email === "debrianfigueroa@ufl.edu" || userObj.email === "sponsors@swamphacks.com") {
-
-			$("#op5").removeClass("hide");
-			$("#op5").addClass("show");
-
-			$("#op6").removeClass("hide");
-			$("#op6").addClass("show");
-
-			getStats();
-			reloadStats();
-
-		}
 
 		if (userObj.isVolunteer !== undefined && userObj.isVolunteer === true) {
 
