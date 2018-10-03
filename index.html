@@ -187,7 +187,7 @@
 										<option value="University of Central Florida">University of Central Florida</option>
 								</select> <br>
 								
-								<label class="form-lbl" for="q1" name="">What year are you?</label> <br>
+								<label class="form-lbl" for="q1" name="">What year are you?</label> <span class=" redTxt">* </span><br>
 								<select class="form-field" name="schoolYear">
 										<option value="Freshman">Freshman</option>
 										<option value="Sophmore">Sophmore</option>
@@ -249,27 +249,27 @@
 						</div>
 						
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">Why would you like to participate in SwampHacks?</label>                      
+								<label class="form-lbl" for="q1" name="">Why would you like to participate in SwampHacks?</label> <span class=" redTxt">* </span>                     
 								<textarea class="form-field form-textbox" id="interest" name="interest" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">What’s an everyday problem that tech could solve?</label>                               
+								<label class="form-lbl" for="q1" name="">What’s an everyday problem that tech could solve?</label> <span class=" redTxt">* </span>                               
 								<textarea class="form-field form-textbox" id="everydayProblem" name="everydayProblem" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">What do you hope to gain out of SwampHacks?</label>                            
+								<label class="form-lbl" for="q1" name="">What do you hope to gain out of SwampHacks?</label> <span class=" redTxt">* </span>                            
 								<textarea class="form-field form-textbox" id="hopes" name="hopes" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">Other comments? - what workshops, mentors, activities, etc. would you want to see?</label>
+								<label class="form-lbl" for="q1" name="">Other comments? - what workshops, mentors, activities, etc. would you want to see?</label> <span class=" redTxt">* </span>
 								<textarea class="form-field form-textbox" id="comments" name="comments" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">How did you hear about SwampHacks? </label>
+								<label class="form-lbl" for="q1" name="">How did you hear about SwampHacks? </label> <span class=" redTxt">* </span>
 								<textarea class="form-field form-textbox" id="news" name="news" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
@@ -1192,7 +1192,8 @@
 			});
         }
 
-        function checkFields(fname, lname, gender, raceEthnicity, resume, firstTimeHacker, transportation, codeOfConduct) {
+		function checkFields(fname, lname, gender, raceEthnicity, resume, firstTimeHacker, transportation,
+				interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct) {
             var canSubmit = true;
             if (fname == "") {
                 canSubmit = false;
@@ -1203,6 +1204,31 @@
                 canSubmit = false;
                 // mark as 
 				$("#lastName").addClass("requiredField");
+			}
+			if (interestReason == "") {
+                canSubmit = false;
+                // mark as 
+				$("#interest").addClass("requiredField");
+            }
+            if (everydayProblem == "") {
+                canSubmit = false;
+                // mark as 
+				$("#everydayProblem").addClass("requiredField");
+			}
+			if (hopeToGain == "") {
+                canSubmit = false;
+                // mark as 
+				$("#hopes").addClass("requiredField");
+            }
+            if (comments == "") {
+                canSubmit = false;
+                // mark as 
+				$("#comments").addClass("requiredField");
+			}
+			if (hearAbout == "") {
+                canSubmit = false;
+                // mark as 
+				$("#news").addClass("requiredField");
             }
             if (!gender) {
                 canSubmit = false;
@@ -1263,7 +1289,8 @@
             const codeOfConduct = $('input[name="codeOfConduct"]:checked').val();
 
             var canSubmit = checkFields(fname, lname, gender, raceEthnicity,
-                $('#resume').get(0).files[0], firstTimeHacker, transportation, codeOfConduct);
+				$('#resume').get(0).files[0], firstTimeHacker, transportation,
+				interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct);
             
             if (canSubmit) {
                 // store resume in database
