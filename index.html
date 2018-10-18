@@ -102,6 +102,10 @@
 							<a href="#" class="pure-menu-link" onclick="menuClick(0)">Application</a>
 					</li>
 
+					<li id="op2" class="pure-menu-item top-ln hide">
+						<a href="#" class="pure-menu-link" onclick="menuClick(2)">Applicant Info</a>
+					  </li>
+
 					<li id="op5" class="pure-menu-item top-ln hide">
                       <a href="#" class="pure-menu-link" onclick="menuClick(5)">SH Stats</a>
                     </li>
@@ -180,15 +184,15 @@
 
 						<div class="col-md-12 top-margin">
 								<label class="form-lbl" for="q1" name="">Your School</label> <span class=" redTxt">* </span><br>
-								<select class="form-field" name="schools">
+								<select class="form-field minimal" name="schools">
 										<option value="MIT">MIT</option>
 										<option value="University of Florida">University of Florida</option>
 										<option value="University of South Florida">University of South Florida</option>
 										<option value="University of Central Florida">University of Central Florida</option>
 								</select> <br>
-								
+
 								<label class="form-lbl" for="q1" name="">What year are you?</label> <span class=" redTxt">* </span><br>
-								<select class="form-field" name="schoolYear">
+								<select class="form-field minimal" name="schoolYear">
 										<option value="Freshman">Freshman</option>
 										<option value="Sophmore">Sophmore</option>
 										<option value="Junior">Junior</option>
@@ -221,7 +225,7 @@
 						<div id="shirtCol" class="col-md-12 top-margin">
 							<label class="form-lbl" for="q1" name="">T-Shirt Size</label> <span class=" redTxt">* </span>
 							<!-- <input class="form-field" id="shirtSize" name="q1" type="text" placeholder="Medium" /> -->
-							<select class="form-field" id="shirtSize" name="shirtSize" >
+							<select class="form-field minimal" id="shirtSize" name="shirtSize" >
 								<option value="small">Small</option>
 								<option value="medium">Medium</option>
 								<option value="large">Large</option>
@@ -232,7 +236,7 @@
 						<div id="dietCol" class="col-md-12 top-margin">
 							<label class="form-lbl" for="q1" name="">Dietary Restrictions</label>  <span class=" redTxt">* </span>
 							<!-- <input class="form-field" id="diet" name="q1" type="text" placeholder="Halal" /> -->
-							<select class="form-field" id="diet" name="diet" >
+							<select class="form-field minimal" id="diet" name="diet" >
 								<option value="none">None</option>
 								<option value="vegetarian">Vegetarian</option>
 								<option value="vegan">Vegan</option>
@@ -381,7 +385,21 @@
 					</div>
 				</div>
 
-      </div>
+	  </div>
+	  	  	<!-- %%%%%%%%%%%%%% Applicant Info %%%%%%%%%%%%%% -->
+		<div id="info" class="hide">
+
+			<h1 class="header-main-type">Applicant information</h1>
+	
+					<div class="container-fluid notif-con">
+						<div class="row">
+							<ul id="userList">
+
+							</ul>
+						</div>
+					</div>
+	
+		  </div>
 	  	<!-- %%%%%%%%%%%%%% Notification %%%%%%%%%%%%%% -->
 		<div id="notif" class="hide">
 
@@ -714,11 +732,18 @@
 		});
 
 		if (userObj.email === "debrianfigueroa@ufl.edu" || userObj.email === "sponsors@swamphacks.com") {
+
+			$("#op2").removeClass("hide");
+			$("#op2").addClass("show");
+
 			$("#op5").removeClass("hide");
 			$("#op5").addClass("show");
 
 			$("#op6").removeClass("hide");
 			$("#op6").addClass("show");
+
+			$("#op0").removeClass("show");
+			$("#op0").addClass("hide");
 
 			getStats();
 			reloadStats();
@@ -1341,14 +1366,25 @@
 	// %%%%%%%%%%%%% End of Application Functions %%%%%%%%%%%%% //
 
 	// %%%%%%%%%%%%% Menu Functions %%%%%%%%%%%%%
+	// TODO: create html injection for user information, plus wrapper methods
+	function loadUserInfo() {
+		var userRef = ref.child("users").orderByChild("email");
+		userRef.once('value').then(function(snapshot) {
+			var users = snapshot.val();
+			var html = "<div></div>";
+			for (var userId in users) {
+				var user = users[userId];
+			}
+		});
+	}
 
     function menuClick(item) {
 
-			selected = item;
+		selected = item;
 
-			$("#layout").removeClass("active");
-			$("#menu").removeClass("active");
-			$("#menuLink").removeClass("active");
+		$("#layout").removeClass("active");
+		$("#menu").removeClass("active");
+		$("#menuLink").removeClass("active");
 
 
 	  // Hiding and showing the appropriate info
@@ -1361,6 +1397,9 @@
 
 		$("#application").addClass("show");
         $("#application").removeClass("hide");
+
+		$("#info").addClass("hide");
+        $("#info").removeClass("show");
 
         $("#dashboard").addClass("hide");
         $("#dashboard").removeClass("show");
@@ -1380,6 +1419,9 @@
 
         $("#dashboard").addClass("show");
 		$("#dashboard").removeClass("hide");
+
+		$("#info").addClass("hide");
+        $("#info").removeClass("show");
 		
 		$("#application").addClass("hide");
         $("#application").removeClass("show");
@@ -1412,7 +1454,32 @@
 
 		}
 
-      } else if (item === 3) {
+      } else if (item === 2) {
+		$("#op2").addClass("pure-menu-selected");
+		$("#op0").removeClass("pure-menu-selected");
+		$("#op1").removeClass("pure-menu-selected");
+        $("#op3").removeClass("pure-menu-selected");
+		$("#op5").removeClass("pure-menu-selected");
+		$("#op6").removeClass("pure-menu-selected");
+
+		$("#info").addClass("show");
+        $("#info").removeClass("hide");
+
+		$("#application").addClass("hide");
+        $("#application").removeClass("show");
+
+        $("#dashboard").addClass("hide");
+        $("#dashboard").removeClass("show");
+
+        $("#login").addClass("hide");
+        $("#login").removeClass("show");
+
+		$("#notif").addClass("hide");
+        $("#notif").removeClass("show");
+
+		// load user's information
+		loadUserInfo();
+	  } else if (item === 3) {
 
 		// Show the confirm logout popup
 		$("#confirmLogoutPopup").removeClass("hide");
@@ -1428,6 +1495,9 @@
 		$("#application").addClass("hide");
         $("#application").removeClass("show");
 
+		$("#info").addClass("hide");
+        $("#info").removeClass("show");
+
         $("#dashboard").addClass("hide");
         $("#dashboard").removeClass("show");
 
@@ -1437,13 +1507,13 @@
 		$("#notif").addClass("hide");
         $("#notif").removeClass("show");
 
-				appliedSchools = [];
-				schoolsAndCount = {};
-				topTenSchools = {};
+		appliedSchools = [];
+		schoolsAndCount = {};
+		topTenSchools = {};
 
-				getStats();
-				reloadStats();
-				checkAgainstList();
+		getStats();
+		reloadStats();
+		checkAgainstList();
 
 	  } else if (item === 6) {
 
@@ -1455,6 +1525,9 @@
 
 		$("#application").addClass("hide");
         $("#application").removeClass("show");
+
+		$("#info").addClass("hide");
+        $("#info").removeClass("show");
 
 		$("#dashboard").addClass("hide");
         $("#dashboard").removeClass("show");
@@ -1695,6 +1768,9 @@
 			} else if (selected === 1) {
 
 				$("#headertxt").text("Dashboard");
+			} else if (selected === 2) {
+
+				$("#headertxt").text("Applicant Information");
 			} else if (selected == 5) {
 
 				$("#headertxt").text("Stats");
