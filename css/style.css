@@ -728,6 +728,12 @@ select.minimal:focus {
   color: white;
 }
 
+.cardBtn {
+  width: 20%;
+  background-color: #6C9668;
+  color: white;
+}
+
 .cardHeader {
   font-family: 'Trebuchet MS',  sans-serif;
   border-bottom: #1C3444;
