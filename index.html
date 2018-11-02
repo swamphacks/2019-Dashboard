@@ -279,6 +279,7 @@
 
 						<div class="col-md-12 top-margin" id="codeOfConductContainer">
 								<label class="form-lbl" for="q1" name="">Do you agree to the MLH Code of Conduct?</label> <span class=" redTxt">* </span>
+								<a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>
 								<!-- TODO: add link to it and a checkbox maybe -->
 								<br> <input id="codeOfConduct" name="codeOfConduct" type="checkbox" value="true" /> I agree <br>
 						</div>
@@ -1358,7 +1359,8 @@
 						userObj = user;
 						//  $("#welcomeMessage").text("Welcome, " + userObj.fname + "!");
                         // TODO: notify user that the application was successful
-                    });
+						
+                    }.bind(this));
                 });
             }
         }
