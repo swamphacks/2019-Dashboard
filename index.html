@@ -118,7 +118,7 @@
                         <a href="#" class="pure-menu-link" onclick="menuClick(3)">Logout</a>
                     </li>
 
-                    <li id="op4" class="pure-menu-item bottom-ln">
+                    <li id="op4" class="pure-menu-item bottom-ln hide">
                       <a href="http://live.swamphacks.com" target="_blank" class="pure-menu-link" onclick="menuClick(4)">Live!</a>
                     </li>
                 </ul>
@@ -1163,68 +1163,6 @@
 		$("#submitBtn").prop("disabled", true);
 	}
 
-		function enableFields() {
-		$("#firstName").removeClass("disabled");
-		$("#firstName").prop("disabled", false);
-
-		$("#lastName").removeClass("disabled");
-		$("#lastName").prop("disabled", false);
-
-		$("input[name='gender']").each(function(index, radio) {
-			radio.disabled = false;
-		});
-
-		$('input:checkbox[id^="race"]').each(function(index, checkbox) {
-			checkbox.disabled = false;
-		});
-
-		$('select[name="schools"]').removeClass("disabled");
-		$('select[name="schools"]').prop("disabled", false);
-
-		$('select[name="schoolYear"]').removeClass("disabled");
-		$('select[name="schoolYear"]').prop("disabled", false);
-
-		$("input[name='firstTimeHacker']").each(function(index, radio) {
-			radio.disabled = false;
-		});
-
-		$("#github").removeClass("disabled");
-		$("#github").prop("disabled", false);
-
-		$("#linkedin").removeClass("disabled");
-		$("#linkedin").prop("disabled", false);
-
-		$('select[name="shirtSize"]').removeClass("disabled");
-		$('select[name="shirtSize"]').prop("disabled", false);
-
-		$('select[name="diet"]').removeClass("disabled");
-		$('select[name="diet"]').prop("disabled", false);
-
-		$("input[name='transportation']").each(function(index, radio) {
-			radio.disabled = false;
-		});
-
-		$("#interest").removeClass("disabled");
-		$("#interest").prop("disabled", false);
-
-		$("#everydayProblem").removeClass("disabled");
-		$("#everydayProblem").prop("disabled", false);
-
-		$("#hopes").removeClass("disabled");
-		$("#hopes").prop("disabled", false);
-
-		$("#comments").removeClass("disabled");
-		$("#comments").prop("disabled", false);
-
-		$("#news").removeClass("disabled");
-		$("#news").prop("disabled", false);
-
-		$('input:checkbox[id^="codeOfConduct"]')[0].disabled = false;
-
-		$("#submitBtn").removeClass("disabled");
-		$("#submitBtn").prop("disabled", false);
-	}
-
 	function addApplicationInfo() {
 		$("#firstName").val(userObj.fname);
 		$("#lastName").val(userObj.lname);
@@ -1356,6 +1294,22 @@
             }
             return canSubmit;
         }
+
+		function removeRequired() {
+			$("#firstName").removeClass("requiredField");
+			$("#lastName").removeClass("requiredField");
+			$("#interest").removeClass("requiredField");
+			$("#everydayProblem").removeClass("requiredField");
+			$("#hopes").removeClass("requiredField");
+			$("#comments").removeClass("requiredField");
+			$("#news").removeClass("requiredField");
+			$("#genderContainer").removeClass("requiredCheckbox");
+			$("#raceContainer").removeClass("requiredCheckbox");
+			$("#resumeContainer").removeClass("requiredCheckbox");
+			$("#hackerContainer").removeClass("requiredCheckbox");
+			$("#transportationContainer").removeClass("requiredCheckbox");
+			$("#codeOfConductContainer").removeClass("requiredCheckbox");
+        }
         
         function submitApplication() {
             // Get form values
@@ -1425,7 +1379,7 @@
 						// update user data
 						userObj = user;
 						$("#welcomeMessage").text("Welcome, " + userObj.fname + "!");
-						this.enableFields();
+						this.removeRequired();
 						this.showMenu();
 						// show dashboard
 						selected = 1;
