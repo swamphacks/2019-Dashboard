@@ -394,21 +394,21 @@
 				if (!snapshot.val()) {
 					// create user in database
 					var currentUser = {email: email, applied: false};
-					ref.child('users/'+result.user.uid).set(currentUser);
+					ref.child('users/'+userId).set(currentUser);
 					localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
 				} else {
 					localStorage.setItem('loggedInUser', JSON.stringify(snapshot.val()));
 				}
+				const delay = 1000;
+				setTimeout(function() {
+					// Hide the loader
+					$("#animationWindow").removeClass("showflex");
+					$("#animationWindow").addClass("hide");
+
+					window.location.href = "index.html";
+
+				}, delay);
 			});
-			const delay = 2000;
-			setTimeout(function() {
-				// Hide the loader
-				$("#animationWindow").removeClass("showflex");
-				$("#animationWindow").addClass("hide");
-
-				window.location.href = "index.html";
-
-			}, delay);
 		}
 
 	</script>
