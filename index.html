@@ -729,7 +729,7 @@
 
 		firebase.auth().onAuthStateChanged(function(currentUser) {
 			if (currentUser && currentUser.emailVerified) {
-			} else {
+			} else if(localStorage.getItem('provider') != 'facebook'){
 				window.location.href = "login.html";
 			}
 		});
@@ -1658,6 +1658,7 @@
 				// Sign-out successful.
 				localStorage.setItem('loggedInUser', null);
 				localStorage.setItem('loggedInUserKey', null);
+				localStorage.setItem('provider', null);
 
 				window.location.href = "login.html";
 
