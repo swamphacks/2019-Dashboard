@@ -138,14 +138,16 @@
 
 		<div class="container-fluid notif-con">
 			<div class="row">
-				<div class="col-md-12">
-					<!-- <h3 class="header-sub-type">Welcome, Albert!</h3> -->
-					<p class="descrip-txt"> 
-						Please fill out the apropriate fields.
-					</p>
-					<p class="redTxt">
-						* Required
-					</p>
+				<div class="row">
+					<div class="col-md-12">
+						<!-- <h3 class="header-sub-type">Welcome, Albert!</h3> -->
+						<p class="descrip-txt"> 
+							Please fill out the apropriate fields.
+						</p>
+						<p class="redTxt">
+							* Required
+						</p>
+					</div>
 				</div>
 
 				<div class="row">
@@ -751,41 +753,7 @@
 		}
 
 		if (userObj.applied || userObj.email === "sponsors@swamphacks.com") {
-			// Show side menu
-			$("#menuList").addClass("show");
-			// $("#menuLink").addClass("show");
-			// Show dashboard first
-			selected = 1;
-
-			$("#op1").addClass("pure-menu-selected");
-			$("#op0").removeClass("pure-menu-selected");
-			$("#op2").removeClass("pure-menu-selected");
-			$("#op3").removeClass("pure-menu-selected");
-			$("#op5").removeClass("pure-menu-selected");
-			$("#op6").removeClass("pure-menu-selected");
-
-			$("#dashboard").addClass("show");
-			$("#dashboard").removeClass("hide");
-			
-			$("#application").addClass("hide");
-			$("#application").removeClass("show");
-
-			$("#info").addClass("hide");
-			$("#info").removeClass("show");
-
-			$("#login").addClass("hide");
-			$("#login").removeClass("show");
-
-			$("#notif").addClass("hide");
-			$("#notif").removeClass("show");
-
-			// update timeline
-			$("#appliedTimeline").addClass("lime");
-			$("#appliedCircle").addClass("lightGreen");
-			$("#appliedTimelineText").text("Completed!");
-
-			// Fill application page with user information
-			addApplicationInfo();
+			this.showMenu();
 		}
 
 		// create qr code
@@ -925,6 +893,44 @@
 				// $("#rejectCon").removeClass("show");
 			}
 
+		}
+
+		function showMenu() {
+			// Show side menu
+			$("#menuList").addClass("show");
+			// $("#menuLink").addClass("show");
+			// Show dashboard first
+			selected = 1;
+
+			$("#op1").addClass("pure-menu-selected");
+			$("#op0").removeClass("pure-menu-selected");
+			$("#op2").removeClass("pure-menu-selected");
+			$("#op3").removeClass("pure-menu-selected");
+			$("#op5").removeClass("pure-menu-selected");
+			$("#op6").removeClass("pure-menu-selected");
+
+			$("#dashboard").addClass("show");
+			$("#dashboard").removeClass("hide");
+			
+			$("#application").addClass("hide");
+			$("#application").removeClass("show");
+
+			$("#info").addClass("hide");
+			$("#info").removeClass("show");
+
+			$("#login").addClass("hide");
+			$("#login").removeClass("show");
+
+			$("#notif").addClass("hide");
+			$("#notif").removeClass("show");
+
+			// update timeline
+			$("#appliedTimeline").addClass("lime");
+			$("#appliedCircle").addClass("lightGreen");
+			$("#appliedTimelineText").text("Completed!");
+
+			// Fill application page with user information
+			addApplicationInfo();
 		}
 
 		function rejectSpotBtnClicked() {
@@ -1357,8 +1363,30 @@
 						// update user data
 						userObj = user;
 						//  $("#welcomeMessage").text("Welcome, " + userObj.fname + "!");
-                        // TODO: notify user that the application was successful
+                        // TODO: send to dashboard
+						this.showMenu();
+						// show dashboard
+						selected = 1;
+						$("#op1").addClass("pure-menu-selected");
+						$("#op0").removeClass("pure-menu-selected");
+						$("#op3").removeClass("pure-menu-selected");
+						$("#op5").removeClass("pure-menu-selected");
+						$("#op6").removeClass("pure-menu-selected");
+
+						$("#dashboard").addClass("show");
+						$("#dashboard").removeClass("hide");
+
+						$("#info").addClass("hide");
+						$("#info").removeClass("show");
 						
+						$("#application").addClass("hide");
+						$("#application").removeClass("show");
+
+						$("#login").addClass("hide");
+						$("#login").removeClass("show");
+
+						$("#notif").addClass("hide");
+						$("#notif").removeClass("show");
                     }.bind(this));
                 });
             }
@@ -1401,7 +1429,7 @@
 		list += closeLi;
 		return list;
 	}
-	// TODO: create html injection for user information, plus wrapper methods
+	
 	function loadUserInfo() {
 		var userRef = ref.child("users").orderByChild("email");
 		userRef.once('value').then(function(snapshot) {
