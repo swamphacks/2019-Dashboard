@@ -1323,7 +1323,7 @@
             const school = $('select[name="schools"]').val();
             const schoolYear = $('select[name="schoolYear"]').val();
 			const firstTimeHacker = $('input[name="firstTimeHacker"]:checked').val();
-			const resumeName = $('#resume').get(0).files[0].name;
+			const resumeName = $('#resume').get(0).files[0] ? $('#resume').get(0).files[0].name: undefined;
             const githubProfile = $('input[name="github"]').val();
             const linkedinProfile = $('input[name="linkedin"]').val();
             const shirtSize = $('select[name="shirtSize"]').val();
