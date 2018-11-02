@@ -1288,7 +1288,7 @@
             }
             return canSubmit;
         }
-        // TODO: Show user what fields they are missing and alerting user that their application was successful if it was
+        
         function submitApplication() {
             // Get form values
             const fname = $("#firstName").val();
@@ -1353,7 +1353,6 @@
                     var userRef = ref.child("users");
                     var updates = {};
                     updates[loggedInUserKey] = user;
-                    // TODO: Show loading screen
                     userRef.update(updates).then(function() {
 						// update user data
 						userObj = user;
@@ -1368,14 +1367,72 @@
 	// %%%%%%%%%%%%% End of Application Functions %%%%%%%%%%%%% //
 
 	// %%%%%%%%%%%%% Menu Functions %%%%%%%%%%%%%
+	function createListElement(email, fname, lname, schoolYear, school, transportation,
+				everydayProblem, extraInfo, firstTimeHacker, hearAbout, hopeToGain, interestReason) {
+		var openLi = '<li class="userInfoItem">';
+		var closeLi = '</li>';
+		var openDiv = '<div class="row">';
+		var openHeader = '<div class="row cardHeader">';
+		var openContent = '<div class="row cardContent">';
+		var closeDiv = '</div>';
+		var closeP = '</p>';
+		// Setup header for card
+		var list = openLi + openHeader + '<div class="col-md-5 cardHeaderTitle">'
+			+ fname + ' ' + lname + closeDiv + 
+			'<div class="col-md-7 cardSchoolInfo">' + schoolYear + ' at ' + school + closeDiv + closeDiv;
+		// Setup card content 
+		list += openContent;
+		// add email
+		list += '<div class="col-md-4">' + '<p id="emailItem"> <b>Email: </b>' + email + closeP + closeDiv;
+		// add transportation
+		list += '<div class="col-md-4">' + '<p id="transportationItem"> <b>Needs Transportation: </b>' + transportation + closeP + closeDiv;
+		// add first time hacker
+		list += '<div class="col-md-4">' + '<p id="firstTimeItem"> <b>First Time Hacker: </b>' + firstTimeHacker + closeP + closeDiv;
+		// add responses
+		list += openDiv + '<p id="everydayProblemItem"> <b>What is an everyday problem coding can solve?: </b> <br>' + everydayProblem + closeP + closeDiv;
+		list += openDiv + '<p id="hearAboutItem"> <b>How did you hear about swamphacks?: </b> <br>' + hearAbout + closeP + closeDiv;
+		list += openDiv + '<p id="hopeToGainItem"> <b>What do you hope to gain?: </b> <br>' + hopeToGain + closeP + closeDiv;
+		list += openDiv + '<p id="interestReasonItem"> <b>Why are you interested in swamphacks?: </b> <br>' + interestReason + closeP + closeDiv;
+		list += openDiv + '<p id="extraInfoItem"> <b>Extra information: </b> <br>' + extraInfo + closeP + closeDiv;
+		list += openDiv + '<button class="button cardBtn" style="float: right"> Accept!</button>' + closeDiv;
+		// Close content tag
+		list += closeDiv;
+		// close list tag
+		list += closeLi;
+		return list;
+	}
 	// TODO: create html injection for user information, plus wrapper methods
 	function loadUserInfo() {
 		var userRef = ref.child("users").orderByChild("email");
 		userRef.once('value').then(function(snapshot) {
 			var users = snapshot.val();
-			var html = "<div></div>";
+			var userList = document.getElementById("userList");
+			var html = '';
+			// wrap in list tag
+			// inside <li> have a row divs
+			// for now put email on first row and transportation need on second row
+			// close tags
 			for (var userId in users) {
+				// TODO: filter: only show if they have applied, and if they havent been accepted
 				var user = users[userId];
+				const applied = user['applied'];
+				// if (applied) {
+					const status = user['status'];
+					var email = user['email'] ? user['email'] : 'N/A';
+					var fname = user['fname'] ? user['fname'] : 'N/A';
+					var lname = user['lname'] ? user['lname'] : 'N/A';
+					var schoolYear = user['schoolYear'] ? user['schoolYear'] : 'N/A';
+					var school = user['school'] ? user['school'] : 'N/A';
+					var transportation = user['transportation'] ? user['transportation'] : 'N/A';
+					var everydayProblem = user['everydayProblem'] ? user['everydayProblem'] : 'N/A';
+					var extraInfo = user['extraInfo'] ? user['extraInfo'] : 'N/A';
+					var firstTimeHacker = user['firstTimeHacker'] ? user['firstTimeHacker'] : 'N/A';
+					var hearAbout = user['hearAbout'] ? user['hearAbout'] : 'N/A';
+					var hopeToGain = user['hopeToGain'] ? user['hopeToGain'] : 'N/A';
+					var interestReason = user['interestReason'] ? user['interestReason'] : 'N/A';
+					userList.innerHTML += createListElement(email, fname, lname, schoolYear, school, transportation,
+					everydayProblem, extraInfo, firstTimeHacker, hearAbout, hopeToGain, interestReason);
+				// }
 			}
 		});
 	}

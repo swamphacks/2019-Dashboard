@@ -720,6 +720,53 @@ select.minimal:focus {
   resize: none;
 }
 
+.userInfoItem {
+  list-style: none;
+   /* Add shadows to create the "card" effect */
+   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+   transition: 0.3s;
+   margin-top: 20px;
+   padding: 5px 50px;
+}
+
+.userInfoItem:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.userInfoItem:nth-child(even) { 
+  background-color: rgb(57, 93, 117);
+  color: white;
+}
+
+.cardBtn {
+  width: 20%;
+  background-color: #6C9668;
+  color: white;
+}
+
+.cardHeader {
+  font-family: 'Trebuchet MS',  sans-serif;
+  border-bottom: #1C3444;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+.cardSchoolInfo {
+  text-align: right;
+  padding-top: 10px;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.cardHeaderTitle {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.cardContent {
+  padding: 5px 25px;
+}
+
 .log {
   width: 100%;
 }
