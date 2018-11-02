@@ -193,7 +193,7 @@
 										<option value="University of Central Florida">University of Central Florida</option>
 								</select> <br>
 
-								<label class="form-lbl" for="q1" name="">What year are you?</label> <span class=" redTxt">* </span><br>
+								<label class="form-lbl top-margin" for="q1" name="">What year are you?</label> <span class=" redTxt">* </span><br>
 								<select class="form-field minimal" name="schoolYear">
 										<option value="Freshman">Freshman</option>
 										<option value="Sophmore">Sophmore</option>
@@ -247,7 +247,7 @@
 						</div>
 
 						<div class="col-md-12 top-margin" id="transportationContainer">
-								<label class="form-lbl" for="q1" name="">Do you need transportation to SwampHacks?(FYI carpool and buses w/ 400 mile radius) - outside that we do a travel reimbursement</label>
+								<label class="form-lbl" for="q1" name="">Do you need transportation to SwampHacks? (FYI carpool and buses w/ 400 mile radius) - outside that we do a travel reimbursement</label>
 								<span class=" redTxt">* </span>
 								<br>
 								<input id="transportationyes" name="transportation" type="radio" value="yes" /> Yes
@@ -319,7 +319,7 @@
 							<div id="qrcode"></div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row top-margin">
 						<div class="col-md-12">
 							<h3 class="header-sub-type" id="welcomeMessage">Welcome, Albert!</h3>
 							<div class="spacer">
@@ -1163,6 +1163,68 @@
 		$("#submitBtn").prop("disabled", true);
 	}
 
+		function enableFields() {
+		$("#firstName").removeClass("disabled");
+		$("#firstName").prop("disabled", false);
+
+		$("#lastName").removeClass("disabled");
+		$("#lastName").prop("disabled", false);
+
+		$("input[name='gender']").each(function(index, radio) {
+			radio.disabled = false;
+		});
+
+		$('input:checkbox[id^="race"]').each(function(index, checkbox) {
+			checkbox.disabled = false;
+		});
+
+		$('select[name="schools"]').removeClass("disabled");
+		$('select[name="schools"]').prop("disabled", false);
+
+		$('select[name="schoolYear"]').removeClass("disabled");
+		$('select[name="schoolYear"]').prop("disabled", false);
+
+		$("input[name='firstTimeHacker']").each(function(index, radio) {
+			radio.disabled = false;
+		});
+
+		$("#github").removeClass("disabled");
+		$("#github").prop("disabled", false);
+
+		$("#linkedin").removeClass("disabled");
+		$("#linkedin").prop("disabled", false);
+
+		$('select[name="shirtSize"]').removeClass("disabled");
+		$('select[name="shirtSize"]').prop("disabled", false);
+
+		$('select[name="diet"]').removeClass("disabled");
+		$('select[name="diet"]').prop("disabled", false);
+
+		$("input[name='transportation']").each(function(index, radio) {
+			radio.disabled = false;
+		});
+
+		$("#interest").removeClass("disabled");
+		$("#interest").prop("disabled", false);
+
+		$("#everydayProblem").removeClass("disabled");
+		$("#everydayProblem").prop("disabled", false);
+
+		$("#hopes").removeClass("disabled");
+		$("#hopes").prop("disabled", false);
+
+		$("#comments").removeClass("disabled");
+		$("#comments").prop("disabled", false);
+
+		$("#news").removeClass("disabled");
+		$("#news").prop("disabled", false);
+
+		$('input:checkbox[id^="codeOfConduct"]')[0].disabled = false;
+
+		$("#submitBtn").removeClass("disabled");
+		$("#submitBtn").prop("disabled", false);
+	}
+
 	function addApplicationInfo() {
 		$("#firstName").val(userObj.fname);
 		$("#lastName").val(userObj.lname);
@@ -1362,8 +1424,8 @@
                     userRef.update(updates).then(function() {
 						// update user data
 						userObj = user;
-						//  $("#welcomeMessage").text("Welcome, " + userObj.fname + "!");
-                        // TODO: send to dashboard
+						$("#welcomeMessage").text("Welcome, " + userObj.fname + "!");
+						this.enableFields();
 						this.showMenu();
 						// show dashboard
 						selected = 1;
