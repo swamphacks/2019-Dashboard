@@ -135,7 +135,7 @@
 	  <!-- %%%%%%%%%%%%%% Application %%%%%%%%%%%%%% -->
 	  <div id="application" class="show">
 		<h1 class="header-main-type">Application</h1>
-
+		<!-- <textarea id="jsonList"></textarea> -->
 		<div class="container-fluid notif-con">
 			<div class="row">
 				<div class="row">
@@ -186,11 +186,7 @@
 
 						<div class="col-md-12 top-margin">
 								<label class="form-lbl" for="q1" name="">Your School</label> <span class=" redTxt">* </span><br>
-								<select class="form-field minimal" name="schools">
-										<option value="MIT">MIT</option>
-										<option value="University of Florida">University of Florida</option>
-										<option value="University of South Florida">University of South Florida</option>
-										<option value="University of Central Florida">University of Central Florida</option>
+								<select class="form-field minimal" name="schools" id="schools">
 								</select> <br>
 
 								<label class="form-lbl top-margin" for="q1" name="">What year are you?</label> <span class=" redTxt">* </span><br>
@@ -698,6 +694,7 @@
 	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
 	<script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
 	<script src="firebaseconfig.js"></script>
+	<script src="js/schoolList.js"></script>
 
   <script>
 
@@ -726,6 +723,35 @@
 		var numVegan = 0;
 		var numHalal = 0;
 		var numNone = 0;
+
+		// add school list to application selection
+		var schools = document.getElementById('schools');
+		var listHtml = '';
+		for (let school of schoolList) {
+			listHtml += '<option value="'+ school.institution + '">' + school.institution + '</option>';
+		}
+		schools.innerHTML += listHtml;
+		// ---------------------- Delete ---------------------- //
+		// function compareStrings(a, b) {
+		// 	// Assuming you want case-insensitive comparison
+		// 	a = a.toLowerCase();
+		// 	b = b.toLowerCase();
+
+		// 	return (a < b) ? -1 : (a > b) ? 1 : 0;
+		// }
+
+		// schoolList.sort(function(a, b) {
+		// 	return compareStrings(a.institution, b.institution);
+		// });
+
+		// var textarea = document.getElementById('jsonList');
+		// var result = '[\n\t';
+		// for (let school of schoolList) {
+		// 	result += '{\n\t "institution": "' + school.institution + '"\n\t},\n\t';
+		// }
+		// result += ']';
+		// textarea.value = result;
+		// ---------------------- Delete ---------------------- //
 
 		firebase.auth().onAuthStateChanged(function(currentUser) {
 			if (currentUser && currentUser.emailVerified) {
