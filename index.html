@@ -172,15 +172,42 @@
 
 						<div class="col-md-12 top-margin" id="raceContainer">
 								<label class="form-lbl" for="q1" name="">Race/Ethnicity</label> <span class="redTxt">* </span><br>
-								<input id="race" name="race" type="checkbox" value="Non-Hispanic White" /> Non-Hispanic White <br>
-								<input id="race" name="race" type="checkbox" value="Black or African American" /> Black or African American <br>
-								<input id="race" name="race" type="checkbox" value="Latino or Hispanic American" /> Latino or Hispanic American <br>
-								<input id="race" name="race" type="checkbox" value="South Asian or Indian American" /> South Asian or Indian American <br>
-								<input id="race" name="race" type="checkbox" value="East Asian or Asian American" /> East Asian or Asian American <br>
-								<input id="race" name="race" type="checkbox" value="Middle Eastern or Arab American" /> Middle Eastern or Arab American <br>
-								<input id="race" name="race" type="checkbox" value="Native American or Alaskan Native" /> Native American or Alaskan Native <br>
-								<input id="race" name="race" type="checkbox" value="Hawaiian or Pacific Islander" /> Hawaiian or Pacific Islander <br>
-								<input id="race" name="race" type="checkbox" value="Other" /> Other <br>
+								<label class="checkbox-container" id="raceCheckBox0"> Non-Hispanic White
+									<input name="race" type="checkbox" value="Non-Hispanic White">
+									<span class="checkmark"></span>
+								</label>
+								<label class="checkbox-container" id="raceCheckBox1"> Black or African American
+									<input name="race" type="checkbox" value="Black or African American"/>
+									<span class="checkmark"></span>
+								</label>
+								<label class="checkbox-container" id="raceCheckBox2"> Latino or Hispanic American
+									<input name="race" type="checkbox" value="Latino or Hispanic American"/>
+									<span class="checkmark"></span>
+								</label>
+								<label class="checkbox-container" id="raceCheckBox3"> South Asian or Indian American
+									<input name="race" type="checkbox" value="South Asian or Indian American"/>
+									<span class="checkmark"></span>
+								</label>
+								<label class="checkbox-container" id="raceCheckBox4"> East Asian or Asian American 
+									<input name="race" type="checkbox" value="East Asian or Asian American"/>
+									<span class="checkmark"></span>
+								</label>
+								<label class="checkbox-container" id="raceCheckBox5"> Middle Eastern or Arab American
+									<input name="race" type="checkbox" value="Middle Eastern or Arab American"/> 
+									<span class="checkmark"></span>
+								</label>
+								<label class="checkbox-container" id="raceCheckBox6"> Native American or Alaskan Native
+									<input name="race" type="checkbox" value="Native American or Alaskan Native"/>
+									<span class="checkmark"></span>
+								</label>
+								<label class="checkbox-container" id="raceCheckBox7"> Hawaiian or Pacific Islander
+									<input name="race" type="checkbox" value="Hawaiian or Pacific Islander"/>
+									<span class="checkmark"></span>
+								</label>
+								<label class="checkbox-container" id="raceCheckBox8"> Other
+									<input name="race" type="checkbox" value="Other"/>
+									<span class="checkmark"></span>
+								</label>
 						</div>
 
 						<div class="col-md-12 top-margin">
@@ -276,9 +303,11 @@
 
 						<div class="col-md-12 top-margin" id="codeOfConductContainer">
 								<label class="form-lbl" for="q1" name="">Do you agree to the MLH Code of Conduct?</label> <span class=" redTxt">* </span>
-								<a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>
-								<!-- TODO: add link to it and a checkbox maybe -->
-								<br> <input id="codeOfConduct" name="codeOfConduct" type="checkbox" value="true" /> I agree <br>
+								<a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a> <br>
+								<label class="checkbox-container" id="agreedCheckbox"> I agree
+									<input name="codeOfConduct" type="checkbox" value="true"/>
+									<span class="checkmark"></span>
+								</label>
 						</div>
 
 					</form>
@@ -307,7 +336,7 @@
 
         <h1 class="header-main-type">Dashboard</h1>
 
-				<div class="container-fluid notif-con">
+				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-12">
 							<!-- Qr Code -->
@@ -862,7 +891,7 @@
 
 			if (userObj.status === "CONFIRMED") {
 				// update timeline
-				$("#confirmedTimeline").addClass("lime");
+				$("#confirmedTimeline").addClass("limeGreen");
 				$("#confirmedCircle").addClass("lightGreen");
 				$("#confirmedTimelineText").text("Confirmed");
 				// $("#dashStatus").addClass("green");
@@ -874,7 +903,7 @@
 				// $("#rejectCon").removeClass("hide");
 			} else if (userObj.status === "ACCEPTED") {
 				// update timeline
-				$("#statusTimeline").addClass("lime");
+				$("#statusTimeline").addClass("limeGreen");
 				$("#statusCircle").addClass("lightGreen");
 				$("#statusTimelineText").text("Accepted!");	
 				// Show Confirm and Deny buttons
@@ -929,7 +958,7 @@
 			$("#notif").removeClass("show");
 
 			// update timeline
-			$("#appliedTimeline").addClass("lime");
+			$("#appliedTimeline").addClass("limeGreen");
 			$("#appliedCircle").addClass("lightGreen");
 			$("#appliedTimelineText").text("Completed!");
 
@@ -1115,9 +1144,9 @@
 		$("input[name='gender']").each(function(index, radio) {
 			radio.disabled = true;
 		});
-
-		$('input:checkbox[id^="race"]').each(function(index, checkbox) {
+		$('input:checkbox[name^="race"]').each(function(index, checkbox) {
 			checkbox.disabled = true;
+			$('#raceCheckBox'+index.toString()).addClass("disabled");
 		});
 
 		$('select[name="schools"]').addClass("disabled");
@@ -1161,7 +1190,8 @@
 		$("#news").addClass("disabled");
 		$("#news").prop("disabled", true);
 
-		$('input:checkbox[id^="codeOfConduct"]')[0].disabled = true;
+		$('input:checkbox[name^="codeOfConduct"]')[0].disabled = true;
+		$('#agreedCheckbox').addClass('disabled');
 
 		$("#submitBtn").addClass("disabled");
 		$("#submitBtn").prop("disabled", true);
@@ -1172,7 +1202,7 @@
 		$("#lastName").val(userObj.lname);
 		$("#gender"+userObj.gender).prop("checked", true);
 		// Check all the necessary checkboxes
-		$('input:checkbox[id^="race"]').each(function(index, checkbox) {
+		$('input:checkbox[name^="race"]').each(function(index, checkbox) {
 			var value = checkbox.value;
 			for (var index in userObj.raceEthnicity) {
 				if (userObj.raceEthnicity[index] == value) {
@@ -1196,7 +1226,7 @@
 		$("#hopes").val(userObj.hopeToGain);
 		$("#comments").val(userObj.extraInfo);
 		$("#news").val(userObj.hearAbout);
-		$('input:checkbox[id^="codeOfConduct"]')[0].checked = true;
+		$('input:checkbox[name^="codeOfConduct"]')[0].checked = true;
 		disableFields();
 	}
 
