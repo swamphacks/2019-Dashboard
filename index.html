@@ -112,14 +112,14 @@
 
 					<li id="op6" class="pure-menu-item top-ln hide">
                       <a href="#" class="pure-menu-link" onclick="menuClick(6)">Send iOS Notif</a>
-                    </li>
+					</li>
+					
+					<li id="op4" class="pure-menu-item bottom-ln">
+						<a href="http://2019.swamphacks.com" target="_blank" class="pure-menu-link" onclick="menuClick(4)">Live!</a>
+					</li>
 
                     <li id="op3" class="pure-menu-item top-ln">
                         <a href="#" class="pure-menu-link" onclick="menuClick(3)">Logout</a>
-                    </li>
-
-                    <li id="op4" class="pure-menu-item bottom-ln hide">
-                      <a href="http://live.swamphacks.com" target="_blank" class="pure-menu-link" onclick="menuClick(4)">Live!</a>
                     </li>
                 </ul>
 
@@ -152,26 +152,37 @@
 				<div class="row">
 					<form id="profileForm" class="" autocomplete="off">
 						<div class="col-md-6 top-margin">
-							<label class="form-lbl" for="q1" name="">First name</label> <span class="redTxt"> * </span>
+							<label class="form-lbl" for="q1" name="">First name <span class="redTxt"> * </span></label>
 							<input class="form-field" id="firstName" name="q1" type="text" placeholder="" />
 						</div>
 
 						<div class="col-md-6 top-margin">
-							<label class="form-lbl" for="q1" name="">Last name</label> <span class="redTxt">* </span>
+							<label class="form-lbl" for="q1" name="">Last name <span class="redTxt">* </span></label>
 							<input class="form-field" id="lastName" name="q1" type="text" placeholder="" />
 						</div>
 
 						<div class="col-md-12 top-margin" id="genderContainer">
-								<label class="form-lbl" for="q1" name="">Gender</label> <span class="redTxt">* </span><br>
-								
-								<input id="genderMale" name="gender" type="radio" value="Male" /> Male <br>
-								<input id="genderFemale" name="gender" type="radio" value="Female" /> Female <br>
-								<input id="genderNone-binary/third gender" name="gender" type="radio" value="None-binary/third gender" /> None-binary/third gender <br>
-								<input id="genderOther" name="gender" type="radio" value="Other" /> Other <br>
+								<label class="form-lbl" for="q1" name="">Gender <span class="redTxt">* </span></label><br>
+								<label class="radio-container" id="genderRadio0"> Male
+									<input id="genderMale" name="gender" type="radio" value="Male">
+									<span class="radioBtn"></span>
+								</label>
+								<label class="radio-container" id="genderRadio1"> Female
+									<input id="genderFemale" name="gender" type="radio" value="Female"/>
+									<span class="radioBtn"></span>
+								</label>
+								<label class="radio-container" id="genderRadio2"> None-binary/third gender
+									<input id="genderNone-binary/third gender" name="gender" type="radio" value="None-binary/third gender"/>
+									<span class="radioBtn"></span>
+								</label>
+								<label class="radio-container" id="genderRadio3"> Other
+									<input id="genderOther" name="gender" type="radio" value="Other"/>
+									<span class="radioBtn"></span>
+								</label>
 						</div>
 
 						<div class="col-md-12 top-margin" id="raceContainer">
-								<label class="form-lbl" for="q1" name="">Race/Ethnicity</label> <span class="redTxt">* </span><br>
+								<label class="form-lbl" for="q1" name="">Race/Ethnicity <span class="redTxt">* </span></label><br>
 								<label class="checkbox-container" id="raceCheckBox0"> Non-Hispanic White
 									<input name="race" type="checkbox" value="Non-Hispanic White">
 									<span class="checkmark"></span>
@@ -211,11 +222,11 @@
 						</div>
 
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">Your School</label> <span class=" redTxt">* </span><br>
+								<label class="form-lbl" for="q1" name="">Your School <span class=" redTxt">* </span></label><br>
 								<select class="form-field minimal" name="schools" id="schools">
 								</select> <br>
 
-								<label class="form-lbl top-margin" for="q1" name="">What year are you?</label> <span class=" redTxt">* </span><br>
+								<label class="form-lbl top-margin" for="q1" name="">What year are you? <span class=" redTxt">* </span></label><br>
 								<select class="form-field minimal" name="schoolYear">
 										<option value="Freshman">Freshman</option>
 										<option value="Sophmore">Sophmore</option>
@@ -226,29 +237,35 @@
 						</div>
 
 						<div class="col-md-12 top-margin" id="hackerContainer">
-								<label class="form-lbl" for="q1" name="">Is this your first time hacking?</label> <span class=" redTxt">* </span><br>
-								<input id="firstTimeHackeryes" name="firstTimeHacker" type="radio" value="yes" /> Yes
-								<input id="firstTimeHackerno" name="firstTimeHacker" type="radio" value="no" /> No <br>
+								<label class="form-lbl" for="q1" name="">Is this your first time hacking? <span class=" redTxt">* </span></label><br>
+								<label class="radio-container" id="firstTimeHackerRadio0"> Yes
+									<input id="firstTimeHackeryes" name="firstTimeHacker" type="radio" value="yes"/> 
+									<span class="radioBtn"></span>
+								</label>
+								<label class="radio-container" id="firstTimeHackerRadio1"> No
+									<input id="firstTimeHackerno" name="firstTimeHacker" type="radio" value="no"/> 
+									<span class="radioBtn"></span>
+								</label>
 						</div>
 
 						<div class="col-md-12 top-margin" id="resumeContainer">
-								<label class="form-lbl" for="q1" name="">Resume</label> <span class=" redTxt">* </span>
-								<input id="resume" name="q1" type="file" placeholder="Choose File"/>
+								<label class="form-lbl" for="q1" name="">Resume <span class=" redTxt">* </span></label>
+								<input class="inputfile" id="resume" name="resume" type="file" data-multiple-caption="{count} files selected" multiple/>
+								<label for="resume">Choose a file</label>
 						</div>
 
 						<div class="col-md-12 top-margin">
 								<label class="form-lbl" for="q1" name="">Github Profile</label>
-								<input class="form-field" id="github" name="github" type="text" placeholder=""/>
+								<input class="form-field" id="github" name="github" type="text" value="https://github.com/"/>
 						</div>
 
 						<div class="col-md-12 top-margin">
 								<label class="form-lbl" for="q1" name="">LinkedIn Profile</label>
-								<input class="form-field" id="linkedin" name="linkedin" type="text" placeholder=""/>
+								<input class="form-field" id="linkedin" name="linkedin" type="text" value="www.linkedin.com/in/"/>
 						</div>
 
 						<div id="shirtCol" class="col-md-12 top-margin">
-							<label class="form-lbl" for="q1" name="">T-Shirt Size</label> <span class=" redTxt">* </span>
-							<!-- <input class="form-field" id="shirtSize" name="q1" type="text" placeholder="Medium" /> -->
+							<label class="form-lbl" for="q1" name="">T-Shirt Size  <span class=" redTxt">* </span></label>
 							<select class="form-field minimal" id="shirtSize" name="shirtSize" >
 								<option value="small">Small</option>
 								<option value="medium">Medium</option>
@@ -258,52 +275,57 @@
 						</div>
 	
 						<div id="dietCol" class="col-md-12 top-margin">
-							<label class="form-lbl" for="q1" name="">Dietary Restrictions</label>  <span class=" redTxt">* </span>
-							<!-- <input class="form-field" id="diet" name="q1" type="text" placeholder="Halal" /> -->
+							<label class="form-lbl" for="q1" name="">Dietary Restrictions <span class=" redTxt">* </span></label>
 							<select class="form-field minimal" id="diet" name="diet" >
 								<option value="none">None</option>
 								<option value="vegetarian">Vegetarian</option>
 								<option value="vegan">Vegan</option>
 								<option value="halal">Halal</option>
+								<option value="kosher">Kosher</option>
 							</select>
 						</div>
 
 						<div class="col-md-12 top-margin" id="transportationContainer">
-								<label class="form-lbl" for="q1" name="">Do you need transportation to SwampHacks? (FYI carpool and buses w/ 400 mile radius) - outside that we do a travel reimbursement</label>
-								<span class=" redTxt">* </span>
+								<label class="form-lbl" for="q1" name="">Do you need transportation to SwampHacks? (FYI carpool and buses w/ 400 mile radius) - outside that we do a travel reimbursement <span class="redTxt">* </span></label>
 								<br>
-								<input id="transportationyes" name="transportation" type="radio" value="yes" /> Yes
-								<input id="transportationno" name="transportation" type="radio" value="no" /> No <br>
+								<label class="radio-container" id="transportationRadio0"> Yes
+									<input id="transportationyes" name="transportation" type="radio" value="yes"/> 
+									<span class="radioBtn"></span>
+								</label>
+								<label class="radio-container" id="transportationRadio1"> No
+									<input id="transportationno" name="transportation" type="radio" value="no"/> 
+									<span class="radioBtn"></span>
+								</label>
 						</div>
 						
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">Why would you like to participate in SwampHacks?</label> <span class=" redTxt">* </span>                     
+								<label class="form-lbl" for="q1" name="">Why would you like to participate in SwampHacks? <span class=" redTxt">* </span> </label>                    
 								<textarea class="form-field form-textbox" id="interest" name="interest" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">What’s an everyday problem that tech could solve?</label> <span class=" redTxt">* </span>                               
+								<label class="form-lbl" for="q1" name="">What’s an everyday problem that tech could solve? <span class=" redTxt">* </span> </label>                              
 								<textarea class="form-field form-textbox" id="everydayProblem" name="everydayProblem" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">What do you hope to gain out of SwampHacks?</label> <span class=" redTxt">* </span>                            
+								<label class="form-lbl" for="q1" name="">What do you hope to gain out of SwampHacks? <span class=" redTxt">* </span></label>                            
 								<textarea class="form-field form-textbox" id="hopes" name="hopes" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">Other comments? - what workshops, mentors, activities, etc. would you want to see?</label> <span class=" redTxt">* </span>
+								<label class="form-lbl" for="q1" name="">Other comments? - what workshops, mentors, activities, etc. would you want to see? <span class=" redTxt">* </span></label>
 								<textarea class="form-field form-textbox" id="comments" name="comments" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">How did you hear about SwampHacks? </label> <span class=" redTxt">* </span>
+								<label class="form-lbl" for="q1" name="">How did you hear about SwampHacks? <span class=" redTxt">* </span></label>
 								<textarea class="form-field form-textbox" id="news" name="news" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
 						<div class="col-md-12 top-margin" id="codeOfConductContainer">
-								<label class="form-lbl" for="q1" name="">Do you agree to the MLH Code of Conduct?</label> <span class=" redTxt">* </span>
-								<a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a> <br>
+								<label class="form-lbl" for="q1" name="">Do you agree to the MLH Code of Conduct? <span class=" redTxt">* </span></label>
+								<br><a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a> <br>
 								<label class="checkbox-container" id="agreedCheckbox"> I agree
 									<input name="codeOfConduct" type="checkbox" value="true"/>
 									<span class="checkmark"></span>
@@ -810,7 +832,30 @@
 			$("#sign-in-link").addClass("show");
 
 		}
-	
+
+		// add events to styled file input
+		var inputs = document.querySelectorAll( '.inputfile' );
+		Array.prototype.forEach.call( inputs, function( input )
+		{
+			var label = input.nextElementSibling,
+				labelVal = label.innerHTML;
+
+			input.addEventListener( 'change', function( e )
+			{
+				var fileName = '';
+				if( this.files && this.files.length > 1 )
+					fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+				else
+					fileName = e.target.value.split( '\\' ).pop();
+
+				if( fileName )
+					label.innerHTML = fileName;
+				else
+					label.innerHTML = labelVal;
+			});
+			input.addEventListener( 'focus', function(){ input.classList.add( 'has-focus' ); });
+		input.addEventListener( 'blur', function(){ input.classList.remove( 'has-focus' ); });
+		});
 
 		checkedInRef.on('value', function(snapshot) {
 
@@ -1143,6 +1188,7 @@
 
 		$("input[name='gender']").each(function(index, radio) {
 			radio.disabled = true;
+			$('#genderRadio'+index.toString()).addClass("disabled");
 		});
 		$('input:checkbox[name^="race"]').each(function(index, checkbox) {
 			checkbox.disabled = true;
@@ -1157,6 +1203,7 @@
 
 		$("input[name='firstTimeHacker']").each(function(index, radio) {
 			radio.disabled = true;
+			$('#firstTimeHackerRadio'+index.toString()).addClass("disabled");
 		});
 
 		$("#github").addClass("disabled");
@@ -1173,6 +1220,7 @@
 
 		$("input[name='transportation']").each(function(index, radio) {
 			radio.disabled = true;
+			$('#transportationRadio'+index.toString()).addClass("disabled");
 		});
 
 		$("#interest").addClass("disabled");
