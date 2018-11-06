@@ -32,6 +32,9 @@
 	</head>
 
   <body id="mainBody">
+	<div id="animationWindow" class="hide">
+		<div class="loader"></div>
+	</div>
 
 	<!-- Begin Status Popups -->
 
@@ -100,6 +103,10 @@
 
 					<li id="op0" class="pure-menu-item top-ln pure-menu-selected">
 							<a href="#" class="pure-menu-link" onclick="menuClick(0)">Application</a>
+					</li>
+
+					<li id="op7" class="pure-menu-item top-ln">
+						<a href="#" class="pure-menu-link" onclick="menuClick(7)">Transportation Form</a>
 					</li>
 
 					<li id="op2" class="pure-menu-item top-ln hide">
@@ -345,7 +352,10 @@
 				</div>
 
 				<div class="row">
-					<div class="col-md-12 top-margin">
+					<div class="col-md-6 top-margin">
+						<button id="saveFormBtn" class="button green" onclick="saveExit()"><p class="makeactbtn">Save and Exit</p></button>
+					</div>
+					<div class="col-md-6 top-margin">
 						<button id="submitBtn" class="button green" onclick="submitApplication()"><p class="makeactbtn">Submit</p></button>
 					</div>
 				</div>
@@ -435,20 +445,49 @@
 				</div>
 
 	  </div>
-	  	  	<!-- %%%%%%%%%%%%%% Applicant Info %%%%%%%%%%%%%% -->
-		<div id="info" class="hide">
+		<!-- %%%%%%%%%%%%%% Applicant Info %%%%%%%%%%%%%% -->
+	  <div id="info" class="hide">
 
-			<h1 class="header-main-type">Applicant information</h1>
-	
-					<div class="container-fluid notif-con">
-						<div class="row">
-							<ul id="userList">
+		<h1 class="header-main-type">Applicant information</h1>
 
-							</ul>
-						</div>
+				<div class="container-fluid notif-con">
+					<div class="row">
+						<ul id="userList">
+
+						</ul>
 					</div>
-	
-		  </div>
+				</div>
+
+		</div>
+		<!-- %%%%%%%%%%%%%% Transportation Form %%%%%%%%%%%%%% -->
+		<div id="transportationForm" class="hide">
+
+			<h1 class="header-main-type">Transportation Form</h1>
+
+				<div class="container-fluid notif-con">
+					<!-- Begin Mailchimp Signup Form -->
+					<link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
+					<style type="text/css">
+						#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
+						/* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
+						We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+					</style>
+					<div id="mc_embed_signup">
+					<form action="https://swamphacks.us10.list-manage.com/subscribe/post-json?u=44a52d9dbedc78feec6c91b97&amp;id=95e20955a2&c=?" method="get" id="transportation-form" name="transportation-form" class="validate" target="_blank" novalidate>
+						<div id="mc_embed_signup_scroll">
+						<label for="mce-EMAIL">Subscribe to our mailing list</label>
+						<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+						<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+						<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_44a52d9dbedc78feec6c91b97_95e20955a2" tabindex="-1" value=""></div>
+						<div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+						</div>
+					</form>
+					</div>
+
+					<!--End mc_embed_signup-->
+				</div>
+
+		</div>
 	  	<!-- %%%%%%%%%%%%%% Notification %%%%%%%%%%%%%% -->
 		<div id="notif" class="hide">
 
@@ -751,6 +790,7 @@
 		var ref = firebase.database().ref();
 		var userObj = JSON.parse(localStorage.getItem('loggedInUser'));
 		var loggedInUserKey = localStorage.getItem('loggedInUserKey');
+		var savedFormData = JSON.parse(localStorage.getItem('savedForm'));
 		var usersRef = ref.child("applicants");
 		var acceptedRef = ref.child("accepted");
 		var checkedInRef = ref.child("confirmed");
@@ -774,6 +814,32 @@
 		var numHalal = 0;
 		var numNone = 0;
 
+		$(document).ready( function () {
+			// I only have one form on the page but you can be more specific if need be.
+			var $form = $('form[name="transportation-form"]');
+			if ( $form.length > 0 ) {
+				$('form input[type="submit"]').bind('click', function ( event ) {
+					if ( event ) event.preventDefault();
+					$.ajax({
+						type: $form.attr('method'),
+						url: $form.attr('action'),
+						data: $form.serialize(),
+						cache       : false,
+						dataType    : 'json',
+						contentType: "application/json; charset=utf-8",
+						error       : function(err) { alert("Could not connect to the registration server. Please try again later."); },
+						success     : function(data) {
+							if (data.result != "success") {
+								// Something went wrong, do something to notify the user. maybe alert(data.msg);
+							} else {
+								// It worked, carry on...
+							}
+						}
+					});
+				});
+			}
+		});
+
 		// add school list to application selection
 		var schools = document.getElementById('schools');
 		var listHtml = '';
@@ -781,14 +847,14 @@
 			listHtml += '<option value="'+ school.institution + '">' + school.institution + '</option>';
 		}
 		schools.innerHTML += listHtml;
-
+		// send unlogged users to login page
 		firebase.auth().onAuthStateChanged(function(currentUser) {
 			if (currentUser && currentUser.emailVerified) {
 			} else if(localStorage.getItem('provider') != 'facebook'){
 				window.location.href = "login.html";
 			}
 		});
-
+		// Show admin options
 		if (userObj.email === "debrianfigueroa@ufl.edu" || userObj.email === "sponsors@swamphacks.com") {
 
 			$("#op2").removeClass("hide");
@@ -806,9 +872,19 @@
 			getStats();
 			reloadStats();
 		}
-
+		
 		if (userObj.applied || userObj.email === "sponsors@swamphacks.com") {
 			this.showMenu();
+			$('#mce-EMAIL').val(userObj.email);
+			if (userObj.transportation == 'yes') {
+				//show form on menu
+				// set form fields
+				$('#mce-EMAIL').val = userObj.email;
+			}
+		}else if (!userObj.applied && savedFormData) {
+			// show saved form info
+			if (savedFormData.email == userObj.email)
+				addSavedFormData();
 		}
 
 		// create qr code
@@ -1243,7 +1319,78 @@
 
 		$("#submitBtn").addClass("disabled");
 		$("#submitBtn").prop("disabled", true);
+		
+		$("#saveFormBtn").addClass("disabled");
+		$("#saveFormBtn").prop("disabled", true);
 	}
+
+	function addSavedFormData() {
+		const fname = savedFormData.fname ? savedFormData.fname : '';
+		const lname = savedFormData.lname ? savedFormData.lname : '';
+		const gender = savedFormData.gender ? savedFormData.gender : '';
+		const raceEthnicity = savedFormData.raceEthnicity ? savedFormData.raceEthnicity : undefined;
+		const school = savedFormData.school ? savedFormData.school : '';
+		const schoolYear = savedFormData.schoolYear ? savedFormData.schoolYear : '';
+		const firstTimeHacker = savedFormData.firstTimeHacker ? savedFormData.firstTimeHacker : '';
+		const githubProfile = savedFormData.githubProfile ? savedFormData.githubProfile : '';
+		const linkedinProfile = savedFormData.linkedinProfile ? savedFormData.linkedinProfile : '';
+		const tshirtSize = savedFormData.tshirtSize ? savedFormData.tshirtSize : '';
+		const dietaryRestrictions = savedFormData.dietaryRestrictions ? savedFormData.dietaryRestrictions : '';
+		const transportation = savedFormData.transportation ? savedFormData.transportation : '';
+		const interestReason = savedFormData.interestReason ? savedFormData.interestReason : '';
+		const everydayProblem = savedFormData.everydayProblem ? savedFormData.everydayProblem : '';
+		const hopeToGain = savedFormData.hopeToGain ? savedFormData.hopeToGain : '';
+		const extraInfo = savedFormData.extraInfo ? savedFormData.extraInfo : '';
+		const hearAbout = savedFormData.hearAbout ? savedFormData.hearAbout : '';
+		const codeOfConduct = savedFormData.codeOfConduct ? savedFormData.codeOfConduct : undefined;
+
+		$("#firstName").val(fname);
+		$("#lastName").val(lname);
+		if(gender != '') {
+			$("#gender"+gender).prop("checked", true);
+		}
+		if (raceEthnicity) {
+			// Check all the necessary checkboxes
+			$('input:checkbox[name^="race"]').each(function(index, checkbox) {
+				var value = checkbox.value;
+				for (var i in raceEthnicity) {
+					if (raceEthnicity[i] == value) {
+						checkbox.checked = true;
+						break;
+					}
+				}
+			});
+		}
+		if (school != '') {
+			$('select[name="schools"]').val(school);
+		}
+		if (schoolYear != '') {
+			$('select[name="schoolYear"]').val(schoolYear);
+		}
+		if (firstTimeHacker != '') {
+			$("#firstTimeHacker"+firstTimeHacker).prop("checked", true);
+		}
+		$("#github").val(githubProfile);
+		$("#linkedin").val(linkedinProfile);
+		if (tshirtSize != '') {
+			$('select[name="shirtSize"]').val(tshirtSize);
+		}
+		if (dietaryRestrictions != '') {
+			$('select[name="diet"]').val(dietaryRestrictions);
+		}
+		if (transportation != '') {
+			$("#transportation"+transportation).prop("checked", true);
+		}
+		$("#interest").val(interestReason);
+		$("#everydayProblem").val(everydayProblem);
+		$("#hopes").val(hopeToGain);
+		$("#comments").val(extraInfo);
+		$("#news").val(hearAbout);
+		if (codeOfConduct) {
+			$('input:checkbox[name^="codeOfConduct"]')[0].checked = codeOfConduct;
+		}
+	}
+	// End of save form data
 
 	function addApplicationInfo() {
 		$("#firstName").val(userObj.fname);
@@ -1458,6 +1605,8 @@
                     var updates = {};
                     updates[loggedInUserKey] = user;
                     userRef.update(updates).then(function() {
+						// delete saved form data
+						localStorage.setItem('savedForm', null);
 						// update user data
 						userObj = user;
 						$("#welcomeMessage").text("Welcome, " + userObj.fname + "!");
@@ -1488,7 +1637,66 @@
                     }.bind(this));
                 });
             }
-        }
+		}
+		
+		function saveExit() {
+			// save entered information locally, and log out user
+			// Get form values
+			const fname = $("#firstName").val();
+            const lname = $("#lastName").val();
+            const gender = $('input[name="gender"]:checked').val(); //returns undefined if none clicked
+            // array of all race/ethnicities selected
+            const raceEthnicity = $('input[name="race"]:checked').map(function() {
+                return this.value;
+            }).get();
+            const school = $('select[name="schools"]').val();
+            const schoolYear = $('select[name="schoolYear"]').val();
+			const firstTimeHacker = $('input[name="firstTimeHacker"]:checked').val();
+			const resumeName = $('#resume').get(0).files[0] ? $('#resume').get(0).files[0].name: undefined;
+            const githubProfile = $('input[name="github"]').val();
+            const linkedinProfile = $('input[name="linkedin"]').val();
+            const shirtSize = $('select[name="shirtSize"]').val();
+            const diet = $('select[name="diet"]').val();
+            const transportation = $('input[name="transportation"]:checked').val();
+            const interestReason = $('textarea[name="interest"]').val();
+            const everydayProblem = $('textarea[name="everydayProblem"]').val();
+            const hopeToGain =  $('textarea[name="hopes"]').val();
+            const comments =  $('textarea[name="comments"]').val();
+            const hearAbout =  $('textarea[name="news"]').val();
+			const codeOfConduct = $('input[name="codeOfConduct"]:checked').val();
+			const savedForm = {
+				email: userObj.email,
+				fname: fname,
+				lname: lname,
+				gender: gender,
+				raceEthnicity: raceEthnicity,
+				school: school,
+				schoolYear: schoolYear,
+				firstTimeHacker: firstTimeHacker,
+				githubProfile: githubProfile,
+				linkedinProfile: linkedinProfile,
+				tshirtSize: shirtSize,
+				dietaryRestrictions: diet,
+				transportation: transportation,
+				interestReason: interestReason,
+				everydayProblem: everydayProblem,
+				hopeToGain: hopeToGain,
+				hearAbout: hearAbout,
+				extraInfo: comments,
+				codeOfConduct: codeOfConduct
+			};
+			localStorage.setItem('savedForm', JSON.stringify(savedForm));
+			// Show the loader
+			$("#animationWindow").removeClass("hide");
+			$("#animationWindow").addClass("showflex");
+			// log user out
+			this.confirmLogoutClicked();
+			setTimeout(function(){
+				// Hide the loader
+				$("#animationWindow").removeClass("showflex");
+				$("#animationWindow").addClass("hide");
+			}, 2000);
+		}
 
 	// %%%%%%%%%%%%% End of Application Functions %%%%%%%%%%%%% //
 
@@ -1579,6 +1787,7 @@
         $("#op3").removeClass("pure-menu-selected");
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op6").removeClass("pure-menu-selected");
+		$("#op7").removeClass("pure-menu-selected");
 
 		$("#application").addClass("show");
         $("#application").removeClass("hide");
@@ -1593,7 +1802,10 @@
         $("#login").removeClass("show");
 
 		$("#notif").addClass("hide");
-        $("#notif").removeClass("show");
+		$("#notif").removeClass("show");
+		
+		$("#transportationForm").addClass("hide");
+		$("#transportationForm").removeClass("show");
 	  } else if (item === 1) {
 
 		$("#op1").addClass("pure-menu-selected");
@@ -1601,6 +1813,7 @@
         $("#op3").removeClass("pure-menu-selected");
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op6").removeClass("pure-menu-selected");
+		$("#op7").removeClass("pure-menu-selected");
 
         $("#dashboard").addClass("show");
 		$("#dashboard").removeClass("hide");
@@ -1615,7 +1828,10 @@
         $("#login").removeClass("show");
 
 		$("#notif").addClass("hide");
-        $("#notif").removeClass("show");
+		$("#notif").removeClass("show");
+		
+		$("#transportationForm").addClass("hide");
+		$("#transportationForm").removeClass("show");
 
 		if (userObj.status !== undefined) {
 
@@ -1646,6 +1862,7 @@
         $("#op3").removeClass("pure-menu-selected");
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op6").removeClass("pure-menu-selected");
+		$("#op7").removeClass("pure-menu-selected");
 
 		$("#info").addClass("show");
         $("#info").removeClass("hide");
@@ -1660,7 +1877,10 @@
         $("#login").removeClass("show");
 
 		$("#notif").addClass("hide");
-        $("#notif").removeClass("show");
+		$("#notif").removeClass("show");
+		
+		$("#transportationForm").addClass("hide");
+		$("#transportationForm").removeClass("show");
 
 		// load user's information
 		loadUserInfo();
@@ -1676,6 +1896,7 @@
 		$("#op0").removeClass("pure-menu-selected");
         $("#op1").removeClass("pure-menu-selected");
 		$("#op6").removeClass("pure-menu-selected");
+		$("#op7").removeClass("pure-menu-selected");
 
 		$("#application").addClass("hide");
         $("#application").removeClass("show");
@@ -1690,7 +1911,10 @@
         $("#login").removeClass("hide");
 
 		$("#notif").addClass("hide");
-        $("#notif").removeClass("show");
+		$("#notif").removeClass("show");
+		
+		$("#transportationForm").addClass("hide");
+		$("#transportationForm").removeClass("show");
 
 		appliedSchools = [];
 		schoolsAndCount = {};
@@ -1707,6 +1931,7 @@
 		$("#op1").removeClass("pure-menu-selected");
 		$("#op3").removeClass("pure-menu-selected");
 		$("#op5").removeClass("pure-menu-selected");
+		$("#op7").removeClass("pure-menu-selected");
 
 		$("#application").addClass("hide");
         $("#application").removeClass("show");
@@ -1721,9 +1946,39 @@
         $("#login").removeClass("show");
 
 		$("#notif").addClass("show");
-        $("#notif").removeClass("hide");
+		$("#notif").removeClass("hide");
+		
+		$("#transportationForm").addClass("hide");
+		$("#transportationForm").removeClass("show");
 
-	  }
+	  } else if (item === 7) {
+		$("#op7").addClass("pure-menu-selected");
+		$("#op6").removeClass("pure-menu-selected");
+		$("#op0").removeClass("pure-menu-selected");
+		$("#op1").removeClass("pure-menu-selected");
+		$("#op3").removeClass("pure-menu-selected");
+		$("#op5").removeClass("pure-menu-selected");
+
+
+		$("#transportationForm").addClass("show");
+		$("#transportationForm").removeClass("hide");
+
+		$("#application").addClass("hide");
+		$("#application").removeClass("show");
+
+		$("#info").addClass("hide");
+		$("#info").removeClass("show");
+
+		$("#dashboard").addClass("hide");
+		$("#dashboard").removeClass("show");
+
+		$("#login").addClass("hide");
+		$("#login").removeClass("show");
+
+		$("#notif").addClass("hide");
+		$("#notif").removeClass("show");
+
+	   }
     }
 
 		function denyLogoutClicked() {
@@ -1964,6 +2219,10 @@
 			} else if (selected == 6) {
 
 				$("#headertxt").text("Send iOS Notif");
+
+			} else if (selected == 6) {
+
+				$("#headertxt").text("Transportation Form");
 
 			}
 
