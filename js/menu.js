@@ -33,11 +33,11 @@
     }
 
     menuLink.onclick = function (e) {
-        console.log('first');
         toggleAll(e);
     };
     if (content) {
         content.onclick = function(e) {
+            // TODO: being called even when menu is active, needs investigation
             if (menu.className.indexOf('active') !== -1) {
                 // toggleAll(e);
             }
