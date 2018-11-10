@@ -9,7 +9,6 @@
         var classes = element.className.split(/\s+/),
             length = classes.length,
             i = 0;
-
         for(; i < length; i++) {
           if (classes[i] === className) {
             classes.splice(i, 1);
@@ -34,12 +33,13 @@
     }
 
     menuLink.onclick = function (e) {
+        console.log('first');
         toggleAll(e);
     };
     if (content) {
         content.onclick = function(e) {
             if (menu.className.indexOf('active') !== -1) {
-                toggleAll(e);
+                // toggleAll(e);
             }
         };
     }

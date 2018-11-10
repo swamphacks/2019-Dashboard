@@ -168,6 +168,16 @@
 							<input class="form-field" id="lastName" name="q1" type="text" placeholder="" />
 						</div>
 
+						<div class="col-md-12 top-margin">
+							<label class="form-lbl" for="q1" name="">Phone Number <span class="redTxt">* </span></label>
+							<input class="form-field" id="phoneNumber" name="q1" type="text" placeholder="###-###-####" />
+						</div>
+
+						<div class="col-md-12 top-margin">
+							<label class="form-lbl" for="q1" name="">Birthdate <span class="redTxt">* </span></label>
+							<input class="form-field" id="birthdate" name="q1" type="text" placeholder="MM/DD/YYYY" />
+						</div>
+
 						<div class="col-md-12 top-margin" id="genderContainer">
 								<label class="form-lbl" for="q1" name="">Gender <span class="redTxt">* </span></label><br>
 								<label class="radio-container" id="genderRadio0"> Male
@@ -226,6 +236,10 @@
 									<input name="race" type="checkbox" value="Other"/>
 									<span class="checkmark"></span>
 								</label>
+								<label class="checkbox-container" id="raceCheckBox9"> Prefer Not to Answer
+									<input name="race" type="checkbox" value="Prefer Not to Answer"/>
+									<span class="checkmark"></span>
+								</label>
 						</div>
 
 						<div class="col-md-12 top-margin">
@@ -238,8 +252,17 @@
 										<option value="Freshman">Freshman</option>
 										<option value="Sophmore">Sophmore</option>
 										<option value="Junior">Junior</option>
-										<option value="Senior">Senior</option>
+										<option value="Senior/4+ Years">Senior/4+ Years</option>
 										<option value="PHD/Master">PHD/Master</option>
+								</select> <br>
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl top-margin" for="q1" name="">What is your major? <span class=" redTxt">* </span></label><br>
+								<select class="form-field minimal" name="major">
+									<!-- TODO: Get list of majors -->
+										<option value="Computer Science">Computer Science</option>
+										<option value="Computer Engineering">Computer Engineering</option>
 								</select> <br>
 						</div>
 
@@ -331,10 +354,25 @@
 						</div>
 
 						<div class="col-md-12 top-margin" id="codeOfConductContainer">
-								<label class="form-lbl" for="q1" name="">Do you agree to the MLH Code of Conduct? <span class=" redTxt">* </span></label>
-								<br><a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a> <br>
+								<label class="form-lbl" for="q1" name="">
+									I have read and agree to the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a><span class=" redTxt"> *</span>
+								</label>
+								<br>
 								<label class="checkbox-container" id="agreedCheckbox"> I agree
 									<input name="codeOfConduct" type="checkbox" value="true"/>
+									<span class="checkmark"></span>
+								</label>
+						</div>
+
+						<div class="col-md-12 top-margin" id="authorizeOptionContainer">
+								<label class="form-lbl" for="q1" name="">
+										I authorize you to share certain application/registration information for event administration, ranking, MLH administration, pre and post-event informational e-mails, and occasional messages about hackathons in-line with the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.
+										I further agree to the terms of both the <a href="https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md" target="_blank">MLH Contest Terms and Conditions</a> and the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.
+										<!-- <span class=" redTxt"> *</span> -->
+								</label>
+								<br>
+								<label class="checkbox-container" id="agreedCheckboxOpt"> I agree
+									<input name="authorizeOption" type="checkbox" value="true"/>
 									<span class="checkmark"></span>
 								</label>
 						</div>
@@ -342,10 +380,6 @@
 					</form>
 
 				</div>
-
-				<!-- <div class="col-md-12 top-margin descrip-txt">
-						If you'd like to change anything later on, feel free to come back here and update your information!
-				</div> -->
 
 				<div class="col-md-12 top-margin descrip-txt hide" id="profileStatusTxt">
 					Please fill in all fields!
@@ -1326,6 +1360,12 @@
 		$("#lastName").addClass("disabled");
 		$("#lastName").prop("disabled", true);
 
+		$("#phoneNumber").addClass("disabled");
+		$("#phoneNumber").prop("disabled", true);
+
+		$("#birthdate").addClass("disabled");
+		$("#birthdate").prop("disabled", true);
+
 		$("input[name='gender']").each(function(index, radio) {
 			radio.disabled = true;
 			$('#genderRadio'+index.toString()).addClass("disabled");
@@ -1340,6 +1380,9 @@
 
 		$('select[name="schoolYear"]').addClass("disabled");
 		$('select[name="schoolYear"]').prop("disabled", true);
+
+		$('select[name="major"]').addClass("disabled");
+		$('select[name="major"]').prop("disabled", true);
 
 		$("input[name='firstTimeHacker']").each(function(index, radio) {
 			radio.disabled = true;
@@ -1391,10 +1434,13 @@
 	function addSavedFormData() {
 		const fname = savedFormData.fname ? savedFormData.fname : '';
 		const lname = savedFormData.lname ? savedFormData.lname : '';
+		const phoneNumber = savedFormData.phoneNumber ? savedFormData.phoneNumber : '';
+		const birthdate = savedFormData.birthdate ? savedFormData.birthdate : '';
 		const gender = savedFormData.gender ? savedFormData.gender : '';
 		const raceEthnicity = savedFormData.raceEthnicity ? savedFormData.raceEthnicity : undefined;
 		const school = savedFormData.school ? savedFormData.school : '';
 		const schoolYear = savedFormData.schoolYear ? savedFormData.schoolYear : '';
+		const major = savedFormData.major ? savedFormData.major : '';
 		const firstTimeHacker = savedFormData.firstTimeHacker ? savedFormData.firstTimeHacker : '';
 		const githubProfile = savedFormData.githubProfile ? savedFormData.githubProfile : '';
 		const linkedinProfile = savedFormData.linkedinProfile ? savedFormData.linkedinProfile : '';
@@ -1407,6 +1453,7 @@
 		const extraInfo = savedFormData.extraInfo ? savedFormData.extraInfo : '';
 		const hearAbout = savedFormData.hearAbout ? savedFormData.hearAbout : '';
 		const codeOfConduct = savedFormData.codeOfConduct ? savedFormData.codeOfConduct : undefined;
+		const authorizeOption = savedFormData.authorizeOption ? savedFormData.authorizeOption : undefined;
 
 		$("#firstName").val(fname);
 		$("#lastName").val(lname);
@@ -1431,6 +1478,9 @@
 		if (schoolYear != '') {
 			$('select[name="schoolYear"]').val(schoolYear);
 		}
+		if (major != '') {
+			$('select[name="major"]').val(major);
+		}
 		if (firstTimeHacker != '') {
 			$("#firstTimeHacker"+firstTimeHacker).prop("checked", true);
 		}
@@ -1453,12 +1503,17 @@
 		if (codeOfConduct) {
 			$('input:checkbox[name^="codeOfConduct"]')[0].checked = codeOfConduct;
 		}
+		if (authorizeOption) {
+			$('input:checkbox[name^="authorizeOption"]')[0].checked = authorizeOption;
+		}
 	}
 	// End of save form data
 
 	function addApplicationInfo() {
 		$("#firstName").val(userObj.fname);
 		$("#lastName").val(userObj.lname);
+		$("#phoneNumber").val(userObj.phoneNumber);
+		$("#birthdate").val(userObj.birthdate);
 		$("#gender"+userObj.gender).prop("checked", true);
 		// Check all the necessary checkboxes
 		$('input:checkbox[name^="race"]').each(function(index, checkbox) {
@@ -1472,6 +1527,7 @@
 		});
 		$('select[name="schools"]').val(userObj.school);
 		$('select[name="schoolYear"]').val(userObj.schoolYear);
+		$('select[name="major"]').val(userObj.major);
 		$("#firstTimeHacker"+userObj.firstTimeHacker).prop("checked", true);
 		// hide resume field
 		// $("#resumeContainer").addClass("hide");
@@ -1486,6 +1542,7 @@
 		$("#comments").val(userObj.extraInfo);
 		$("#news").val(userObj.hearAbout);
 		$('input:checkbox[name^="codeOfConduct"]')[0].checked = true;
+		$('input:checkbox[name^="authorizeOption"]')[0].checked = userObj.authorizeOption;
 		disableFields();
 	}
 
@@ -1517,7 +1574,24 @@
 			});
         }
 
-		function checkFields(fname, lname, gender, raceEthnicity, resume, firstTimeHacker, transportation,
+		function validatePhoneNumber(phoneNumber) {
+			var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+			if(phoneNumber.match(phoneno)){
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		function validateBirthdate(birthdate) {
+			var dateformat = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+			if (birthdate.match(dateformat)) {
+				return true;
+			}
+			return false;
+		}
+
+		function checkFields(fname, lname, gender, phoneNumber, birthdate, raceEthnicity, resume, firstTimeHacker, transportation,
 				interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct) {
             var canSubmit = true;
             if (fname == "") {
@@ -1529,6 +1603,18 @@
                 canSubmit = false;
                 // mark as 
 				$("#lastName").addClass("requiredField");
+			}
+			// make sure phone number format is correct
+			if (phoneNumber == "" || !validatePhoneNumber(phoneNumber)) {
+				canSubmit = false;
+                // mark as 
+				$("#phoneNumber").addClass("requiredField");
+			}
+			// make sure birthdate format is correct
+			if (birthdate == "" || !validateBirthdate(birthdate)) {
+				canSubmit = false;
+                // mark as 
+				$("#birthdate").addClass("requiredField");
 			}
 			if (interestReason == "") {
                 canSubmit = false;
@@ -1591,6 +1677,8 @@
 		function removeRequired() {
 			$("#firstName").removeClass("requiredField");
 			$("#lastName").removeClass("requiredField");
+			$("#phoneNumber").removeClass("requiredField");
+			$("#birthdate").removeClass("requiredField");
 			$("#interest").removeClass("requiredField");
 			$("#everydayProblem").removeClass("requiredField");
 			$("#hopes").removeClass("requiredField");
@@ -1609,12 +1697,15 @@
             const fname = $("#firstName").val();
             const lname = $("#lastName").val();
             const gender = $('input[name="gender"]:checked').val(); //returns undefined if none clicked
+			const phoneNumber = $("#phoneNumber").val();
+			const birthdate = $("#birthdate").val();
             // array of all race/ethnicities selected
             const raceEthnicity = $('input[name="race"]:checked').map(function() {
                 return this.value;
             }).get();
             const school = $('select[name="schools"]').val();
             const schoolYear = $('select[name="schoolYear"]').val();
+			const major = $('select[name="major"]').val();
 			const firstTimeHacker = $('input[name="firstTimeHacker"]:checked').val();
 			const resumeName = $('#resume').get(0).files[0] ? $('#resume').get(0).files[0].name: undefined;
             const githubProfile = $('input[name="github"]').val();
@@ -1628,8 +1719,9 @@
             const comments =  $('textarea[name="comments"]').val();
             const hearAbout =  $('textarea[name="news"]').val();
             const codeOfConduct = $('input[name="codeOfConduct"]:checked').val();
+			const authorizeOption = $('input[name="authorizeOption"]:checked').val();
 
-            var canSubmit = checkFields(fname, lname, gender, raceEthnicity,
+            var canSubmit = checkFields(fname, lname, gender, phoneNumber, birthdate, raceEthnicity,
 				$('#resume').get(0).files[0], firstTimeHacker, transportation,
 				interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct);
             
@@ -1644,10 +1736,13 @@
                         email: email,
                         fname: fname,
                         lname: lname,
+						phoneNumber: phoneNumber,
+						birthdate: birthdate,
                         gender: gender,
                         raceEthnicity: raceEthnicity,
                         school: school,
                         schoolYear: schoolYear,
+						major: major,
 						firstTimeHacker: firstTimeHacker,
 						resumeName: resumeName,
 						githubProfile: githubProfile,
@@ -1660,6 +1755,7 @@
                         hopeToGain: hopeToGain,
                         hearAbout: hearAbout,
                         extraInfo: comments,
+						authorizeOption: authorizeOption,
                         isVolunteer: false,
                         status: "PENDING",
                         applied: true
@@ -1708,6 +1804,8 @@
 			// Get form values
 			const fname = $("#firstName").val();
             const lname = $("#lastName").val();
+			const phoneNumber = $("#phoneNumber").val();
+            const birthdate = $("#birthdate").val();
             const gender = $('input[name="gender"]:checked').val(); //returns undefined if none clicked
             // array of all race/ethnicities selected
             const raceEthnicity = $('input[name="race"]:checked').map(function() {
@@ -1715,6 +1813,7 @@
             }).get();
             const school = $('select[name="schools"]').val();
             const schoolYear = $('select[name="schoolYear"]').val();
+			const major = $('select[name="major"]').val();
 			const firstTimeHacker = $('input[name="firstTimeHacker"]:checked').val();
 			const resumeName = $('#resume').get(0).files[0] ? $('#resume').get(0).files[0].name: undefined;
             const githubProfile = $('input[name="github"]').val();
@@ -1728,14 +1827,18 @@
             const comments =  $('textarea[name="comments"]').val();
             const hearAbout =  $('textarea[name="news"]').val();
 			const codeOfConduct = $('input[name="codeOfConduct"]:checked').val();
+			const authorizeOption = $('input[name="authorizeOption"]:checked').val();
 			const savedForm = {
 				email: userObj.email,
 				fname: fname,
 				lname: lname,
+				phoneNumber: phoneNumber,
+				birthdate: birthdate,
 				gender: gender,
 				raceEthnicity: raceEthnicity,
 				school: school,
 				schoolYear: schoolYear,
+				major: major,
 				firstTimeHacker: firstTimeHacker,
 				githubProfile: githubProfile,
 				linkedinProfile: linkedinProfile,
@@ -1747,6 +1850,7 @@
 				hopeToGain: hopeToGain,
 				hearAbout: hearAbout,
 				extraInfo: comments,
+				authorizeOption: authorizeOption,
 				codeOfConduct: codeOfConduct
 			};
 			localStorage.setItem('savedForm', JSON.stringify(savedForm));
@@ -1759,7 +1863,7 @@
 				// Hide the loader
 				$("#animationWindow").removeClass("showflex");
 				$("#animationWindow").addClass("hide");
-			}, 2000);
+			}, 2500);
 		}
 
 	// %%%%%%%%%%%%% End of Application Functions %%%%%%%%%%%%% //
@@ -2043,7 +2147,7 @@
 		$("#notif").removeClass("show");
 
 	   }
-    }
+	}
 
 		function denyLogoutClicked() {
 
