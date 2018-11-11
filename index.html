@@ -601,7 +601,7 @@
 						<div class="response" id="mce-success-response" style="display:none"></div>
 					</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
 					<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_44a52d9dbedc78feec6c91b97_95e20955a2" tabindex="-1" value=""></div>
-					<div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+					<div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button green"></div>
 					</div>
 				</form>
 				</div>
@@ -994,7 +994,7 @@
 			getStats();
 			reloadStats();
 		}
-		
+
 		if (userObj.applied || userObj.email === "sponsors@swamphacks.com") {
 			this.showMenu();
 			$('#mce-EMAIL').val(userObj.email);
@@ -1800,6 +1800,7 @@
 			$("#hackerContainer").removeClass("requiredCheckbox");
 			$("#transportationContainer").removeClass("requiredCheckbox");
 			$("#codeOfConductContainer").removeClass("requiredCheckbox");
+			$("#authorizeOptionContainer").removeClass("requiredCheckbox");
 			$('#incorrectFields').addClass('hide');
         }
         
@@ -1892,7 +1893,10 @@
 						// delete saved form data
 						localStorage.setItem('savedForm', null);
 						// update user data
-						userObj = user;
+						this.userObj = user;
+						localStorage.setItem('loggedInUser', JSON.stringify(user));
+						localStorage.setItem('loggedInUserKey', loggedInUserKey);
+						// update welcome message
 						$("#welcomeMessage").text("Welcome, " + userObj.fname + "!");
 						this.removeRequired();
 						this.showMenu();
