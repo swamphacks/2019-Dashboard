@@ -75,6 +75,7 @@
 .requiredCheckbox {
   border-color: red !important;
   border-width: 1px;
+  border-radius: 5px;
   border-style: solid;
 }
 
@@ -559,6 +560,11 @@ td, th {
 
 .top-margin {
   margin-top: 2em !important;
+  transition: margin-top 1s;
+}
+
+.reduce-top {
+  margin-top: -2em !important;
 }
 
 .school-tab {
@@ -649,6 +655,22 @@ td b {
   background-color: white;
   -webkit-appearance: none;
 }
+
+.otherInput {
+  visibility: hidden;
+  width: 95%;
+  opacity: 0;
+  margin-left: 30px;
+  transform: translateY(-100%);
+  transition: visibility 0.5s, transform 0.5s, opacity 0.5s;
+}
+
+.showOtherInput {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0%);
+}
+
 select {
 
   /* styling */

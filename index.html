@@ -181,24 +181,26 @@
 						<div class="col-md-12 top-margin" id="genderContainer">
 								<label class="form-lbl" for="q1" name="">Gender <span class="redTxt">* </span></label><br>
 								<label class="radio-container" id="genderRadio0"> Male
-									<input id="genderMale" name="gender" type="radio" value="Male">
+									<input id="genderMale" name="gender" type="radio" value="Male" onclick="genderRadioClicked(false)">
 									<span class="radioBtn"></span>
 								</label>
 								<label class="radio-container" id="genderRadio1"> Female
-									<input id="genderFemale" name="gender" type="radio" value="Female"/>
+									<input id="genderFemale" name="gender" type="radio" value="Female" onclick="genderRadioClicked(false)"/>
 									<span class="radioBtn"></span>
 								</label>
 								<label class="radio-container" id="genderRadio2"> Prefer not to Answer
-									<input id="genderPrefer not to Answer" name="gender" type="radio" value="Prefer not to Answer"/>
+									<input id="genderPrefer not to Answer" name="gender" type="radio" value="Prefer not to Answer" onclick="genderRadioClicked(false)"/>
 									<span class="radioBtn"></span>
 								</label>
 								<label class="radio-container" id="genderRadio3"> Other
-									<input id="genderOther" name="gender" type="radio" value="Other"/>
+									<input id="genderOther" name="gender" type="radio" value="Other" onclick="genderRadioClicked(true)"/>
 									<span class="radioBtn"></span>
 								</label>
 						</div>
+						<!-- hidden input for when other is clicked -->
+						<input class="form-field otherInput" id="genderOtherInput" type="text"/>
 
-						<div class="col-md-12 top-margin" id="raceContainer">
+						<div class="col-md-12 top-margin reduce-top" id="raceContainer">
 								<label class="form-lbl" for="q1" name="">Race/Ethnicity <span class="redTxt">* </span></label><br>
 								<label class="checkbox-container" id="raceCheckBox0"> Non-Hispanic White
 									<input name="race" type="checkbox" value="Non-Hispanic White">
@@ -237,12 +239,14 @@
 									<span class="checkmark"></span>
 								</label>
 								<label class="checkbox-container" id="raceCheckBox8"> Other
-									<input name="race" type="checkbox" value="Other"/>
+									<input id="raceOther" name="race" type="checkbox" value="Other" onclick="raceOtherClicked()"/>
 									<span class="checkmark"></span>
 								</label>
 						</div>
+						<!-- hidden input for when other is clicked -->
+						<input class="form-field otherInput" id="raceOtherInput" type="text"/>
 
-						<div class="col-md-12 top-margin">
+						<div class="col-md-12 top-margin reduce-top" id="schoolContainer">
 								<label class="form-lbl" for="q1" name="">Your School <span class=" redTxt">* </span></label><br>
 								<select class="form-field minimal" name="schools" id="schools">
 									<!-- priority schools -->
@@ -1366,6 +1370,28 @@
 
 		}
 	// %%%%%%%%%%%%% Application Functions %%%%%%%%%%%%% //
+	function genderRadioClicked(state) {
+		if (state) {
+			// other is selected
+			$('#genderOtherInput').addClass('showOtherInput');
+			$('#raceContainer').removeClass('reduce-top');
+		} else {
+			$('#genderOtherInput').removeClass('showOtherInput');
+			$('#raceContainer').addClass('reduce-top');
+		}
+	}
+
+	function raceOtherClicked() {
+		if ($('#raceOther')[0].checked) {
+			// other is selected
+			$('#raceOtherInput').addClass('showOtherInput');
+			$('#schoolContainer').removeClass('reduce-top');
+		} else {
+			$('#raceOtherInput').removeClass('showOtherInput');
+			$('#schoolContainer').addClass('reduce-top');
+		}
+	}
+
 	function disableFields() {
 		$("#firstName").addClass("disabled");
 		$("#firstName").prop("disabled", true);
@@ -1383,10 +1409,25 @@
 			radio.disabled = true;
 			$('#genderRadio'+index.toString()).addClass("disabled");
 		});
+
+		if (userObj.gender === 'Other') {
+			$("#genderOtherInput").addClass("disabled");
+			$("#genderOtherInput").prop("disabled", true);
+		}
+
 		$('input:checkbox[name^="race"]').each(function(index, checkbox) {
 			checkbox.disabled = true;
 			$('#raceCheckBox'+index.toString()).addClass("disabled");
 		});
+		for(let race in userObj.raceEthnicity) {
+			if (race === 'Other') {
+				$('#raceOtherInput').addClass('showOtherInput');
+				$('#schoolContainer').removeClass('reduce-top');
+
+				$("#raceOtherInput").addClass("disabled");
+				$("#raceOtherInput").prop("disabled", true);
+			}
+		}
 
 		$('select[name="schools"]').addClass("disabled");
 		$('select[name="schools"]').prop("disabled", true);
@@ -1453,7 +1494,9 @@
 		const phoneNumber = savedFormData.phoneNumber ? savedFormData.phoneNumber : '';
 		const birthdate = savedFormData.birthdate ? savedFormData.birthdate : '';
 		const gender = savedFormData.gender ? savedFormData.gender : '';
+		const genderDesc = savedFormData.genderDesc ? savedFormData.genderDesc : '';
 		const raceEthnicity = savedFormData.raceEthnicity ? savedFormData.raceEthnicity : undefined;
+		const raceDesc = savedFormData.raceDesc ? savedFormData.raceDesc : '';
 		const school = savedFormData.school ? savedFormData.school : '';
 		const schoolYear = savedFormData.schoolYear ? savedFormData.schoolYear : '';
 		const studyLevel = savedFormData.studyLevel ? savedFormData.studyLevel : '';
@@ -1476,6 +1519,10 @@
 		$("#lastName").val(lname);
 		if(gender != '') {
 			$("#gender"+gender).prop("checked", true);
+			if (gender === 'Other') {
+				genderRadioClicked(true);
+				$("#genderOtherInput").val(genderDesc);
+			}
 		}
 		if (raceEthnicity) {
 			// Check all the necessary checkboxes
@@ -1484,6 +1531,10 @@
 				for (var i in raceEthnicity) {
 					if (raceEthnicity[i] == value) {
 						checkbox.checked = true;
+						if (value === 'Other') {
+							raceOtherClicked();
+							$("#raceOtherInput").val(raceDesc);
+						}
 						break;
 					}
 				}
@@ -1535,12 +1586,20 @@
 		$("#phoneNumber").val(userObj.phoneNumber);
 		$("#birthdate").val(userObj.birthdate);
 		$("#gender"+userObj.gender).prop("checked", true);
+		if (userObj.gender === 'Other') {
+			genderRadioClicked(true);
+			$('#genderOtherInput').val(userObj.genderDesc);
+		}
 		// Check all the necessary checkboxes
 		$('input:checkbox[name^="race"]').each(function(index, checkbox) {
 			var value = checkbox.value;
 			for (var index in userObj.raceEthnicity) {
 				if (userObj.raceEthnicity[index] == value) {
 					checkbox.checked = true;
+					if (value === 'Other') {
+						raceOtherClicked();
+						$("#raceOtherInput").val(userObj.raceDesc);
+					}
 					break;
 				}
 			}
@@ -1612,7 +1671,7 @@
 			return false;
 		}
 
-		function checkFields(fname, lname, gender, phoneNumber, birthdate, raceEthnicity, resume, firstTimeHacker, transportation,
+		function checkFields(fname, lname, gender, genderDesc, phoneNumber, birthdate, raceEthnicity, raceDesc, resume, firstTimeHacker, transportation,
 				interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct, authorizeOption) {
             var canSubmit = true;
             if (fname == "") {
@@ -1666,12 +1725,20 @@
                 canSubmit = false;
                 // mark as 
 				$("#genderContainer").addClass("requiredCheckbox");
-            }
-            if (!raceEthnicity) {
+            } else if (genderDesc == '') {
+				canSubmit = false;
+                // mark as 
+				$("#genderOtherInput").addClass("requiredField");
+			}
+            if (raceEthnicity.length <= 0) {
                 canSubmit = false;
                 // mark as 
 				$("#raceContainer").addClass("requiredCheckbox");
-            }
+            } else if (raceDesc == '') {
+				canSubmit = false;
+                // mark as 
+				$("#raceOtherInput").addClass("requiredField");
+			}
             if (!resume) {
                 canSubmit = false;
                 // mark as 
@@ -1711,7 +1778,9 @@
 			$("#comments").removeClass("requiredField");
 			$("#news").removeClass("requiredField");
 			$("#genderContainer").removeClass("requiredCheckbox");
+			$("#genderOtherInput").removeClass("requiredField");
 			$("#raceContainer").removeClass("requiredCheckbox");
+			$("#raceOtherInput").removeClass("requiredField");
 			$("#resumeContainer").removeClass("requiredCheckbox");
 			$("#hackerContainer").removeClass("requiredCheckbox");
 			$("#transportationContainer").removeClass("requiredCheckbox");
@@ -1722,11 +1791,19 @@
             // Get form values
             const fname = $("#firstName").val();
             const lname = $("#lastName").val();
-            const gender = $('input[name="gender"]:checked').val(); //returns undefined if none clicked
+			const gender = $('input[name="gender"]:checked').val(); //returns undefined if none clicked
+			let genderDesc = '';
+			if (gender === 'Other') {
+				genderDesc = $("#genderOtherInput").val();
+			}
 			const phoneNumber = $("#phoneNumber").val();
 			const birthdate = $("#birthdate").val();
-            // array of all race/ethnicities selected
+			// array of all race/ethnicities selected
+			let raceDesc = '';
             const raceEthnicity = $('input[name="race"]:checked').map(function() {
+				if (this.value === 'Other') {
+					raceDesc = $("#raceOtherInput").val();
+				}
                 return this.value;
             }).get();
             const school = $('select[name="schools"]').val();
@@ -1748,7 +1825,7 @@
             const codeOfConduct = $('input[name="codeOfConduct"]:checked').val();
 			const authorizeOption = $('input[name="authorizeOption"]:checked').val();
 
-            var canSubmit = checkFields(fname, lname, gender, phoneNumber, birthdate, raceEthnicity,
+            var canSubmit = checkFields(fname, lname, gender, genderDesc, phoneNumber, birthdate, raceEthnicity, raceDesc,
 				$('#resume').get(0).files[0], firstTimeHacker, transportation,
 				interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct, authorizeOption);
             
@@ -1765,8 +1842,10 @@
                         lname: lname,
 						phoneNumber: phoneNumber,
 						birthdate: birthdate,
-                        gender: gender,
-                        raceEthnicity: raceEthnicity,
+						gender: gender,
+						genderDesc: genderDesc,
+						raceEthnicity: raceEthnicity,
+						raceDesc: raceDesc,
                         school: school,
 						schoolYear: schoolYear,
 						studyLevel: studyLevel,
@@ -1835,8 +1914,16 @@
 			const phoneNumber = $("#phoneNumber").val();
             const birthdate = $("#birthdate").val();
             const gender = $('input[name="gender"]:checked').val(); //returns undefined if none clicked
-            // array of all race/ethnicities selected
+			let genderDesc = '';
+			if (gender === 'Other') {
+				genderDesc = $("#genderOtherInput").val();
+			}
+			let raceDesc = '';
+			// array of all race/ethnicities selected
             const raceEthnicity = $('input[name="race"]:checked').map(function() {
+				if (this.value === 'Other') {
+					raceDesc = $("#raceOtherInput").val();
+				}
                 return this.value;
             }).get();
             const school = $('select[name="schools"]').val();
@@ -1864,7 +1951,9 @@
 				phoneNumber: phoneNumber,
 				birthdate: birthdate,
 				gender: gender,
+				genderDesc: genderDesc,
 				raceEthnicity: raceEthnicity,
+				raceDesc: raceDesc,
 				school: school,
 				schoolYear: schoolYear,
 				studyLevel: studyLevel,
