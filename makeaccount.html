@@ -89,9 +89,9 @@
 									<button class="button google" onclick="googleSignIn()">Google Sign In</button>
 							</div>
 
-							<div class="col-md-12 top-margin">
+							<!-- <div class="col-md-12 top-margin">
 									<button class="button facebook" onclick="facebookSignIn()">Facebook Sign In</button>
-							</div>
+							</div> -->
 							<!-- <div class="col-md-12 descrip-txt login-txt">
 								Create your account with the email you applied with. This form will not let
 								you do otherwise!
@@ -158,7 +158,7 @@
 
 		function createActBtnClicked() {
 
-			var email = $("#email").val();
+			var email = $("#email").val().trim();
 			var password = $("#pass1").val();
 			var confirmPassword = $("#pass2").val();
 

@@ -188,8 +188,8 @@
 									<input id="genderFemale" name="gender" type="radio" value="Female"/>
 									<span class="radioBtn"></span>
 								</label>
-								<label class="radio-container" id="genderRadio2"> None-binary/third gender
-									<input id="genderNone-binary/third gender" name="gender" type="radio" value="None-binary/third gender"/>
+								<label class="radio-container" id="genderRadio2"> Prefer not to Answer
+									<input id="genderPrefer not to Answer" name="gender" type="radio" value="Prefer not to Answer"/>
 									<span class="radioBtn"></span>
 								</label>
 								<label class="radio-container" id="genderRadio3"> Other
@@ -232,12 +232,12 @@
 									<input name="race" type="checkbox" value="Hawaiian or Pacific Islander"/>
 									<span class="checkmark"></span>
 								</label>
-								<label class="checkbox-container" id="raceCheckBox8"> Other
-									<input name="race" type="checkbox" value="Other"/>
-									<span class="checkmark"></span>
-								</label>
 								<label class="checkbox-container" id="raceCheckBox9"> Prefer Not to Answer
 									<input name="race" type="checkbox" value="Prefer Not to Answer"/>
+									<span class="checkmark"></span>
+								</label>
+								<label class="checkbox-container" id="raceCheckBox8"> Other
+									<input name="race" type="checkbox" value="Other"/>
 									<span class="checkmark"></span>
 								</label>
 						</div>
@@ -245,25 +245,38 @@
 						<div class="col-md-12 top-margin">
 								<label class="form-lbl" for="q1" name="">Your School <span class=" redTxt">* </span></label><br>
 								<select class="form-field minimal" name="schools" id="schools">
-								</select> <br>
+									<!-- priority schools -->
+									<option disabled>──────────</option>
+								</select>
+						</div>
 
-								<label class="form-lbl top-margin" for="q1" name="">What year are you? <span class=" redTxt">* </span></label><br>
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">What year are you? <span class=" redTxt">* </span></label><br>
 								<select class="form-field minimal" name="schoolYear">
 										<option value="Freshman">Freshman</option>
 										<option value="Sophmore">Sophmore</option>
 										<option value="Junior">Junior</option>
 										<option value="Senior/4+ Years">Senior/4+ Years</option>
 										<option value="PHD/Master">PHD/Master</option>
-								</select> <br>
+								</select>
 						</div>
 
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl top-margin" for="q1" name="">What is your major? <span class=" redTxt">* </span></label><br>
+								<label class="form-lbl" for="q1" name="">What is your most current level of study?<span class=" redTxt"> * </span></label><br>
+								<select class="form-field minimal" name="studyLevel">
+										<option value="Bachelor of Science">Bachelor of Science</option>
+										<option value="Masters">Masters</option>
+										<option value="PHD">PHD</option>
+								</select>
+						</div>
+
+						<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">What is your major? <span class=" redTxt">* </span></label><br>
 								<select class="form-field minimal" name="major">
 									<!-- TODO: Get list of majors -->
 										<option value="Computer Science">Computer Science</option>
 										<option value="Computer Engineering">Computer Engineering</option>
-								</select> <br>
+								</select>
 						</div>
 
 						<div class="col-md-12 top-margin" id="hackerContainer">
@@ -368,7 +381,7 @@
 								<label class="form-lbl" for="q1" name="">
 										I authorize you to share certain application/registration information for event administration, ranking, MLH administration, pre and post-event informational e-mails, and occasional messages about hackathons in-line with the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.
 										I further agree to the terms of both the <a href="https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md" target="_blank">MLH Contest Terms and Conditions</a> and the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.
-										<!-- <span class=" redTxt"> *</span> -->
+										<span class=" redTxt"> *</span>
 								</label>
 								<br>
 								<label class="checkbox-container" id="agreedCheckboxOpt"> I agree
@@ -461,7 +474,7 @@
 							your status if you decide you cannot attend.
 						</div> -->
 
-						<div class="row">
+						<div class="row" style="margin: 0">
 							<div class="col-md-12 top-margin" id="confirmCon">
 								<button id="confirmBtn" class="button green hide" onclick="confirmSpotBtnClicked()">
 									<p id="confirmSpot">Confirm my spot!</p>
@@ -961,8 +974,8 @@
 			$("#op5").removeClass("hide");
 			$("#op5").addClass("show");
 
-			$("#op6").removeClass("hide");
-			$("#op6").addClass("show");
+			// $("#op6").removeClass("hide");
+			// $("#op6").addClass("show");
 
 			$("#op0").removeClass("show");
 			$("#op0").addClass("hide");
@@ -1381,6 +1394,9 @@
 		$('select[name="schoolYear"]').addClass("disabled");
 		$('select[name="schoolYear"]').prop("disabled", true);
 
+		$('select[name="studyLevel"]').addClass("disabled");
+		$('select[name="studyLevel"]').prop("disabled", true);
+
 		$('select[name="major"]').addClass("disabled");
 		$('select[name="major"]').prop("disabled", true);
 
@@ -1440,6 +1456,7 @@
 		const raceEthnicity = savedFormData.raceEthnicity ? savedFormData.raceEthnicity : undefined;
 		const school = savedFormData.school ? savedFormData.school : '';
 		const schoolYear = savedFormData.schoolYear ? savedFormData.schoolYear : '';
+		const studyLevel = savedFormData.studyLevel ? savedFormData.studyLevel : '';
 		const major = savedFormData.major ? savedFormData.major : '';
 		const firstTimeHacker = savedFormData.firstTimeHacker ? savedFormData.firstTimeHacker : '';
 		const githubProfile = savedFormData.githubProfile ? savedFormData.githubProfile : '';
@@ -1477,6 +1494,9 @@
 		}
 		if (schoolYear != '') {
 			$('select[name="schoolYear"]').val(schoolYear);
+		}
+		if (studyLevel != '') {
+			$('select[name="studyLevel"]').val(studyLevel);
 		}
 		if (major != '') {
 			$('select[name="major"]').val(major);
@@ -1527,6 +1547,7 @@
 		});
 		$('select[name="schools"]').val(userObj.school);
 		$('select[name="schoolYear"]').val(userObj.schoolYear);
+		$('select[name="studyLevel"]').val(userObj.studyLevel);
 		$('select[name="major"]').val(userObj.major);
 		$("#firstTimeHacker"+userObj.firstTimeHacker).prop("checked", true);
 		// hide resume field
@@ -1592,7 +1613,7 @@
 		}
 
 		function checkFields(fname, lname, gender, phoneNumber, birthdate, raceEthnicity, resume, firstTimeHacker, transportation,
-				interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct) {
+				interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct, authorizeOption) {
             var canSubmit = true;
             if (fname == "") {
                 canSubmit = false;
@@ -1670,7 +1691,12 @@
                 canSubmit = false;
                 // mark as 
 				$("#codeOfConductContainer").addClass("requiredCheckbox");
-            }
+			}
+			
+			if (!authorizeOption) {
+				canSubmit = false;
+				$("#authorizeOptionContainer").addClass("requiredCheckbox");
+			}
             return canSubmit;
         }
 
@@ -1704,7 +1730,8 @@
                 return this.value;
             }).get();
             const school = $('select[name="schools"]').val();
-            const schoolYear = $('select[name="schoolYear"]').val();
+			const schoolYear = $('select[name="schoolYear"]').val();
+			const studyLevel = $('select[name="studyLevel"]').val();
 			const major = $('select[name="major"]').val();
 			const firstTimeHacker = $('input[name="firstTimeHacker"]:checked').val();
 			const resumeName = $('#resume').get(0).files[0] ? $('#resume').get(0).files[0].name: undefined;
@@ -1723,7 +1750,7 @@
 
             var canSubmit = checkFields(fname, lname, gender, phoneNumber, birthdate, raceEthnicity,
 				$('#resume').get(0).files[0], firstTimeHacker, transportation,
-				interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct);
+				interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct, authorizeOption);
             
             if (canSubmit) {
                 // store resume in database
@@ -1741,7 +1768,8 @@
                         gender: gender,
                         raceEthnicity: raceEthnicity,
                         school: school,
-                        schoolYear: schoolYear,
+						schoolYear: schoolYear,
+						studyLevel: studyLevel,
 						major: major,
 						firstTimeHacker: firstTimeHacker,
 						resumeName: resumeName,
@@ -1812,7 +1840,8 @@
                 return this.value;
             }).get();
             const school = $('select[name="schools"]').val();
-            const schoolYear = $('select[name="schoolYear"]').val();
+			const schoolYear = $('select[name="schoolYear"]').val();
+			const studyLevel = $('select[name="studyLevel"]').val();
 			const major = $('select[name="major"]').val();
 			const firstTimeHacker = $('input[name="firstTimeHacker"]:checked').val();
 			const resumeName = $('#resume').get(0).files[0] ? $('#resume').get(0).files[0].name: undefined;
@@ -1838,6 +1867,7 @@
 				raceEthnicity: raceEthnicity,
 				school: school,
 				schoolYear: schoolYear,
+				studyLevel: studyLevel,
 				major: major,
 				firstTimeHacker: firstTimeHacker,
 				githubProfile: githubProfile,

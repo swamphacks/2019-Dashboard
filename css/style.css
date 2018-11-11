@@ -415,6 +415,7 @@
   font-size: 2em;
   font-family: 'Poppins', sans-serif;
   text-align: left;
+  word-wrap: break-word;
 }
 
 .descrip-txt {
@@ -1647,6 +1648,18 @@ select.minimal {
 }
 
 @media (max-width: 800px) {
+
+  .timeLineCircles {
+    margin-left: 40%;
+  }
+
+  .timelineStatusText {
+    position: absolute;
+    bottom: -60px;
+    width: 80px;
+    text-align: center;
+    margin-left: -30px;
+}
 
   .menu-items-con {
     margin-top: 3em;

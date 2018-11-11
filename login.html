@@ -78,9 +78,9 @@
 								<button class="button google" onclick="googleSignIn()">Google Sign In</button>
 							</div>
 
-							<div class="col-md-12 top-margin">
+							<!-- <div class="col-md-12 top-margin">
 									<button class="button facebook" onclick="facebookSignIn()">Facebook Sign In</button>
-							</div>
+							</div> -->
 
 							<div class="col-md-12 top-margin" style="margin-top: 11px; text-align: center">
 								<button class="button txtbtnouter">
@@ -148,7 +148,7 @@
 
     function loginBtnClicked() {
 
-			var email = $("#email").val();
+			var email = $("#email").val().trim();
 			var password = $("#password").val();
 
 			if (email !== "" && password !== "") {
