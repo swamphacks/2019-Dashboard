@@ -170,11 +170,13 @@
 
 						<div class="col-md-12 top-margin">
 							<label class="form-lbl" for="q1" name="">Phone Number <span class="redTxt">* </span></label>
+							<label class="form-lbl redTxt hide" for="q1" id="phoneNumberFormat">Incorrect Format</label>
 							<input class="form-field" id="phoneNumber" name="q1" type="text" placeholder="###-###-####" />
 						</div>
 
 						<div class="col-md-12 top-margin">
 							<label class="form-lbl" for="q1" name="">Birthdate <span class="redTxt">* </span></label>
+							<label class="form-lbl redTxt hide" for="q1" id="birthdateFormat">Incorrect Format</label>
 							<input class="form-field" id="birthdate" name="q1" type="text" placeholder="MM/DD/YYYY" />
 						</div>
 
@@ -250,7 +252,10 @@
 								<label class="form-lbl" for="q1" name="">Your School <span class=" redTxt">* </span></label><br>
 								<select class="form-field minimal" name="schools" id="schools">
 									<!-- priority schools -->
-									<option disabled>──────────</option>
+									<option value="University of Florida">University of Florida</option>
+									<option value="University of Central Florida">University of Central Florida</option>
+									<option value="University of South Florida-Main Campus">University of South Florida-Main Campus</option>
+									<option disabled>──────────────────</option>
 								</select>
 						</div>
 
@@ -298,7 +303,7 @@
 						<div class="col-md-12 top-margin" id="resumeContainer">
 								<label class="form-lbl" for="q1" name="">Resume <span class=" redTxt">* </span></label>
 								<input class="inputfile" id="resume" name="resume" type="file" data-multiple-caption="{count} files selected" multiple/>
-								<label for="resume">Choose a file</label>
+								<label for="resume" id="resumeLabel">Choose a file</label>
 						</div>
 
 						<div class="col-md-12 top-margin">
@@ -401,6 +406,8 @@
 				<div class="col-md-12 top-margin descrip-txt hide" id="profileStatusTxt">
 					Please fill in all fields!
 				</div>
+
+				<label class="form-lbl redTxt hide" for="q1" id="incorrectFields">You have 1 or more incorrect fields</label>
 
 				<div class="row">
 					<div class="col-md-6 top-margin">
@@ -1517,6 +1524,8 @@
 
 		$("#firstName").val(fname);
 		$("#lastName").val(lname);
+		$("#phoneNumber").val(phoneNumber);
+		$("#birthdate").val(birthdate);
 		if(gender != '') {
 			$("#gender"+gender).prop("checked", true);
 			if (gender === 'Other') {
@@ -1611,6 +1620,8 @@
 		$("#firstTimeHacker"+userObj.firstTimeHacker).prop("checked", true);
 		// hide resume field
 		// $("#resumeContainer").addClass("hide");
+		// show name of previous resume uploaded
+		$('#resumeLabel')[0].innerHTML = userObj.resumeName;
 		$("#github").val(userObj.githubProfile);
 		$("#linkedin").val(userObj.linkedinProfile);
 		$('select[name="shirtSize"]').val(userObj.tshirtSize);
@@ -1659,6 +1670,7 @@
 			if(phoneNumber.match(phoneno)){
 				return true;
 			} else {
+				$('#phoneNumberFormat').removeClass('hide');
 				return false;
 			}
 		}
@@ -1668,6 +1680,7 @@
 			if (birthdate.match(dateformat)) {
 				return true;
 			}
+			$('#birthdateFormat').removeClass('hide');
 			return false;
 		}
 
@@ -1725,7 +1738,7 @@
                 canSubmit = false;
                 // mark as 
 				$("#genderContainer").addClass("requiredCheckbox");
-            } else if (genderDesc == '') {
+            } else if (gender === 'Other' && genderDesc == '') {
 				canSubmit = false;
                 // mark as 
 				$("#genderOtherInput").addClass("requiredField");
@@ -1734,7 +1747,7 @@
                 canSubmit = false;
                 // mark as 
 				$("#raceContainer").addClass("requiredCheckbox");
-            } else if (raceDesc == '') {
+            } else if (raceEthnicity[raceEthnicity.length - 1] === 'Other' && raceDesc == '') {
 				canSubmit = false;
                 // mark as 
 				$("#raceOtherInput").addClass("requiredField");
@@ -1772,6 +1785,8 @@
 			$("#lastName").removeClass("requiredField");
 			$("#phoneNumber").removeClass("requiredField");
 			$("#birthdate").removeClass("requiredField");
+			$("#phoneNumberFormat").addClass("hide");
+			$("#birthdateFormat").addClass("hide");
 			$("#interest").removeClass("requiredField");
 			$("#everydayProblem").removeClass("requiredField");
 			$("#hopes").removeClass("requiredField");
@@ -1785,19 +1800,21 @@
 			$("#hackerContainer").removeClass("requiredCheckbox");
 			$("#transportationContainer").removeClass("requiredCheckbox");
 			$("#codeOfConductContainer").removeClass("requiredCheckbox");
+			$('#incorrectFields').addClass('hide');
         }
         
         function submitApplication() {
+			removeRequired();
             // Get form values
-            const fname = $("#firstName").val();
-            const lname = $("#lastName").val();
+            const fname = $("#firstName").val().trim();
+            const lname = $("#lastName").val().trim();
 			const gender = $('input[name="gender"]:checked').val(); //returns undefined if none clicked
 			let genderDesc = '';
 			if (gender === 'Other') {
 				genderDesc = $("#genderOtherInput").val();
 			}
-			const phoneNumber = $("#phoneNumber").val();
-			const birthdate = $("#birthdate").val();
+			const phoneNumber = $("#phoneNumber").val().trim();
+			const birthdate = $("#birthdate").val().trim();
 			// array of all race/ethnicities selected
 			let raceDesc = '';
             const raceEthnicity = $('input[name="race"]:checked').map(function() {
@@ -1828,7 +1845,7 @@
             var canSubmit = checkFields(fname, lname, gender, genderDesc, phoneNumber, birthdate, raceEthnicity, raceDesc,
 				$('#resume').get(0).files[0], firstTimeHacker, transportation,
 				interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct, authorizeOption);
-            
+
             if (canSubmit) {
                 // store resume in database
                 storeResume(loggedInUserKey);
@@ -1903,7 +1920,9 @@
 						$("#notif").removeClass("show");
                     }.bind(this));
                 });
-            }
+            } else {
+				$('#incorrectFields').removeClass('hide');
+			}
 		}
 		
 		function saveExit() {

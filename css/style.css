@@ -541,7 +541,7 @@
 }
 
 .redTxt {
-  color: red;
+  color: red !important;
 }
 
 .dark {
@@ -658,7 +658,7 @@ td b {
 
 .otherInput {
   visibility: hidden;
-  width: 95%;
+  width: 90%;
   opacity: 0;
   margin-left: 30px;
   transform: translateY(-100%);
