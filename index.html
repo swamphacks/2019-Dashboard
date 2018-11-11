@@ -105,7 +105,7 @@
 							<a href="#" class="pure-menu-link" onclick="menuClick(0)">Application</a>
 					</li>
 
-					<li id="op7" class="pure-menu-item top-ln">
+					<li id="op7" class="pure-menu-item top-ln hide">
 						<a href="#" class="pure-menu-link" onclick="menuClick(7)">Transportation Form</a>
 					</li>
 
@@ -997,11 +997,12 @@
 
 		if (userObj.applied || userObj.email === "sponsors@swamphacks.com") {
 			this.showMenu();
-			$('#mce-EMAIL').val(userObj.email);
 			if (userObj.transportation == 'yes') {
 				//show form on menu
+				$("#op7").removeClass("hide");
+				$("#op7").addClass("show");
 				// set form fields
-				$('#mce-EMAIL').val = userObj.email;
+				$('#mce-EMAIL').val(userObj.email);
 			}
 		}else if (!userObj.applied && savedFormData) {
 			// show saved form info
@@ -1676,12 +1677,35 @@
 		}
 
 		function validateBirthdate(birthdate) {
-			var dateformat = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
-			if (birthdate.match(dateformat)) {
-				return true;
+			let dateformat = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+			var correctFormat = true;
+			if (!birthdate.match(dateformat)) {
+				correctFormat = false;
 			}
-			$('#birthdateFormat').removeClass('hide');
-			return false;
+			 // Parse the date parts to integers
+			var parts = birthdate.split("/");
+			var day = parseInt(parts[1], 10);
+			var month = parseInt(parts[0], 10);
+			var year = parseInt(parts[2], 10);
+
+			// Check the ranges of month and year
+			if(year < 1000 || year > 3000 || month == 0 || month > 12)
+				correctFormat = false;
+
+			var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+
+			// Adjust for leap years
+			if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+				monthLength[1] = 29;
+
+			// Check the range of the day
+			correctFormat = day > 0 && day <= monthLength[month - 1];
+			if (correctFormat) {
+				return true;
+			} else {
+				$('#birthdateFormat').removeClass('hide');
+				return false;
+			}
 		}
 
 		function checkFields(fname, lname, gender, genderDesc, phoneNumber, birthdate, raceEthnicity, raceDesc, resume, firstTimeHacker, transportation,
