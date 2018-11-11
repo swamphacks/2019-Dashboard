@@ -1489,6 +1489,9 @@
 		$('input:checkbox[name^="codeOfConduct"]')[0].disabled = true;
 		$('#agreedCheckbox').addClass('disabled');
 
+		$('input:checkbox[name^="authorizeOption"]')[0].disabled = true;
+		$('#agreedCheckboxOpt').addClass('disabled');
+
 		$("#submitBtn").addClass("disabled");
 		$("#submitBtn").prop("disabled", true);
 		
@@ -1931,6 +1934,15 @@
 						$("#op3").removeClass("pure-menu-selected");
 						$("#op5").removeClass("pure-menu-selected");
 						$("#op6").removeClass("pure-menu-selected");
+
+						// show transportation that if needed
+						if (user.transportation == 'yes') {
+							//show form on menu
+							$("#op7").removeClass("hide");
+							$("#op7").addClass("show");
+							// set form fields
+							$('#mce-EMAIL').val(userObj.email);
+						}
 
 						$("#dashboard").addClass("show");
 						$("#dashboard").removeClass("hide");
