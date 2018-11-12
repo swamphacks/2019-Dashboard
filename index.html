@@ -456,6 +456,9 @@
 							<p class="dashboardInfo">
 								Deadline to finish application for SwampHacks: <b>11:59PM December 21st, 2018</b>
 							</p>
+							<p class="dashboardInfo hide redTxt" id="transportFormReminder">
+								Please fill out the <b>Transportation Form</b> in order to get considered for travel reimbursement!
+							</p>
 							<div class="spacer">
 								<!-- Timeline -->
 								<div class="timeline" id="appliedTimeline">
@@ -1142,6 +1145,9 @@
 					if (transportationInfo.completed) {
 						// disable fields
 						disableTransportForm();
+						$('#transportFormReminder').addClass('hide');
+					} else {
+						$('#transportFormReminder').removeClass('hide');
 					}
 				} else {
 					// set form fields
@@ -1157,6 +1163,8 @@
 					$('#mce-BIRTHDAY-month').val(month);
 					$('#mce-BIRTHDAY-day').val(day);
 					$('#mce-BIRTHDAY-year').val(year);
+
+					$('#transportFormReminder').removeClass('hide');
 				}
 			}
 		}else if (!userObj.applied && savedFormData) {
@@ -1810,9 +1818,9 @@
 		$("#major").val(major);
 		$("#firstTimeHacker"+userObj.firstTimeHacker).prop("checked", true);
 		// hide resume field
-		// $("#resumeContainer").addClass("hide");
+		$("#resumeContainer").addClass("hide");
 		// show name of previous resume uploaded
-		$('#resumeLabel')[0].innerHTML = userObj.resumeName;
+		// $('#resumeLabel')[0].innerHTML = userObj.resumeName;
 		$("#github").val(userObj.githubProfile);
 		$("#linkedin").val(userObj.linkedinProfile);
 		$('select[name="shirtSize"]').val(userObj.tshirtSize);
