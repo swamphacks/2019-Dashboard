@@ -44,8 +44,12 @@
 					<!-- <img id="logo" class="" src="img/logoblue.svg"></img> -->
 				</div>
 
-				<div class="btngroup hide">
-					<span id="statusWithBtn" class="">Please fill in all fields!</span> <span onclick="resendEmailClicked()" class="resend" id="resendBtn">Resend it?</span>
+				<!-- <div class="col-md-12" style="margin-top: 11px; text-align: center" id="resendContainer">
+					<button onclick="showEmailVerification()" class="resend" id="resendBtn">Resend Email Verification?</button>
+				</div> -->
+
+				<div class="col-md-12 hide" style="margin-top: 11px; text-align: center" id="returnContainer">
+					<button onclick="showLogin()" class="resend" id="returnBtn">Return to Login</button>
 				</div>
 
 				<div id="loginStatusTxt" class="hide">
@@ -53,8 +57,17 @@
 				</div>
 
 				<div class="menu-items-con-login">
+					<div class="row log hide" id="emailVerification" style="margin: 30px">
+						<div class="col-md-12 top-margin">
+							<label class="form-lbl" for="q1" name="">Resend Email Verification</label>
+							<input class="form-field" id="emailVerificationInput" name="q1" type="text" placeholder="" required/>
+						</div>
 
-					<div class="row log">
+						<div class="col-md-12 top-margin">
+							<button class="button green" onclick="resendEmailClicked()"><p class="loginbtn">Send</p></button>
+						</div>	
+					</div>
+					<div class="row log" id="loginSection">
 						<form id="loginForm" class="" autocomplete="off">
 							<div class="col-md-12 top-margin">
 								<label class="form-lbl" for="q1" name="">Email</label>
@@ -62,7 +75,7 @@
 							</div>
 
 							<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">Password -<span class="underline-btn" onclick="resetPasswordClicked()">Forgot?</span></label>
+								<label class="form-lbl" for="q1" name="">Password -<span class="underline-btn lightGreenTxt" onclick="resetPasswordClicked()">Forgot?</span></label>
 								<i class="fa fa-lock pass-visibility" aria-hidden="true" id="pv3" onclick="showPassPressed(password, pv3)"></i>
 								<input class="form-field" id="password" name="q1" type="password" placeholder="" required/>
 							</div>
@@ -164,9 +177,11 @@
 						// Hide the loader
 						$("#animationWindow").removeClass("showflex");
 						$("#animationWindow").addClass("hide");
-						// Display error message
-						$("#loginStatusTxt").text("Email not verified!");
-						$("#loginStatusTxt").addClass("show");
+						user.firebase.auth().currentUser.sendEmailVerification().then(function() {
+							// Display error message
+							$("#loginStatusTxt").text("Email not verified! Email Verification sent.");
+							$("#loginStatusTxt").addClass("show");
+						});
 						//exit function
 						return;
 					}
@@ -179,39 +194,10 @@
 								localStorage.setItem('loggedInUser', JSON.stringify(snapshot.val()));
 	 							localStorage.setItem('loggedInUserKey', user.uid);
 							});
-							// Delay before checking
-							// acceptedRef.orderByChild("email").equalTo(email).on("value", function(snapshot) {
-
-							// 	 // Getting the info of the found user and storing it in local storage
-							// 	 snapshot.forEach(function(childSnapshot) {
-
-							// 		 var key = childSnapshot.key;
-							// 		 var childData = childSnapshot.val();
-							// 		 localStorage.setItem('loggedInUser', JSON.stringify(childData));
-	 						// 		 localStorage.setItem('loggedInUserKey', key);
-
-							// 	 });
-
-							// });
-
-							// if (JSON.parse(localStorage.getItem('loggedInUser')) === null || JSON.parse(localStorage.getItem('loggedInUser')) === undefined) {
-
-							// 	confirmedRef.orderByChild("email").equalTo(email).on("value", function(snapshot) {
-
-							// 		// Getting the info of the found user and storing it in local storage
-							// 		snapshot.forEach(function(childSnapshot) {
-
-							// 			var key = childSnapshot.key;
-							// 			var childData2 = childSnapshot.val();
-
-							// 			localStorage.setItem('loggedInUser', JSON.stringify(childData2));
-							// 			localStorage.setItem('loggedInUserKey', key);
-
-							// 		});
-
-							//  });
-
-							// }
+							var transportUserRef = firebase.database().ref("transportationForm/"+user.uid);
+							transportUserRef.once('value').then(function(snapshot) {
+								localStorage.setItem('transportationInfo', JSON.stringify(snapshot.val()));
+							});
 
 							setTimeout(function() {
 
@@ -326,21 +312,41 @@
 
 		}
 
+		function showEmailVerification() {
+			$('#loginSection').addClass('hide');
+			$('#emailVerification').removeClass('hide');
+			$('#resendContainer').addClass('hide');
+			$('#returnContainer').removeClass('hide');
+		}
+
+		function showLogin() {
+			$('#loginSection').removeClass('hide');
+			$('#emailVerification').addClass('hide');
+			$('#resendContainer').removeClass('hide');
+			$('#returnContainer').addClass('hide');
+		}
+
 		function resendEmailClicked() {
+			const email = $('#emailVerificationInput').val();
+			if (email && email != '') {
+				// find user through email
+				const userRef = ref.child('users');
+				userRef.orderByChild('email').once('value').then(function(snapshot) {
+					console.log(snapshot.val());
+				});
+			}
+			// firebase.auth().onAuthStateChanged(function(user) {
+			// 	if (user && !user.emailVerified) {
+			// 		user.sendEmailVerification();
+			// 		$("#loginStatusTxt").text("Email Sent!");
+			// 		$("#loginStatusTxt").addClass("show");
 
-			firebase.auth().onAuthStateChanged(function(user) {
+			// 	} else {
+			// 		$("#loginStatusTxt").text("Already Verified!");
+			// 		$("#loginStatusTxt").addClass("show");
+			// 	}
 
-				if (!user.emailVerified) {
-					user.sendEmailVerification();
-					$("#resendBtn").text("Email Sent!");
-					$("#resendBtn").addClass("disabled");
-
-				} else {
-					$("#resendBtn").text("Already Verified!");
-					$("#resendBtn").addClass("disabled");
-				}
-
-			});
+			// });
 
 		}
 
@@ -417,6 +423,14 @@
 					window.location.href = "index.html";
 
 				}, delay);
+			});
+			var transportUserRef = firebase.database().ref("transportationForm/"+user.uid);
+			transportUserRef.once('value').then(function(snapshot) {
+				if(!snapshot.val()) {
+					localStorage.setItem('transportationInfo', null);
+				} else {
+					localStorage.setItem('transportationInfo', JSON.stringify(snapshot.val()));
+				}
 			});
 		}
 

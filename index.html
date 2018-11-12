@@ -16,7 +16,13 @@
 		<script src="js/qrcode-generator/jquery.min.js"></script>
 		<script src="js/qrcode-generator/qrcode.js"></script>
 		<!-- Stylesheets
-    ================================================== -->
+	================================================== -->
+	<link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+		/* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
+		We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+	</style>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
 	<!-- <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"> -->
 		<!-- Favicon
@@ -122,7 +128,7 @@
 					</li>
 					
 					<li id="op4" class="pure-menu-item bottom-ln">
-						<a href="http://2019.swamphacks.com" target="_blank" class="pure-menu-link" onclick="menuClick(4)">Live!</a>
+						<a href="http://2019.swamphacks.com" target="_blank" class="pure-menu-link" onclick="menuClick(4)">2019 Website</a>
 					</li>
 
                     <li id="op3" class="pure-menu-item top-ln">
@@ -249,7 +255,7 @@
 						<input class="form-field otherInput" id="raceOtherInput" type="text"/>
 
 						<div class="col-md-12 top-margin reduce-top" id="schoolContainer">
-								<label class="form-lbl" for="q1" name="">Your School <span class=" redTxt">* </span></label><br>
+								<label class="form-lbl" for="q1" name="">Your School <span class="redTxt">* </span></label><br>
 								<select class="form-field minimal" name="schools" id="schools">
 									<!-- priority schools -->
 									<option value="University of Florida">University of Florida</option>
@@ -260,32 +266,33 @@
 						</div>
 
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">What year are you? <span class=" redTxt">* </span></label><br>
+								<label class="form-lbl" for="q1" name="">What is your graduation year? <span class=" redTxt">* </span></label><br>
 								<select class="form-field minimal" name="schoolYear">
-										<option value="Freshman">Freshman</option>
-										<option value="Sophmore">Sophmore</option>
-										<option value="Junior">Junior</option>
-										<option value="Senior/4+ Years">Senior/4+ Years</option>
-										<option value="PHD/Master">PHD/Master</option>
+										<option value="2018" selected="selected">2018</option>
+										<option value="2019">2019</option>
+										<option value="2020">2020</option>
+										<option value="2021">2021</option>
+										<option value="2022">2022</option>
+										<option value="2023">2023</option>
+										<option value="2024">2024</option>
+										<option value="2025">2025</option>
+										<option value="2026">2026</option>
+										<option value="2027">2027</option>
+										<option value="2028">2028</option>
 								</select>
 						</div>
 
 						<div class="col-md-12 top-margin">
 								<label class="form-lbl" for="q1" name="">What is your most current level of study?<span class=" redTxt"> * </span></label><br>
 								<select class="form-field minimal" name="studyLevel">
-										<option value="Bachelor of Science">Bachelor of Science</option>
-										<option value="Masters">Masters</option>
-										<option value="PHD">PHD</option>
+										<option value="Undergraduate" selected="selected">Undergraduate</option>
+										<option value="Graduate">Graduate</option>
 								</select>
 						</div>
 
 						<div class="col-md-12 top-margin">
-								<label class="form-lbl" for="q1" name="">What is your major? <span class=" redTxt">* </span></label><br>
-								<select class="form-field minimal" name="major">
-									<!-- TODO: Get list of majors -->
-										<option value="Computer Science">Computer Science</option>
-										<option value="Computer Engineering">Computer Engineering</option>
-								</select>
+							<label class="form-lbl" for="q1" name="">What is your major? <span class="redTxt"> * </span></label>
+							<input class="form-field" id="major" name="q1" type="text" placeholder="" />
 						</div>
 
 						<div class="col-md-12 top-margin" id="hackerContainer">
@@ -338,19 +345,23 @@
 						</div>
 
 						<div class="col-md-12 top-margin" id="transportationContainer">
-								<label class="form-lbl" for="q1" name="">Do you need transportation to SwampHacks? (FYI carpool and buses w/ 400 mile radius) - outside that we do a travel reimbursement <span class="redTxt">* </span></label>
+								<label class="form-lbl" for="q1" name="">Do you need transportation to SwampHacks? <span class="redTxt">* </span></label>
 								<br>
 								<label class="radio-container" id="transportationRadio0"> Yes
-									<input id="transportationyes" name="transportation" type="radio" value="yes"/> 
+									<input id="transportationyes" name="transportation" type="radio" value="yes" onclick="transportClicked(true)"/> 
 									<span class="radioBtn"></span>
 								</label>
 								<label class="radio-container" id="transportationRadio1"> No
-									<input id="transportationno" name="transportation" type="radio" value="no"/> 
+									<input id="transportationno" name="transportation" type="radio" value="no" onclick="transportClicked(false)"/> 
 									<span class="radioBtn"></span>
 								</label>
 						</div>
+						<div class="col-md-12 homeStateInput" id="homeStateContainer">
+								<label class="form-lbl" for="q1" name="">Where will you be traveling from? <span class=" redTxt">* </span> </label>  
+								<input class="form-field" id="homeState" name="homeState" type="text" value=""/>
+						</div>
 						
-						<div class="col-md-12 top-margin">
+						<div class="col-md-12 top-margin reduce-top-2" id="interestContainer">
 								<label class="form-lbl" for="q1" name="">Why would you like to participate in SwampHacks? <span class=" redTxt">* </span> </label>                    
 								<textarea class="form-field form-textbox" id="interest" name="interest" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
@@ -436,6 +447,15 @@
 					<div class="row top-margin">
 						<div class="col-md-12">
 							<h3 class="header-sub-type" id="welcomeMessage">Welcome, Albert!</h3>
+							<p class="dashboardInfo">
+								Thank you for submitting an application to SwampHacks V. The timeline below shows you where you are in the application process. We will be reviewing applications on a rolling basis and you should receive a response from us soon. Until then, sit tight. We can’t wait to see you at SwampHacks in 2019!
+							</p>
+							<p class="dashboardInfo">
+								Deadline to apply for travel reimbursement: <b>11:59PM November 18th, 2018</b>
+							</p>
+							<p class="dashboardInfo">
+								Deadline to finish application for SwampHacks: <b>11:59PM December 14th, 2018</b>
+							</p>
 							<div class="spacer">
 								<!-- Timeline -->
 								<div class="timeline" id="appliedTimeline">
@@ -521,92 +541,99 @@
 		<div id="transportationForm" class="hide">
 
 			<h1 class="header-main-type">Transportation Form</h1>
-
-				<div class="container-fluid notif-con">
+			<div class="container-fluid notif-con">
+					<p class="transportationInfo">
+						The University of Florida requires us to create you a university identifier and travel authorization to officially apply for a reimbursement. If approved, your reimbursement will be in the form a check delivered the address you provide below 2-3 weeks after SwampHacks. More information will be provided on the monetary amount we can reimburse as we get closer to the date. Please wait to purchase any tickets until after you receive confirmation you are accepted to SwampHacks and approved for travel, if you require a reimbursement.
+					</p>
+					<p class="transportationInfo">
+						Please make sure the information provided is your:
+						<ul class="transportationInfo">
+							<li>Full legal name</li>
+							<li>Accurate Birthdate</li>
+							<li>Current Address (this will be the address we send the reimbursement check)</li>
+							<li> Current phone number</li>
+						</ul>
+					</p>
 				<!-- Begin Mailchimp Signup Form -->
-				<link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
-				<style type="text/css">
-					#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
-					/* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
-					We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-				</style>
 				<div id="mc_embed_signup">
 				<form action="https://swamphacks.us10.list-manage.com/subscribe/post?u=44a52d9dbedc78feec6c91b97&amp;id=95e20955a2" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
 					<div id="mc_embed_signup_scroll">
-					<h2>Subscribe to our mailing list</h2>
-				<div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
-				<div class="mc-field-group">
-					<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
-				</label>
-					<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
-				</div>
-				<div class="mc-field-group">
-					<label for="mce-FNAME">First Name  <span class="asterisk">*</span>
-				</label>
-					<input type="text" value="" name="FNAME" class="required" id="mce-FNAME">
-				</div>
-				<div class="mc-field-group">
-					<label for="mce-MNAME">Middle Name </label>
-					<input type="text" value="" name="MNAME" class="" id="mce-MNAME">
-				</div>
-				<div class="mc-field-group">
-					<label for="mce-LNAME">Last Name  <span class="asterisk">*</span>
-				</label>
-					<input type="text" value="" name="LNAME" class="required" id="mce-LNAME">
-				</div>
-				<div class="mc-field-group size1of2">
-					<label for="mce-PHONE">Phone Number  <span class="asterisk">*</span>
-				</label>
-					<input type="number" name="PHONE" class="required" value="" id="mce-PHONE">
-				</div>
-				<div class="mc-address-group">
+					<h2>Sign up for travel reimbursement</h2>
+					<p class="redTxt">
+						* Required
+					</p>
 					<div class="mc-field-group">
-						<label for="mce-ADDRESS-addr1">Address  <span class="asterisk">*</span>
-				</label>
-						<input type="text" value="" maxlength="70" name="ADDRESS[addr1]" id="mce-ADDRESS-addr1" class="required">
+						<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+					</label>
+						<input type="email" value="" name="EMAIL" class="required email form-field" id="mce-EMAIL">
 					</div>
 					<div class="mc-field-group">
-						<label for="mce-ADDRESS-addr2">Address Line 2</label>
-						<input type="text" value="" maxlength="70" name="ADDRESS[addr2]" id="mce-ADDRESS-addr2">		
+						<label for="mce-FNAME">First Name  <span class="asterisk">*</span>
+					</label>
+						<input type="text" value="" name="FNAME" class="required form-field" id="mce-FNAME">
 					</div>
-					<div class="mc-field-group size1of2">
-						<label for="mce-ADDRESS-city">City</label>
-						<input type="text" value="" maxlength="40" name="ADDRESS[city]" id="mce-ADDRESS-city" class="required">
+					<div class="mc-field-group">
+						<label for="mce-MNAME">Middle Name </label>
+						<input type="text" value="" name="MNAME" class="form-field" id="mce-MNAME">
 					</div>
-					<div class="mc-field-group size1of2">
-						<label for="mce-ADDRESS-state">State/Province/Region</label>
-					<input type="text" value="" maxlength="20" name="ADDRESS[state]" id="mce-ADDRESS-state" class="required">
+					<div class="mc-field-group">
+						<label for="mce-LNAME">Last Name  <span class="asterisk">*</span>
+					</label>
+						<input type="text" value="" name="LNAME" class="required form-field" id="mce-LNAME">
 					</div>
-					<div class="mc-field-group size1of2">
-						<label for="mce-ADDRESS-zip">Postal / Zip Code</label>
-						<input type="text" value="" maxlength="10" name="ADDRESS[zip]" id="mce-ADDRESS-zip" class="required">
+					<div class="mc-field-group">
+						<label for="mce-PHONE">Phone Number  <span class="asterisk">*</span>
+					</label>
+						<input type="number" name="PHONE" class="required form-field" value="" id="mce-PHONE">
 					</div>
-					<div class="mc-field-group size1of2">
-						<label for="mce-ADDRESS-country">Country</label>
-						<select name="ADDRESS[country]" id="mce-ADDRESS-country" class="required"><option value="164" selected>USA</option><option value="286">Aaland Islands</option><option value="274">Afghanistan</option><option value="2">Albania</option><option value="3">Algeria</option><option value="178">American Samoa</option><option value="4">Andorra</option><option value="5">Angola</option><option value="176">Anguilla</option><option value="175">Antigua And Barbuda</option><option value="6">Argentina</option><option value="7">Armenia</option><option value="179">Aruba</option><option value="8">Australia</option><option value="9">Austria</option><option value="10">Azerbaijan</option><option value="11">Bahamas</option><option value="12">Bahrain</option><option value="13">Bangladesh</option><option value="14">Barbados</option><option value="15">Belarus</option><option value="16">Belgium</option><option value="17">Belize</option><option value="18">Benin</option><option value="19">Bermuda</option><option value="20">Bhutan</option><option value="21">Bolivia</option><option value="325">Bonaire, Saint Eustatius and Saba</option><option value="22">Bosnia and Herzegovina</option><option value="23">Botswana</option><option value="181">Bouvet Island</option><option value="24">Brazil</option><option value="180">Brunei Darussalam</option><option value="25">Bulgaria</option><option value="26">Burkina Faso</option><option value="27">Burundi</option><option value="28">Cambodia</option><option value="29">Cameroon</option><option value="30">Canada</option><option value="31">Cape Verde</option><option value="32">Cayman Islands</option><option value="33">Central African Republic</option><option value="34">Chad</option><option value="35">Chile</option><option value="36">China</option><option value="185">Christmas Island</option><option value="37">Colombia</option><option value="204">Comoros</option><option value="38">Congo</option><option value="183">Cook Islands</option><option value="268">Costa Rica</option><option value="275">Cote D'Ivoire</option><option value="40">Croatia</option><option value="276">Cuba</option><option value="298">Curacao</option><option value="41">Cyprus</option><option value="42">Czech Republic</option><option value="318">Democratic Republic of the Congo</option><option value="43">Denmark</option><option value="44">Djibouti</option><option value="289">Dominica</option><option value="187">Dominican Republic</option><option value="45">Ecuador</option><option value="46">Egypt</option><option value="47">El Salvador</option><option value="48">Equatorial Guinea</option><option value="49">Eritrea</option><option value="50">Estonia</option><option value="51">Ethiopia</option><option value="189">Falkland Islands</option><option value="191">Faroe Islands</option><option value="52">Fiji</option><option value="53">Finland</option><option value="54">France</option><option value="193">French Guiana</option><option value="277">French Polynesia</option><option value="56">Gabon</option><option value="57">Gambia</option><option value="58">Georgia</option><option value="59">Germany</option><option value="60">Ghana</option><option value="194">Gibraltar</option><option value="61">Greece</option><option value="195">Greenland</option><option value="192">Grenada</option><option value="196">Guadeloupe</option><option value="62">Guam</option><option value="198">Guatemala</option><option value="270">Guernsey</option><option value="63">Guinea</option><option value="65">Guyana</option><option value="200">Haiti</option><option value="66">Honduras</option><option value="67">Hong Kong</option><option value="68">Hungary</option><option value="69">Iceland</option><option value="70">India</option><option value="71">Indonesia</option><option value="278">Iran</option><option value="279">Iraq</option><option value="74">Ireland</option><option value="323">Isle of Man</option><option value="75">Israel</option><option value="76">Italy</option><option value="202">Jamaica</option><option value="78">Japan</option><option value="288">Jersey  (Channel Islands)</option><option value="79">Jordan</option><option value="80">Kazakhstan</option><option value="81">Kenya</option><option value="203">Kiribati</option><option value="82">Kuwait</option><option value="83">Kyrgyzstan</option><option value="84">Lao People's Democratic Republic</option><option value="85">Latvia</option><option value="86">Lebanon</option><option value="87">Lesotho</option><option value="88">Liberia</option><option value="281">Libya</option><option value="90">Liechtenstein</option><option value="91">Lithuania</option><option value="92">Luxembourg</option><option value="208">Macau</option><option value="93">Macedonia</option><option value="94">Madagascar</option><option value="95">Malawi</option><option value="96">Malaysia</option><option value="97">Maldives</option><option value="98">Mali</option><option value="99">Malta</option><option value="207">Marshall Islands</option><option value="210">Martinique</option><option value="100">Mauritania</option><option value="212">Mauritius</option><option value="241">Mayotte</option><option value="101">Mexico</option><option value="102">Moldova, Republic of</option><option value="103">Monaco</option><option value="104">Mongolia</option><option value="290">Montenegro</option><option value="294">Montserrat</option><option value="105">Morocco</option><option value="106">Mozambique</option><option value="242">Myanmar</option><option value="107">Namibia</option><option value="108">Nepal</option><option value="109">Netherlands</option><option value="110">Netherlands Antilles</option><option value="213">New Caledonia</option><option value="111">New Zealand</option><option value="112">Nicaragua</option><option value="113">Niger</option><option value="114">Nigeria</option><option value="217">Niue</option><option value="214">Norfolk Island</option><option value="272">North Korea</option><option value="116">Norway</option><option value="117">Oman</option><option value="118">Pakistan</option><option value="222">Palau</option><option value="282">Palestine</option><option value="119">Panama</option><option value="219">Papua New Guinea</option><option value="120">Paraguay</option><option value="121">Peru</option><option value="122">Philippines</option><option value="221">Pitcairn</option><option value="123">Poland</option><option value="124">Portugal</option><option value="126">Qatar</option><option value="315">Republic of Kosovo</option><option value="127">Reunion</option><option value="128">Romania</option><option value="129">Russia</option><option value="130">Rwanda</option><option value="205">Saint Kitts and Nevis</option><option value="206">Saint Lucia</option><option value="324">Saint Martin</option><option value="237">Saint Vincent and the Grenadines</option><option value="132">Samoa (Independent)</option><option value="227">San Marino</option><option value="255">Sao Tome and Principe</option><option value="133">Saudi Arabia</option><option value="134">Senegal</option><option value="326">Serbia</option><option value="135">Seychelles</option><option value="136">Sierra Leone</option><option value="137">Singapore</option><option value="302">Sint Maarten</option><option value="138">Slovakia</option><option value="139">Slovenia</option><option value="223">Solomon Islands</option><option value="140">Somalia</option><option value="141">South Africa</option><option value="257">South Georgia and the South Sandwich Islands</option><option value="142">South Korea</option><option value="311">South Sudan</option><option value="143">Spain</option><option value="144">Sri Lanka</option><option value="293">Sudan</option><option value="146">Suriname</option><option value="225">Svalbard and Jan Mayen Islands</option><option value="147">Swaziland</option><option value="148">Sweden</option><option value="149">Switzerland</option><option value="285">Syria</option><option value="152">Taiwan</option><option value="260">Tajikistan</option><option value="153">Tanzania</option><option value="154">Thailand</option><option value="233">Timor-Leste</option><option value="155">Togo</option><option value="232">Tonga</option><option value="234">Trinidad and Tobago</option><option value="156">Tunisia</option><option value="157">Turkey</option><option value="158">Turkmenistan</option><option value="287">Turks &amp; Caicos Islands</option><option value="159">Uganda</option><option value="161">Ukraine</option><option value="162">United Arab Emirates</option><option value="262">United Kingdom</option><option value="163">Uruguay</option><option value="165">Uzbekistan</option><option value="239">Vanuatu</option><option value="166">Vatican City State (Holy See)</option><option value="167">Venezuela</option><option value="168">Vietnam</option><option value="169">Virgin Islands (British)</option><option value="238">Virgin Islands (U.S.)</option><option value="188">Western Sahara</option><option value="170">Yemen</option><option value="173">Zambia</option><option value="174">Zimbabwe</option></select>
+					<div class="mc-field-group">
+						<label for="mce-BIRTHDAY-month">Birthday  <span class="asterisk">*</span>
+					</label>
+						<div class="datefield">
+							<span class="subfield monthfield"><input class="datepart required form-field" type="text" pattern="[0-9]*" value="" placeholder="MM" size="2" maxlength="2" name="BIRTHDAY[month]" id="mce-BIRTHDAY-month"></span> / 
+							<span class="subfield dayfield"><input class="datepart required form-field" type="text" pattern="[0-9]*" value="" placeholder="DD" size="2" maxlength="2" name="BIRTHDAY[day]" id="mce-BIRTHDAY-day"></span> / 
+							<span class="subfield yearfield"><input class="datepart required form-field" type="text" pattern="[0-9]*" value="" placeholder="YYYY" size="4" maxlength="4" name="BIRTHDAY[year]" id="mce-BIRTHDAY-year"></span>
+							<span class="small-meta nowrap transportationInfo">( mm / dd / yyyy )</span>
+						</div>
 					</div>
-				</div>
-				<div class="mc-field-group size1of2">
-					<label for="mce-BIRTHDAY-month">Birthday  <span class="asterisk">*</span>
-				</label>
-					<div class="datefield">
-						<span class="subfield monthfield"><input class="datepart required" type="text" pattern="[0-9]*" value="" placeholder="MM" size="2" maxlength="2" name="BIRTHDAY[month]" id="mce-BIRTHDAY-month"></span> / 
-						<span class="subfield dayfield"><input class="datepart required" type="text" pattern="[0-9]*" value="" placeholder="DD" size="2" maxlength="2" name="BIRTHDAY[day]" id="mce-BIRTHDAY-day"></span> / 
-						<span class="subfield yearfield"><input class="datepart required" type="text" pattern="[0-9]*" value="" placeholder="YYYY" size="4" maxlength="4" name="BIRTHDAY[year]" id="mce-BIRTHDAY-year"></span>
-						<span class="small-meta nowrap">( mm / dd / yyyy )</span>
+					<div class="mc-address-group">
+						<div class="mc-field-group">
+							<label for="mce-ADDRESS-addr1">Address  <span class="asterisk">*</span>
+					</label>
+							<input type="text" value="" maxlength="70" name="ADDRESS[addr1]" id="mce-ADDRESS-addr1" class="required form-field">
+						</div>
+						<div class="mc-field-group">
+							<label for="mce-ADDRESS-addr2">Address Line 2</label>
+							<input type="text" value="" maxlength="70" name="ADDRESS[addr2]" id="mce-ADDRESS-addr2" class="form-field">		
+						</div>
+						<div class="mc-field-group size1of2">
+							<label for="mce-ADDRESS-city">City</label>
+							<input type="text" value="" maxlength="40" name="ADDRESS[city]" id="mce-ADDRESS-city" class="required form-field">
+						</div>
+						<div class="mc-field-group size1of2">
+							<label for="mce-ADDRESS-state">State/Province/Region</label>
+						<input type="text" value="" maxlength="20" name="ADDRESS[state]" id="mce-ADDRESS-state" class="required form-field">
+						</div>
+						<div class="mc-field-group size1of2">
+							<label for="mce-ADDRESS-zip">Postal / Zip Code</label>
+							<input type="text" value="" maxlength="10" name="ADDRESS[zip]" id="mce-ADDRESS-zip" class="required form-field">
+						</div>
+						<div class="mc-field-group size1of2">
+							<label for="mce-ADDRESS-country">Country</label>
+							<select name="ADDRESS[country]" id="mce-ADDRESS-country" class="required form-field"><option value="164" selected>USA</option><option value="286">Aaland Islands</option><option value="274">Afghanistan</option><option value="2">Albania</option><option value="3">Algeria</option><option value="178">American Samoa</option><option value="4">Andorra</option><option value="5">Angola</option><option value="176">Anguilla</option><option value="175">Antigua And Barbuda</option><option value="6">Argentina</option><option value="7">Armenia</option><option value="179">Aruba</option><option value="8">Australia</option><option value="9">Austria</option><option value="10">Azerbaijan</option><option value="11">Bahamas</option><option value="12">Bahrain</option><option value="13">Bangladesh</option><option value="14">Barbados</option><option value="15">Belarus</option><option value="16">Belgium</option><option value="17">Belize</option><option value="18">Benin</option><option value="19">Bermuda</option><option value="20">Bhutan</option><option value="21">Bolivia</option><option value="325">Bonaire, Saint Eustatius and Saba</option><option value="22">Bosnia and Herzegovina</option><option value="23">Botswana</option><option value="181">Bouvet Island</option><option value="24">Brazil</option><option value="180">Brunei Darussalam</option><option value="25">Bulgaria</option><option value="26">Burkina Faso</option><option value="27">Burundi</option><option value="28">Cambodia</option><option value="29">Cameroon</option><option value="30">Canada</option><option value="31">Cape Verde</option><option value="32">Cayman Islands</option><option value="33">Central African Republic</option><option value="34">Chad</option><option value="35">Chile</option><option value="36">China</option><option value="185">Christmas Island</option><option value="37">Colombia</option><option value="204">Comoros</option><option value="38">Congo</option><option value="183">Cook Islands</option><option value="268">Costa Rica</option><option value="275">Cote D'Ivoire</option><option value="40">Croatia</option><option value="276">Cuba</option><option value="298">Curacao</option><option value="41">Cyprus</option><option value="42">Czech Republic</option><option value="318">Democratic Republic of the Congo</option><option value="43">Denmark</option><option value="44">Djibouti</option><option value="289">Dominica</option><option value="187">Dominican Republic</option><option value="45">Ecuador</option><option value="46">Egypt</option><option value="47">El Salvador</option><option value="48">Equatorial Guinea</option><option value="49">Eritrea</option><option value="50">Estonia</option><option value="51">Ethiopia</option><option value="189">Falkland Islands</option><option value="191">Faroe Islands</option><option value="52">Fiji</option><option value="53">Finland</option><option value="54">France</option><option value="193">French Guiana</option><option value="277">French Polynesia</option><option value="56">Gabon</option><option value="57">Gambia</option><option value="58">Georgia</option><option value="59">Germany</option><option value="60">Ghana</option><option value="194">Gibraltar</option><option value="61">Greece</option><option value="195">Greenland</option><option value="192">Grenada</option><option value="196">Guadeloupe</option><option value="62">Guam</option><option value="198">Guatemala</option><option value="270">Guernsey</option><option value="63">Guinea</option><option value="65">Guyana</option><option value="200">Haiti</option><option value="66">Honduras</option><option value="67">Hong Kong</option><option value="68">Hungary</option><option value="69">Iceland</option><option value="70">India</option><option value="71">Indonesia</option><option value="278">Iran</option><option value="279">Iraq</option><option value="74">Ireland</option><option value="323">Isle of Man</option><option value="75">Israel</option><option value="76">Italy</option><option value="202">Jamaica</option><option value="78">Japan</option><option value="288">Jersey  (Channel Islands)</option><option value="79">Jordan</option><option value="80">Kazakhstan</option><option value="81">Kenya</option><option value="203">Kiribati</option><option value="82">Kuwait</option><option value="83">Kyrgyzstan</option><option value="84">Lao People's Democratic Republic</option><option value="85">Latvia</option><option value="86">Lebanon</option><option value="87">Lesotho</option><option value="88">Liberia</option><option value="281">Libya</option><option value="90">Liechtenstein</option><option value="91">Lithuania</option><option value="92">Luxembourg</option><option value="208">Macau</option><option value="93">Macedonia</option><option value="94">Madagascar</option><option value="95">Malawi</option><option value="96">Malaysia</option><option value="97">Maldives</option><option value="98">Mali</option><option value="99">Malta</option><option value="207">Marshall Islands</option><option value="210">Martinique</option><option value="100">Mauritania</option><option value="212">Mauritius</option><option value="241">Mayotte</option><option value="101">Mexico</option><option value="102">Moldova, Republic of</option><option value="103">Monaco</option><option value="104">Mongolia</option><option value="290">Montenegro</option><option value="294">Montserrat</option><option value="105">Morocco</option><option value="106">Mozambique</option><option value="242">Myanmar</option><option value="107">Namibia</option><option value="108">Nepal</option><option value="109">Netherlands</option><option value="110">Netherlands Antilles</option><option value="213">New Caledonia</option><option value="111">New Zealand</option><option value="112">Nicaragua</option><option value="113">Niger</option><option value="114">Nigeria</option><option value="217">Niue</option><option value="214">Norfolk Island</option><option value="272">North Korea</option><option value="116">Norway</option><option value="117">Oman</option><option value="118">Pakistan</option><option value="222">Palau</option><option value="282">Palestine</option><option value="119">Panama</option><option value="219">Papua New Guinea</option><option value="120">Paraguay</option><option value="121">Peru</option><option value="122">Philippines</option><option value="221">Pitcairn</option><option value="123">Poland</option><option value="124">Portugal</option><option value="126">Qatar</option><option value="315">Republic of Kosovo</option><option value="127">Reunion</option><option value="128">Romania</option><option value="129">Russia</option><option value="130">Rwanda</option><option value="205">Saint Kitts and Nevis</option><option value="206">Saint Lucia</option><option value="324">Saint Martin</option><option value="237">Saint Vincent and the Grenadines</option><option value="132">Samoa (Independent)</option><option value="227">San Marino</option><option value="255">Sao Tome and Principe</option><option value="133">Saudi Arabia</option><option value="134">Senegal</option><option value="326">Serbia</option><option value="135">Seychelles</option><option value="136">Sierra Leone</option><option value="137">Singapore</option><option value="302">Sint Maarten</option><option value="138">Slovakia</option><option value="139">Slovenia</option><option value="223">Solomon Islands</option><option value="140">Somalia</option><option value="141">South Africa</option><option value="257">South Georgia and the South Sandwich Islands</option><option value="142">South Korea</option><option value="311">South Sudan</option><option value="143">Spain</option><option value="144">Sri Lanka</option><option value="293">Sudan</option><option value="146">Suriname</option><option value="225">Svalbard and Jan Mayen Islands</option><option value="147">Swaziland</option><option value="148">Sweden</option><option value="149">Switzerland</option><option value="285">Syria</option><option value="152">Taiwan</option><option value="260">Tajikistan</option><option value="153">Tanzania</option><option value="154">Thailand</option><option value="233">Timor-Leste</option><option value="155">Togo</option><option value="232">Tonga</option><option value="234">Trinidad and Tobago</option><option value="156">Tunisia</option><option value="157">Turkey</option><option value="158">Turkmenistan</option><option value="287">Turks &amp; Caicos Islands</option><option value="159">Uganda</option><option value="161">Ukraine</option><option value="162">United Arab Emirates</option><option value="262">United Kingdom</option><option value="163">Uruguay</option><option value="165">Uzbekistan</option><option value="239">Vanuatu</option><option value="166">Vatican City State (Holy See)</option><option value="167">Venezuela</option><option value="168">Vietnam</option><option value="169">Virgin Islands (British)</option><option value="238">Virgin Islands (U.S.)</option><option value="188">Western Sahara</option><option value="170">Yemen</option><option value="173">Zambia</option><option value="174">Zimbabwe</option></select>
+						</div>
 					</div>
-				</div>
-					<div id="mce-responses" class="clear">
-						<div class="response" id="mce-error-response" style="display:none"></div>
-						<div class="response" id="mce-success-response" style="display:none"></div>
-					</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-					<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_44a52d9dbedc78feec6c91b97_95e20955a2" tabindex="-1" value=""></div>
-					<div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button green"></div>
+						<div id="mce-responses" class="clear">
+							<div class="response" id="mce-error-response" style="display:none"></div>
+							<div class="response" id="mce-success-response" style="display:none"></div>
+						</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+						<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_44a52d9dbedc78feec6c91b97_95e20955a2" tabindex="-1" value=""></div>
+						<div class="clear"><input type="submit" value="Submit" name="subscribe" id="mc-embedded-subscribe" class="transportSubmitBtn"></div>
+						</div>
+					</form>
 					</div>
-				</form>
-				</div>
-				<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[4]='MNAME';ftypes[4]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='PHONE';ftypes[3]='number';fnames[5]='ADDRESS';ftypes[5]='address';fnames[6]='BIRTHDAY';ftypes[6]='date';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
-				<!--End mc_embed_signup-->
+					<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[4]='MNAME';ftypes[4]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='PHONE';ftypes[3]='number';fnames[5]='ADDRESS';ftypes[5]='address';fnames[6]='BIRTHDAY';ftypes[6]='date';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+					<!--End mc_embed_signup-->
 				</div>
 
 		</div>
@@ -913,6 +940,7 @@
 		var userObj = JSON.parse(localStorage.getItem('loggedInUser'));
 		var loggedInUserKey = localStorage.getItem('loggedInUserKey');
 		var savedFormData = JSON.parse(localStorage.getItem('savedForm'));
+		var transportationInfo = JSON.parse(localStorage.getItem('transportationInfo'));
 		var usersRef = ref.child("applicants");
 		var acceptedRef = ref.child("accepted");
 		var checkedInRef = ref.child("confirmed");
@@ -936,8 +964,52 @@
 		var numHalal = 0;
 		var numNone = 0;
 
+		function disableTransportForm() {
+			$("#mce-EMAIL").addClass("disabled");
+			$("#mce-EMAIL").prop("disabled", true);
+
+			$("#mce-FNAME").addClass("disabled");
+			$("#mce-FNAME").prop("disabled", true);
+
+			$("#mce-MNAME").addClass("disabled");
+			$("#mce-MNAME").prop("disabled", true);
+
+			$("#mce-LNAME").addClass("disabled");
+			$("#mce-LNAME").prop("disabled", true);
+
+			$("#mce-PHONE").addClass("disabled");
+			$("#mce-PHONE").prop("disabled", true);
+
+			$("#mce-BIRTHDAY-month").addClass("disabled");
+			$("#mce-BIRTHDAY-month").prop("disabled", true);
+
+			$("#mce-BIRTHDAY-day").addClass("disabled");
+			$("#mce-BIRTHDAY-day").prop("disabled", true);
+
+			$("#mce-BIRTHDAY-year").addClass("disabled");
+			$("#mce-BIRTHDAY-year").prop("disabled", true);
+
+			$("#mce-ADDRESS-addr1").addClass("disabled");
+			$("#mce-ADDRESS-addr1").prop("disabled", true);
+
+			$("#mce-ADDRESS-addr2").addClass("disabled");
+			$("#mce-ADDRESS-addr2").prop("disabled", true);
+
+			$("#mce-ADDRESS-city").addClass("disabled");
+			$("#mce-ADDRESS-city").prop("disabled", true);
+
+			$("#mce-ADDRESS-state").addClass("disabled");
+			$("#mce-ADDRESS-state").prop("disabled", true);
+
+			$("#mce-ADDRESS-zip").addClass("disabled");
+			$("#mce-ADDRESS-zip").prop("disabled", true);
+
+			$("#mce-ADDRESS-country").addClass("disabled");
+			$("#mce-ADDRESS-country").prop("disabled", true);
+		}
+
 		$(document).ready( function () {
-			// I only have one form on the page but you can be more specific if need be.
+			// save transportation information on mailchimp
 			var $form = $('form[name="transportation-form"]');
 			if ( $form.length > 0 ) {
 				$('form input[type="submit"]').bind('click', function ( event ) {
@@ -958,6 +1030,43 @@
 							}
 						}
 					});
+				});
+				// save info on DB
+				const email = $("#mce-EMAIL").val().trim();
+				const fname = $("#mce-FNAME").val().trim();
+				const mname = $("#mce-MNAME").val().trim();
+				const lname = $("#mce-LNAME").val().trim();
+				const phoneNumber = $("#mce-PHONE").val().trim();
+				const month = $("#mce-BIRTHDAY-month").val().trim();
+				const day = $("#mce-BIRTHDAY-day").val().trim();
+				const year = $("#mce-BIRTHDAY-year").val().trim();
+				const birthdate = month+'/'+day+'/'+year;
+				const address1 = $("#mce-ADDRESS-addr1").val().trim();
+				const address2 = $("#mce-ADDRESS-addr2").val().trim();
+				const city = $("#mce-ADDRESS-city").val().trim();
+				const state = $("#mce-ADDRESS-state").val().trim();
+				const zip = $("#mce-ADDRESS-zip").val().trim();
+				const country = $('select[name="ADDRESS[country]"]').val();
+				const address = address1+';'+address2+';'+city+';'
+					+state+';'+zip+';'+country;
+				const transportRef = ref.child('transportationForm');
+				let updates = {};
+				let data = {
+					email: email,
+					fname: fname,
+					mname: mname,
+					lname: lname,
+					phoneNumber: phoneNumber,
+					birthdate: birthdate,
+					address: address,
+					completed: true
+				};
+				updates[loggedInUserKey] = data;
+				transportRef.update(updates).then(function() {
+					// disable fields
+					disableTransportForm();
+					transportationInfo = data;
+					localStorage.setItem('transportationInfo', JSON.stringify(data));
 				});
 			}
 		});
@@ -1001,8 +1110,54 @@
 				//show form on menu
 				$("#op7").removeClass("hide");
 				$("#op7").addClass("show");
+				if (transportationInfo) {
 				// set form fields
-				$('#mce-EMAIL').val(userObj.email);
+					$('#mce-EMAIL').val(transportationInfo.email);
+					$('#mce-FNAME').val(transportationInfo.fname);
+					$('#mce-MNAME').val(transportationInfo.mname);
+					$('#mce-LNAME').val(transportationInfo.lname);
+					$('#mce-PHONE').val(transportationInfo.phoneNumber);
+					// parse date
+					var parts = transportationInfo.birthdate.split("/");
+					const day = parts[1];
+					const month = parts[0];
+					const year = parts[2];
+					$('#mce-BIRTHDAY-month').val(month);
+					$('#mce-BIRTHDAY-day').val(day);
+					$('#mce-BIRTHDAY-year').val(year);
+					// parse address
+					var addressLine = transportationInfo.address.split(";");
+					const address1 = addressLine[0];
+					const address2 = addressLine[1];
+					const city = addressLine[2];
+					const state = addressLine[3];
+					const zip = addressLine[4];
+					const country = addressLine[5];
+					$("#mce-ADDRESS-addr1").val(address1);
+					$("#mce-ADDRESS-addr2").val(address2);
+					$("#mce-ADDRESS-city").val(city);
+					$("#mce-ADDRESS-state").val(state);
+					$("#mce-ADDRESS-zip").val(zip);
+					$("#mce-ADDRESS-country").val(country);
+					if (transportationInfo.completed) {
+						// disable fields
+						disableTransportForm();
+					}
+				} else {
+					// set form fields
+					$('#mce-EMAIL').val(userObj.email);
+					$('#mce-FNAME').val(userObj.fname);
+					$('#mce-LNAME').val(userObj.lname);
+					$('#mce-PHONE').val(userObj.phoneNumber);
+					// parse date
+					var parts = userObj.birthdate.split("/");
+					var day = parts[1];
+					var month = parts[0];
+					var year = parts[2];
+					$('#mce-BIRTHDAY-month').val(month);
+					$('#mce-BIRTHDAY-day').val(day);
+					$('#mce-BIRTHDAY-year').val(year);
+				}
 			}
 		}else if (!userObj.applied && savedFormData) {
 			// show saved form info
@@ -1138,6 +1293,7 @@
 				$("#confirmedTimeline").addClass("limeGreen");
 				$("#confirmedCircle").addClass("lightGreen");
 				$("#confirmedTimelineText").text("Confirmed");
+
 				// $("#dashStatus").addClass("green");
 				// $("#dashStatus").removeClass("dark");
 
@@ -1152,15 +1308,24 @@
 				$("#statusTimelineText").text("Accepted!");	
 				// Show Confirm and Deny buttons
 				$("#confirmBtn").addClass("show");
-				$("#rejectSpot").addClass("show"); 
+				$("#rejectSpot").addClass("show");
+
+				// hide qrcode if they haven't been confirmed yet
+				$('#qrcode').addClass('hide');
 			} else if (userObj.status === "NOT ACCEPTED") {
 				// update timeline
 				$("#statusTimeline").addClass("red");
 				$("#statusCircle").addClass("red");
-				$("#statusTimelineText").text("Not Accepted");	
+				$("#statusTimelineText").text("Not Accepted");
+				
+				// hide qrcode if they haven't been confirmed yet
+				$('#qrcode').addClass('hide');	
 			} else if (userObj.status === "NOT ATTENDING")  {
 				// update timeline
-				$("#confirmedTimelineText").text("Not Attending");	
+				$("#confirmedTimelineText").text("Not Attending");
+				
+				// hide qrcode if they haven't been confirmed yet
+				$('#qrcode').addClass('hide');	
 				// $("#dashStatus").removeClass("green");
 				// $("#dashStatus").addClass("dark");
 
@@ -1168,6 +1333,9 @@
 				// $("#confirmCon").removeClass("hide");
 				// $("#rejectCon").addClass("hide");
 				// $("#rejectCon").removeClass("show");
+			} else if (userObj.status === "PENDING") {
+				// hide qrcode if they haven't been confirmed yet
+				$('#qrcode').addClass('hide');
 			}
 
 		}
@@ -1400,6 +1568,18 @@
 		}
 	}
 
+	function transportClicked(state) {
+		if (state) {
+			// show extra input
+			$('#homeStateContainer').addClass('showHomeStateInput');
+			$('#interestContainer').removeClass('reduce-top-2');
+		} else {
+			// hide input
+			$('#homeStateContainer').removeClass('showHomeStateInput');
+			$('#interestContainer').addClass('reduce-top-2');
+		}
+	}
+
 	function disableFields() {
 		$("#firstName").addClass("disabled");
 		$("#firstName").prop("disabled", true);
@@ -1429,8 +1609,8 @@
 		});
 		for(let race in userObj.raceEthnicity) {
 			if (race === 'Other') {
-				$('#raceOtherInput').addClass('showOtherInput');
-				$('#schoolContainer').removeClass('reduce-top');
+				// $('#raceOtherInput').addClass('showOtherInput');
+				// $('#schoolContainer').removeClass('reduce-top');
 
 				$("#raceOtherInput").addClass("disabled");
 				$("#raceOtherInput").prop("disabled", true);
@@ -1446,8 +1626,8 @@
 		$('select[name="studyLevel"]').addClass("disabled");
 		$('select[name="studyLevel"]').prop("disabled", true);
 
-		$('select[name="major"]').addClass("disabled");
-		$('select[name="major"]').prop("disabled", true);
+		$("#major").addClass("disabled");
+		$("#major").prop("disabled", true);
 
 		$("input[name='firstTimeHacker']").each(function(index, radio) {
 			radio.disabled = true;
@@ -1470,6 +1650,10 @@
 			radio.disabled = true;
 			$('#transportationRadio'+index.toString()).addClass("disabled");
 		});
+		if (userObj.transportation === 'yes') {
+			$("#homeState").addClass("disabled");
+			$("#homeState").prop("disabled", true);
+		}
 
 		$("#interest").addClass("disabled");
 		$("#interest").prop("disabled", true);
@@ -1518,6 +1702,7 @@
 		const tshirtSize = savedFormData.tshirtSize ? savedFormData.tshirtSize : '';
 		const dietaryRestrictions = savedFormData.dietaryRestrictions ? savedFormData.dietaryRestrictions : '';
 		const transportation = savedFormData.transportation ? savedFormData.transportation : '';
+		const transportationState = savedFormData.transportationState ? savedFormData.transportationState : '';
 		const interestReason = savedFormData.interestReason ? savedFormData.interestReason : '';
 		const everydayProblem = savedFormData.everydayProblem ? savedFormData.everydayProblem : '';
 		const hopeToGain = savedFormData.hopeToGain ? savedFormData.hopeToGain : '';
@@ -1562,9 +1747,7 @@
 		if (studyLevel != '') {
 			$('select[name="studyLevel"]').val(studyLevel);
 		}
-		if (major != '') {
-			$('select[name="major"]').val(major);
-		}
+		$("#major").val(major);
 		if (firstTimeHacker != '') {
 			$("#firstTimeHacker"+firstTimeHacker).prop("checked", true);
 		}
@@ -1578,6 +1761,10 @@
 		}
 		if (transportation != '') {
 			$("#transportation"+transportation).prop("checked", true);
+			if (transportation === 'yes') {
+				transportClicked(true);
+				$("#homeState").val(transportationState);
+			}
 		}
 		$("#interest").val(interestReason);
 		$("#everydayProblem").val(everydayProblem);
@@ -1620,7 +1807,7 @@
 		$('select[name="schools"]').val(userObj.school);
 		$('select[name="schoolYear"]').val(userObj.schoolYear);
 		$('select[name="studyLevel"]').val(userObj.studyLevel);
-		$('select[name="major"]').val(userObj.major);
+		$("#major").val(major);
 		$("#firstTimeHacker"+userObj.firstTimeHacker).prop("checked", true);
 		// hide resume field
 		// $("#resumeContainer").addClass("hide");
@@ -1631,6 +1818,10 @@
 		$('select[name="shirtSize"]').val(userObj.tshirtSize);
 		$('select[name="diet"]').val(userObj.dietaryRestrictions);
 		$("#transportation"+userObj.transportation).prop("checked", true);
+		if (userObj.transportation === 'yes') {
+			transportClicked(true);
+			$("#homeState").val(userObj.transportationState);
+		}
 		$("#interest").val(userObj.interestReason);
 		$("#everydayProblem").val(userObj.everydayProblem);
 		$("#hopes").val(userObj.hopeToGain);
@@ -1712,7 +1903,7 @@
 		}
 
 		function checkFields(fname, lname, gender, genderDesc, phoneNumber, birthdate, raceEthnicity, raceDesc, resume, firstTimeHacker, transportation,
-				interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct, authorizeOption) {
+				transportationState, major, interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct, authorizeOption) {
             var canSubmit = true;
             if (fname == "") {
                 canSubmit = false;
@@ -1735,6 +1926,11 @@
 				canSubmit = false;
                 // mark as 
 				$("#birthdate").addClass("requiredField");
+			}
+			if (major == "") {
+                canSubmit = false;
+                // mark as 
+				$("#major").addClass("requiredField");
 			}
 			if (interestReason == "") {
                 canSubmit = false;
@@ -1793,7 +1989,11 @@
                 canSubmit = false;
                 // mark as 
 				$("#transportationContainer").addClass("requiredCheckbox");
-            }
+            } else if (transportation === 'yes' && transportationState == '') {
+				canSubmit = false;
+                // mark as 
+				$("#homeState").addClass("requiredField");
+			}
             if (!codeOfConduct) {
                 canSubmit = false;
                 // mark as 
@@ -1814,6 +2014,7 @@
 			$("#birthdate").removeClass("requiredField");
 			$("#phoneNumberFormat").addClass("hide");
 			$("#birthdateFormat").addClass("hide");
+			$("#major").removeClass("requiredField");
 			$("#interest").removeClass("requiredField");
 			$("#everydayProblem").removeClass("requiredField");
 			$("#hopes").removeClass("requiredField");
@@ -1826,6 +2027,7 @@
 			$("#resumeContainer").removeClass("requiredCheckbox");
 			$("#hackerContainer").removeClass("requiredCheckbox");
 			$("#transportationContainer").removeClass("requiredCheckbox");
+			$("#homeState").removeClass("requiredField");
 			$("#codeOfConductContainer").removeClass("requiredCheckbox");
 			$("#authorizeOptionContainer").removeClass("requiredCheckbox");
 			$('#incorrectFields').addClass('hide');
@@ -1854,14 +2056,18 @@
             const school = $('select[name="schools"]').val();
 			const schoolYear = $('select[name="schoolYear"]').val();
 			const studyLevel = $('select[name="studyLevel"]').val();
-			const major = $('select[name="major"]').val();
+			const major = $("#major").val().trim();
 			const firstTimeHacker = $('input[name="firstTimeHacker"]:checked').val();
 			const resumeName = $('#resume').get(0).files[0] ? $('#resume').get(0).files[0].name: undefined;
             const githubProfile = $('input[name="github"]').val();
             const linkedinProfile = $('input[name="linkedin"]').val();
             const shirtSize = $('select[name="shirtSize"]').val();
             const diet = $('select[name="diet"]').val();
-            const transportation = $('input[name="transportation"]:checked').val();
+			const transportation = $('input[name="transportation"]:checked').val();
+			let transportationState = '';
+			if (transportation === 'yes') {
+				transportationState = $("#homeState").val().trim();
+			}
             const interestReason = $('textarea[name="interest"]').val();
             const everydayProblem = $('textarea[name="everydayProblem"]').val();
             const hopeToGain =  $('textarea[name="hopes"]').val();
@@ -1871,7 +2077,7 @@
 			const authorizeOption = $('input[name="authorizeOption"]:checked').val();
 
             var canSubmit = checkFields(fname, lname, gender, genderDesc, phoneNumber, birthdate, raceEthnicity, raceDesc,
-				$('#resume').get(0).files[0], firstTimeHacker, transportation,
+				$('#resume').get(0).files[0], firstTimeHacker, transportation, transportationState, major,
 				interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct, authorizeOption);
 
             if (canSubmit) {
@@ -1901,7 +2107,8 @@
 						linkedinProfile: linkedinProfile,
                         tshirtSize: shirtSize,
                         dietaryRestrictions: diet,
-                        transportation: transportation,
+						transportation: transportation,
+						transportationState: transportationState,
                         interestReason: interestReason,
                         everydayProblem: everydayProblem,
                         hopeToGain: hopeToGain,
@@ -1988,14 +2195,18 @@
             const school = $('select[name="schools"]').val();
 			const schoolYear = $('select[name="schoolYear"]').val();
 			const studyLevel = $('select[name="studyLevel"]').val();
-			const major = $('select[name="major"]').val();
+			const major = $("#major").val();
 			const firstTimeHacker = $('input[name="firstTimeHacker"]:checked').val();
 			const resumeName = $('#resume').get(0).files[0] ? $('#resume').get(0).files[0].name: undefined;
             const githubProfile = $('input[name="github"]').val();
             const linkedinProfile = $('input[name="linkedin"]').val();
             const shirtSize = $('select[name="shirtSize"]').val();
             const diet = $('select[name="diet"]').val();
-            const transportation = $('input[name="transportation"]:checked').val();
+			const transportation = $('input[name="transportation"]:checked').val();
+			let transportationState = '';
+			if (transportation === 'yes') {
+				transportationState = $("#homeState").val().trim();
+			}
             const interestReason = $('textarea[name="interest"]').val();
             const everydayProblem = $('textarea[name="everydayProblem"]').val();
             const hopeToGain =  $('textarea[name="hopes"]').val();
@@ -2023,6 +2234,7 @@
 				tshirtSize: shirtSize,
 				dietaryRestrictions: diet,
 				transportation: transportation,
+				transportationState: transportationState,
 				interestReason: interestReason,
 				everydayProblem: everydayProblem,
 				hopeToGain: hopeToGain,
@@ -2342,6 +2554,7 @@
 				localStorage.setItem('loggedInUser', null);
 				localStorage.setItem('loggedInUserKey', null);
 				localStorage.setItem('provider', null);
+				localStorage.setItem('transportationInfo', null);
 
 				window.location.href = "login.html";
 
@@ -2566,7 +2779,7 @@
 
 				$("#headertxt").text("Send iOS Notif");
 
-			} else if (selected == 6) {
+			} else if (selected == 7) {
 
 				$("#headertxt").text("Transportation Form");
 

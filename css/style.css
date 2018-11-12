@@ -516,6 +516,10 @@
   font-family: 'Poppins', sans-serif;
 }
 
+.blueTxt {
+  color: #3B5998;
+}
+
 .green {
   background: #6C9668;
 }
@@ -538,6 +542,10 @@
 
 .greenTxt {
   color: #6C9668;
+}
+
+.lightGreenTxt {
+  color: rgb(106, 211, 97);
 }
 
 .redTxt {
@@ -565,6 +573,10 @@ td, th {
 
 .reduce-top {
   margin-top: -2em !important;
+}
+
+.reduce-top-2 {
+  margin-top: -5em !important;
 }
 
 .school-tab {
@@ -643,17 +655,79 @@ td b {
 
 .form-field {
   height: 50px;
-  border-radius: 6px;
+  border-radius: 6px !important;
   width: 100%;
   border-style: solid !important;
-  border-color: #6DBFE7;
-  border-width: 2px;
-  padding-left: 10px;
+  border-color: #6DBFE7!important;
+  border-width: 2px!important;
+  padding-left: 10px!important;
   color: #6DBFE7;
-  font-size: 1.2em;
-  font-family: 'Poppins', sans-serif;
+  font-size: 1.2em!important;
+  font-family: 'Poppins', sans-serif!important;
   background-color: white;
   -webkit-appearance: none;
+}
+
+.form-field:focus {
+  outline: none!important;
+  border-color: #1C3444!important;
+  color: #333333!important;
+}
+
+.form-field::placeholder {
+  color: #e6e6e6!important;
+}
+
+.datepart {
+  font-size: 1.2em;
+  font-family: 'Poppins', sans-serif;
+}
+
+#mc_embed_signup .datefield input, #mc_embed_signup .phonefield-us input {
+  /* display: inline;
+  width: 60px;
+  margin: 0 2px;
+  letter-spacing: 1px;
+  text-align: center; */
+  padding: 5px;
+}
+
+#mc_embed_signup .datefield .monthfield input, #mc_embed_signup .datefield .dayfield input {
+  width: 45px;
+}
+
+#mc_embed_signup .mc-field-group input {
+  text-indent: 0;
+}
+
+#mc-embedded-subscribe {
+  margin: 0;
+}
+
+.transportSubmitBtn {
+  font-size: 1.2em;
+  font-family: 'Poppins', sans-serif;
+  padding-top: 0.1px !important;
+  height: 50px;
+  border-radius: 6px;
+  width: 95%!important;
+  border: none;
+  transition: 0.3s;
+  background-color: #6C9668;
+  color: white;
+}
+
+.homeStateInput {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: visibility 0.5s, transform 0.5s, opacity 0.5s;
+}
+
+.showHomeStateInput {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0%);
 }
 
 .otherInput {
@@ -669,6 +743,18 @@ td b {
   visibility: visible;
   opacity: 1;
   transform: translateY(0%);
+}
+
+.transportationInfo {
+  font-size: 1.1em;
+  line-height: 1.6em;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dashboardInfo {
+  font-size: 1.1em;
+  line-height: 1.6em;
+  font-family: 'Poppins', sans-serif;
 }
 
 select {
@@ -706,16 +792,6 @@ select.minimal {
     5px 5px,
     1px 1.5em;
   background-repeat: no-repeat;
-}
-
-.form-field:focus {
-  outline: none;
-  border-color: #1C3444;
-  color: #333333;
-}
-
-.form-field::placeholder {
-  color: #e6e6e6;
 }
 
 .form-textbox {
@@ -1177,6 +1253,18 @@ select.minimal {
   line-height: 1.6em;
   font-family: 'Poppins', sans-serif;
   text-align: left;
+  border: none;
+  background: transparent;
+  transition: 0.3s;
+}
+
+.resend:focus {
+  outline: 0;
+}
+
+.resend:hover {
+  color: rgb(56, 109, 51);
+  text-decoration: underline;
 }
 
 #profileStatusTxt {
