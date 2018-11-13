@@ -1080,6 +1080,7 @@
 		for (let school of schoolList) {
 			listHtml += '<option value="'+ school.institution + '">' + school.institution + '</option>';
 		}
+		listHtml += '<option value="other">other</option>';
 		schools.innerHTML += listHtml;
 		// send unlogged users to login page
 		firebase.auth().onAuthStateChanged(function(currentUser) {
