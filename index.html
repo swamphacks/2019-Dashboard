@@ -1033,43 +1033,43 @@
 							}
 						}
 					});
-				});
-				// save info on DB
-				const email = $("#mce-EMAIL").val().trim();
-				const fname = $("#mce-FNAME").val().trim();
-				const mname = $("#mce-MNAME").val().trim();
-				const lname = $("#mce-LNAME").val().trim();
-				const phoneNumber = $("#mce-PHONE").val().trim();
-				const month = $("#mce-BIRTHDAY-month").val().trim();
-				const day = $("#mce-BIRTHDAY-day").val().trim();
-				const year = $("#mce-BIRTHDAY-year").val().trim();
-				const birthdate = month+'/'+day+'/'+year;
-				const address1 = $("#mce-ADDRESS-addr1").val().trim();
-				const address2 = $("#mce-ADDRESS-addr2").val().trim();
-				const city = $("#mce-ADDRESS-city").val().trim();
-				const state = $("#mce-ADDRESS-state").val().trim();
-				const zip = $("#mce-ADDRESS-zip").val().trim();
-				const country = $('select[name="ADDRESS[country]"]').val();
-				const address = address1+';'+address2+';'+city+';'
-					+state+';'+zip+';'+country;
-				const transportRef = ref.child('transportationForm');
-				let updates = {};
-				let data = {
-					email: email,
-					fname: fname,
-					mname: mname,
-					lname: lname,
-					phoneNumber: phoneNumber,
-					birthdate: birthdate,
-					address: address,
-					completed: true
-				};
-				updates[loggedInUserKey] = data;
-				transportRef.update(updates).then(function() {
-					// disable fields
-					disableTransportForm();
-					transportationInfo = data;
-					localStorage.setItem('transportationInfo', JSON.stringify(data));
+					// save info on DB
+					const email = $("#mce-EMAIL").val().trim();
+					const fname = $("#mce-FNAME").val().trim();
+					const mname = $("#mce-MNAME").val().trim();
+					const lname = $("#mce-LNAME").val().trim();
+					const phoneNumber = $("#mce-PHONE").val().trim();
+					const month = $("#mce-BIRTHDAY-month").val().trim();
+					const day = $("#mce-BIRTHDAY-day").val().trim();
+					const year = $("#mce-BIRTHDAY-year").val().trim();
+					const birthdate = month+'/'+day+'/'+year;
+					const address1 = $("#mce-ADDRESS-addr1").val().trim();
+					const address2 = $("#mce-ADDRESS-addr2").val().trim();
+					const city = $("#mce-ADDRESS-city").val().trim();
+					const state = $("#mce-ADDRESS-state").val().trim();
+					const zip = $("#mce-ADDRESS-zip").val().trim();
+					const country = $('select[name="ADDRESS[country]"]').val();
+					const address = address1+';'+address2+';'+city+';'
+						+state+';'+zip+';'+country;
+					const transportRef = ref.child('transportationForm');
+					let updates = {};
+					let data = {
+						email: email,
+						fname: fname,
+						mname: mname,
+						lname: lname,
+						phoneNumber: phoneNumber,
+						birthdate: birthdate,
+						address: address,
+						completed: true
+					};
+					updates[loggedInUserKey] = data;
+					transportRef.update(updates).then(function() {
+						// disable fields
+						disableTransportForm();
+						transportationInfo = data;
+						localStorage.setItem('transportationInfo', JSON.stringify(data));
+					});
 				});
 			}
 		});
@@ -1080,7 +1080,7 @@
 		for (let school of schoolList) {
 			listHtml += '<option value="'+ school.institution + '">' + school.institution + '</option>';
 		}
-		listHtml += '<option value="other">other</option>';
+		listHtml += '<option value="Other">Other</option>';
 		schools.innerHTML += listHtml;
 		// send unlogged users to login page
 		firebase.auth().onAuthStateChanged(function(currentUser) {
