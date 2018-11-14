@@ -1600,6 +1600,9 @@
 	}
 
 	function disableFields() {
+		$("#appEmail").addClass("disabled");
+		$("#appEmail").prop("disabled", true);
+
 		$("#firstName").addClass("disabled");
 		$("#firstName").prop("disabled", true);
 
@@ -1703,6 +1706,7 @@
 	}
 
 	function addSavedFormData() {
+		const email = savedFormData.email ? savedFormData.email : '';
 		const fname = savedFormData.fname ? savedFormData.fname : '';
 		const lname = savedFormData.lname ? savedFormData.lname : '';
 		const phoneNumber = savedFormData.phoneNumber ? savedFormData.phoneNumber : '';
@@ -1730,6 +1734,7 @@
 		const codeOfConduct = savedFormData.codeOfConduct ? savedFormData.codeOfConduct : undefined;
 		const authorizeOption = savedFormData.authorizeOption ? savedFormData.authorizeOption : undefined;
 
+		$("#appEmail").val(email);
 		$("#firstName").val(fname);
 		$("#lastName").val(lname);
 		$("#phoneNumber").val(phoneNumber);
@@ -1800,6 +1805,7 @@
 	// End of save form data
 
 	function addApplicationInfo() {
+		$("#appEmail").val(userObj.email);
 		$("#firstName").val(userObj.fname);
 		$("#lastName").val(userObj.lname);
 		$("#phoneNumber").val(userObj.phoneNumber);
@@ -1877,7 +1883,15 @@
 					break;
 				}
 			});
-        }
+		}
+		
+		function validateEmail(email) {
+			var emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+			if (email.match(emailFormat)) {
+				return true;
+			}
+			return false;
+		}
 
 		function validatePhoneNumber(phoneNumber) {
 			var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -1921,9 +1935,14 @@
 			}
 		}
 
-		function checkFields(fname, lname, gender, genderDesc, phoneNumber, birthdate, raceEthnicity, raceDesc, resume, firstTimeHacker, transportation,
+		function checkFields(email, fname, lname, gender, genderDesc, phoneNumber, birthdate, raceEthnicity, raceDesc, resume, firstTimeHacker, transportation,
 				transportationState, major, interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct, authorizeOption) {
-            var canSubmit = true;
+			var canSubmit = true;
+			if (email == "" || !validateEmail(email)) {
+				canSubmit = false;
+                // mark as 
+				$("#appEmail").addClass("requiredField");
+			}
             if (fname == "") {
                 canSubmit = false;
                 // mark as 
@@ -2027,6 +2046,7 @@
         }
 
 		function removeRequired() {
+			$("#appEmail").removeClass("requiredField");
 			$("#firstName").removeClass("requiredField");
 			$("#lastName").removeClass("requiredField");
 			$("#phoneNumber").removeClass("requiredField");
@@ -2054,7 +2074,8 @@
         
         function submitApplication() {
 			removeRequired();
-            // Get form values
+			// Get form values
+			const email = $("#appEmail").val().trim();
             const fname = $("#firstName").val().trim();
             const lname = $("#lastName").val().trim();
 			const gender = $('input[name="gender"]:checked').val(); //returns undefined if none clicked
@@ -2095,7 +2116,7 @@
             const codeOfConduct = $('input[name="codeOfConduct"]:checked').val();
 			const authorizeOption = $('input[name="authorizeOption"]:checked').val();
 
-            var canSubmit = checkFields(fname, lname, gender, genderDesc, phoneNumber, birthdate, raceEthnicity, raceDesc,
+            var canSubmit = checkFields(email, fname, lname, gender, genderDesc, phoneNumber, birthdate, raceEthnicity, raceDesc,
 				$('#resume').get(0).files[0], firstTimeHacker, transportation, transportationState, major,
 				interestReason, everydayProblem, hopeToGain, comments, hearAbout, codeOfConduct, authorizeOption);
 
