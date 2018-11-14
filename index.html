@@ -163,15 +163,19 @@
 				</div>
 
 				<div class="row">
-					<form id="profileForm" class="" autocomplete="off">
+					<form id="applicationForm" action="https://swamphacks.us10.list-manage.com/subscribe/post-json?u=44a52d9dbedc78feec6c91b97&amp;id=5e79419ac9&c=?" method="get" name="application-subscribe-form" autocomplete="off">
+						<div class="col-md-12 top-margin">
+							<label class="form-lbl" for="EMAIL" name="">Email <span class="redTxt"> * </span></label>
+							<input class="form-field required" id="appEmail" name="EMAIL" type="email" placeholder="" required/>
+						</div>
 						<div class="col-md-6 top-margin">
-							<label class="form-lbl" for="q1" name="">First name <span class="redTxt"> * </span></label>
-							<input class="form-field" id="firstName" name="q1" type="text" placeholder="" />
+							<label class="form-lbl" for="FNAME" name="">First name <span class="redTxt"> * </span></label>
+							<input class="form-field" id="firstName" name="FNAME" type="text" placeholder="" />
 						</div>
 
 						<div class="col-md-6 top-margin">
-							<label class="form-lbl" for="q1" name="">Last name <span class="redTxt">* </span></label>
-							<input class="form-field" id="lastName" name="q1" type="text" placeholder="" />
+							<label class="form-lbl" for="LNAME" name="">Last name <span class="redTxt">* </span></label>
+							<input class="form-field" id="lastName" name="LNAME" type="text" placeholder="" />
 						</div>
 
 						<div class="col-md-12 top-margin">
@@ -413,7 +417,8 @@
 					</form>
 
 				</div>
-
+				<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+				<!-- <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_44a52d9dbedc78feec6c91b97_5e79419ac9" tabindex="-1" value=""></div> -->
 				<div class="col-md-12 top-margin descrip-txt hide" id="profileStatusTxt">
 					Please fill in all fields!
 				</div>
@@ -428,7 +433,9 @@
 						<button id="submitBtn" class="button green" onclick="submitApplication()"><p class="makeactbtn">Submit</p></button>
 					</div>
 				</div>
-
+				<!-- MAILCHIMP SCRIPTS -->
+				<!-- <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script> -->
+				<script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
 			</div>
 		</div>
 	  </div>
@@ -1089,6 +1096,9 @@
 				window.location.href = "login.html";
 			}
 		});
+		// add email to application and disable field
+		$('#appEmail').val(userObj.email);
+		// $('#appEmail').prop("disabled", true);
 		// Show admin options
 		if (userObj.email === "debrianfigueroa@ufl.edu" || userObj.email === "sponsors@swamphacks.com") {
 
@@ -2174,6 +2184,26 @@
 
 						$("#notif").addClass("hide");
 						$("#notif").removeClass("show");
+						// send user an email that they applied
+						var $appForm = $('form[name="application-subscribe-form"]');
+						if ( $appForm.length > 0 ) {
+							$.ajax({
+								type: $appForm.attr('method'),
+								url: $appForm.attr('action'),
+								data: $appForm.serialize(),
+								cache       : false,
+								dataType    : 'json',
+								contentType: "application/json; charset=utf-8",
+								error       : function(err) { alert("Could not connect to the registration server. Please try again later."); },
+								success     : function(data) {
+									if (data.result != "success") {
+										// Something went wrong, do something to notify the user. maybe alert(data.msg);
+									} else {
+										// It worked, carry on...
+									}
+								}
+							});
+						}
                     }.bind(this));
                 });
             } else {
