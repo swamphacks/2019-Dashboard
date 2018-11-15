@@ -115,6 +115,10 @@
 						<a href="#" class="pure-menu-link" onclick="menuClick(7)">Transportation Form</a>
 					</li>
 
+					<li id="op8" class="pure-menu-item top-ln hide">
+						<a href="#" class="pure-menu-link" onclick="menuClick(8)">Need a ride?</a>
+					</li>
+
 					<li id="op2" class="pure-menu-item top-ln hide">
 						<a href="#" class="pure-menu-link" onclick="menuClick(2)">Applicant Info</a>
 					  </li>
@@ -645,6 +649,20 @@
 				</div>
 
 		</div>
+		<!-- %%%%%%%%%%%%%% Carpool  %%%%%%%%%%%%%% -->
+		<div id="carpool" class="hide">
+
+			<h1 class="header-main-type">Carpool</h1>
+
+				<div class="container-fluid notif-con">
+					<div class="row">
+						<ul id="">
+
+						</ul>
+					</div>
+				</div>
+	
+		</div>
 	  	<!-- %%%%%%%%%%%%%% Notification %%%%%%%%%%%%%% -->
 		<div id="notif" class="hide">
 
@@ -1122,7 +1140,6 @@
 		});
 		// add email to application and disable field
 		$('#appEmail').val(userObj.email);
-		// $('#appEmail').prop("disabled", true);
 		// Show admin options
 		if (userObj.email === "debrianfigueroa@ufl.edu" || userObj.email === "sponsors@swamphacks.com") {
 
@@ -1145,6 +1162,9 @@
 		if (userObj.applied || userObj.email === "sponsors@swamphacks.com") {
 			this.showMenu();
 			if (userObj.transportation == 'yes') {
+				//show carpool option
+				$("#op8").removeClass("hide");
+				$("#op8").addClass("show");
 				//show form on menu
 				$("#op7").removeClass("hide");
 				$("#op7").addClass("show");
@@ -2208,6 +2228,9 @@
 
 						// show transportation that if needed
 						if (user.transportation == 'yes') {
+							//show carpool option
+							$("#op8").removeClass("hide");
+							$("#op8").addClass("show");
 							//show form on menu
 							$("#op7").removeClass("hide");
 							$("#op7").addClass("show");
@@ -2614,6 +2637,36 @@
 		$("#notif").addClass("hide");
 		$("#notif").removeClass("show");
 
+	   } else if (item === 8) {
+		$("#op8").addClass("pure-menu-selected");
+		$("#op7").removeClass("pure-menu-selected");
+		$("#op6").removeClass("pure-menu-selected");
+		$("#op0").removeClass("pure-menu-selected");
+		$("#op1").removeClass("pure-menu-selected");
+		$("#op3").removeClass("pure-menu-selected");
+		$("#op5").removeClass("pure-menu-selected");
+
+		$("#carpool").addClass("show");
+		$("#carpool").removeClass("hide");
+
+		$("#transportationForm").addClass("hide");
+		$("#transportationForm").removeClass("show");
+
+		$("#application").addClass("hide");
+		$("#application").removeClass("show");
+
+		$("#info").addClass("hide");
+		$("#info").removeClass("show");
+
+		$("#dashboard").addClass("hide");
+		$("#dashboard").removeClass("show");
+
+		$("#login").addClass("hide");
+		$("#login").removeClass("show");
+
+		$("#notif").addClass("hide");
+		$("#notif").removeClass("show");
+
 	   }
 	}
 
@@ -2860,6 +2913,10 @@
 			} else if (selected == 7) {
 
 				$("#headertxt").text("Transportation Form");
+
+			} else if (selected == 98) {
+
+				$("#headertxt").text("Carpool");
 
 			}
 
