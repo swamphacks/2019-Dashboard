@@ -163,19 +163,19 @@
 				</div>
 
 				<div class="row">
-					<form id="applicationForm" action="https://swamphacks.us10.list-manage.com/subscribe/post-json?u=44a52d9dbedc78feec6c91b97&amp;id=5e79419ac9&c=?" method="get" name="application-subscribe-form" autocomplete="off">
+					<form id="applicationForm" action="https://swamphacks.us10.list-manage.com/subscribe/post-json?u=44a52d9dbedc78feec6c91b97&amp;id=5e79419ac9&c=?" method="get" name="application-subscribe-form" autocomplete="off" target="_blank" novalidate>
 						<div class="col-md-12 top-margin">
 							<label class="form-lbl" for="EMAIL" name="">Email <span class="redTxt"> * </span></label>
 							<input class="form-field required" id="appEmail" name="EMAIL" type="email" placeholder="" required/>
 						</div>
 						<div class="col-md-6 top-margin">
 							<label class="form-lbl" for="FNAME" name="">First name <span class="redTxt"> * </span></label>
-							<input class="form-field" id="firstName" name="FNAME" type="text" placeholder="" />
+							<input class="form-field" id="firstName" name="FNAME" type="text" placeholder="" required/>
 						</div>
 
 						<div class="col-md-6 top-margin">
 							<label class="form-lbl" for="LNAME" name="">Last name <span class="redTxt">* </span></label>
-							<input class="form-field" id="lastName" name="LNAME" type="text" placeholder="" />
+							<input class="form-field" id="lastName" name="LNAME" type="text" placeholder="" required/>
 						</div>
 
 						<div class="col-md-12 top-margin">
@@ -413,12 +413,14 @@
 									<span class="checkmark"></span>
 								</label>
 						</div>
-
+										<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+				<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_44a52d9dbedc78feec6c91b97_5e79419ac9" tabindex="-1" value=""></div>
+						<div class="col-md-6 top-margin">
+							<input id="submitBtn" type="submit" class="button green" value="Submit"></button>
+						</div>
 					</form>
 
 				</div>
-				<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-				<!-- <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_44a52d9dbedc78feec6c91b97_5e79419ac9" tabindex="-1" value=""></div> -->
 				<div class="col-md-12 top-margin descrip-txt hide" id="profileStatusTxt">
 					Please fill in all fields!
 				</div>
@@ -429,13 +431,7 @@
 					<div class="col-md-6 top-margin">
 						<button id="saveFormBtn" class="button green" onclick="saveExit()"><p class="makeactbtn">Save and Exit</p></button>
 					</div>
-					<div class="col-md-6 top-margin">
-						<button id="submitBtn" class="button green" onclick="submitApplication()"><p class="makeactbtn">Submit</p></button>
-					</div>
 				</div>
-				<!-- MAILCHIMP SCRIPTS -->
-				<!-- <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script> -->
-				<script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
 			</div>
 		</div>
 	  </div>
@@ -453,6 +449,37 @@
 					</div>
 					<div class="row top-margin">
 						<div class="col-md-12">
+							<!-- TESTING -->
+							<!-- Begin Mailchimp Signup Form -->
+							<!-- <div id="mc_embed_signup">
+								<form action="https://swamphacks.us10.list-manage.com/subscribe/post?u=44a52d9dbedc78feec6c91b97&amp;id=5e79419ac9" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+									<div id="mc_embed_signup_scroll">
+									<h2>Subscribe to our mailing list</h2>
+								<div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
+								<div class="mc-field-group">
+									<label for="app-EMAIL">Email Address  <span class="asterisk">*</span>
+								</label>
+									<input type="email" value="" name="EMAIL" class="required email" id="app-EMAIL">
+								</div>
+								<div class="mc-field-group">
+									<label for="app-FNAME">First Name </label>
+									<input type="text" value="" name="FNAME" class="" id="app-FNAME">
+								</div>
+								<div class="mc-field-group">
+									<label for="app-LNAME">Last Name </label>
+									<input type="text" value="" name="LNAME" class="" id="app-LNAME">
+								</div>
+									<div id="mce-responses" class="clear">
+										<div class="response" id="mce-error-response" style="display:none"></div>
+										<div class="response" id="mce-success-response" style="display:none"></div>
+									</div>    <!-real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+									<!-- <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_44a52d9dbedc78feec6c91b97_5e79419ac9" tabindex="-1" value=""></div>
+									<div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+									</div>
+								</form>
+							</div>  -->
+							
+							<!--End mc_embed_signup-->
 							<h3 class="header-sub-type" id="welcomeMessage">Welcome, Albert!</h3>
 							<p class="dashboardInfo">
 								Thank you for submitting an application to SwampHacks V. The timeline below shows you where you are in the application process. We will be reviewing applications on a rolling basis and you should receive a response from us soon. Until then, sit tight. We can’t wait to see you at SwampHacks in 2019!
@@ -566,7 +593,7 @@
 					</p>
 				<!-- Begin Mailchimp Signup Form -->
 				<div id="mc_embed_signup">
-				<form action="https://swamphacks.us10.list-manage.com/subscribe/post?u=44a52d9dbedc78feec6c91b97&amp;id=95e20955a2" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+				<form action="https://swamphacks.us10.list-manage.com/subscribe/post-json?u=44a52d9dbedc78feec6c91b97&amp;id=95e20955a2&c=?" method="get" id="mc-embedded-subscribe-form" name="transportation-form" class="validate" target="_blank" novalidate>
 					<div id="mc_embed_signup_scroll">
 					<h2>Sign up for travel reimbursement</h2>
 					<p class="redTxt">
@@ -1019,10 +1046,36 @@
 		}
 
 		$(document).ready( function () {
+			// save application email to mailchimp
+			var $appForm = $('form[name="application-subscribe-form"]');
+			if ( $appForm.length > 0 ) {
+				$('#submitBtn').bind('click', function ( event ) {
+					if ( event ) event.preventDefault();
+					if (submitApplication()) {
+						$.ajax({
+						type: $appForm.attr('method'),
+						url: $appForm.attr('action'),
+						data: $appForm.serialize(),
+						cache       : false,
+						dataType    : 'json',
+						contentType: "application/json; charset=utf-8",
+						error       : function(err) { alert("Could not connect to the registration server. Please try again later."); },
+						success     : function(data) {
+							if (data.result != "success") {
+								// Something went wrong, do something to notify the user. maybe alert(data.msg);
+							} else {
+								// It worked, carry on...
+							}
+						}
+					});
+					}
+				});
+			}
+			
 			// save transportation information on mailchimp
 			var $form = $('form[name="transportation-form"]');
 			if ( $form.length > 0 ) {
-				$('form input[type="submit"]').bind('click', function ( event ) {
+				$('#mc-embedded-subscribe').bind('click', function ( event ) {
 					if ( event ) event.preventDefault();
 					$.ajax({
 						type: $form.attr('method'),
@@ -1036,46 +1089,45 @@
 							if (data.result != "success") {
 								// Something went wrong, do something to notify the user. maybe alert(data.msg);
 							} else {
-								// It worked, carry on...
+								// save info on DB
+								const email = $("#mce-EMAIL").val().trim();
+								const fname = $("#mce-FNAME").val().trim();
+								const mname = $("#mce-MNAME").val().trim();
+								const lname = $("#mce-LNAME").val().trim();
+								const phoneNumber = $("#mce-PHONE").val().trim();
+								const month = $("#mce-BIRTHDAY-month").val().trim();
+								const day = $("#mce-BIRTHDAY-day").val().trim();
+								const year = $("#mce-BIRTHDAY-year").val().trim();
+								const birthdate = month+'/'+day+'/'+year;
+								const address1 = $("#mce-ADDRESS-addr1").val().trim();
+								const address2 = $("#mce-ADDRESS-addr2").val().trim();
+								const city = $("#mce-ADDRESS-city").val().trim();
+								const state = $("#mce-ADDRESS-state").val().trim();
+								const zip = $("#mce-ADDRESS-zip").val().trim();
+								const country = $('select[name="ADDRESS[country]"]').val();
+								const address = address1+';'+address2+';'+city+';'
+									+state+';'+zip+';'+country;
+								const transportRef = ref.child('transportationForm');
+								let updates = {};
+								let data = {
+									email: email,
+									fname: fname,
+									mname: mname,
+									lname: lname,
+									phoneNumber: phoneNumber,
+									birthdate: birthdate,
+									address: address,
+									completed: true
+								};
+								updates[loggedInUserKey] = data;
+								transportRef.update(updates).then(function() {
+									// disable fields
+									disableTransportForm();
+									transportationInfo = data;
+									localStorage.setItem('transportationInfo', JSON.stringify(data));
+								});
 							}
 						}
-					});
-					// save info on DB
-					const email = $("#mce-EMAIL").val().trim();
-					const fname = $("#mce-FNAME").val().trim();
-					const mname = $("#mce-MNAME").val().trim();
-					const lname = $("#mce-LNAME").val().trim();
-					const phoneNumber = $("#mce-PHONE").val().trim();
-					const month = $("#mce-BIRTHDAY-month").val().trim();
-					const day = $("#mce-BIRTHDAY-day").val().trim();
-					const year = $("#mce-BIRTHDAY-year").val().trim();
-					const birthdate = month+'/'+day+'/'+year;
-					const address1 = $("#mce-ADDRESS-addr1").val().trim();
-					const address2 = $("#mce-ADDRESS-addr2").val().trim();
-					const city = $("#mce-ADDRESS-city").val().trim();
-					const state = $("#mce-ADDRESS-state").val().trim();
-					const zip = $("#mce-ADDRESS-zip").val().trim();
-					const country = $('select[name="ADDRESS[country]"]').val();
-					const address = address1+';'+address2+';'+city+';'
-						+state+';'+zip+';'+country;
-					const transportRef = ref.child('transportationForm');
-					let updates = {};
-					let data = {
-						email: email,
-						fname: fname,
-						mname: mname,
-						lname: lname,
-						phoneNumber: phoneNumber,
-						birthdate: birthdate,
-						address: address,
-						completed: true
-					};
-					updates[loggedInUserKey] = data;
-					transportRef.update(updates).then(function() {
-						// disable fields
-						disableTransportForm();
-						transportationInfo = data;
-						localStorage.setItem('transportationInfo', JSON.stringify(data));
 					});
 				});
 			}
@@ -2189,6 +2241,19 @@
 							$("#op7").addClass("show");
 							// set form fields
 							$('#mce-EMAIL').val(userObj.email);
+							$('#mce-FNAME').val(userObj.fname);
+							$('#mce-LNAME').val(userObj.lname);
+							$('#mce-PHONE').val(userObj.phoneNumber);
+							// parse date
+							var parts = userObj.birthdate.split("/");
+							var day = parts[1];
+							var month = parts[0];
+							var year = parts[2];
+							$('#mce-BIRTHDAY-month').val(month);
+							$('#mce-BIRTHDAY-day').val(day);
+							$('#mce-BIRTHDAY-year').val(year);
+
+							$('#transportFormReminder').removeClass('hide');
 						}
 
 						$("#dashboard").addClass("show");
@@ -2205,31 +2270,12 @@
 
 						$("#notif").addClass("hide");
 						$("#notif").removeClass("show");
-						// send user an email that they applied
-						var $appForm = $('form[name="application-subscribe-form"]');
-						if ( $appForm.length > 0 ) {
-							$.ajax({
-								type: $appForm.attr('method'),
-								url: $appForm.attr('action'),
-								data: $appForm.serialize(),
-								cache       : false,
-								dataType    : 'json',
-								contentType: "application/json; charset=utf-8",
-								error       : function(err) { alert("Could not connect to the registration server. Please try again later."); },
-								success     : function(data) {
-									if (data.result != "success") {
-										// Something went wrong, do something to notify the user. maybe alert(data.msg);
-									} else {
-										// It worked, carry on...
-									}
-								}
-							});
-						}
                     }.bind(this));
                 });
             } else {
 				$('#incorrectFields').removeClass('hide');
 			}
+			return canSubmit;
 		}
 		
 		function saveExit() {
