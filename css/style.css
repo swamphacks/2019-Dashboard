@@ -1248,6 +1248,12 @@ select.minimal {
   text-align: left;
 }
 
+#submitBtn {
+  font-size: 1.2em !important;
+  font-family: 'Poppins', sans-serif !important;
+  color: white !important;
+}
+
 .resend {
   font-size: 1.1em;
   line-height: 1.6em;
