@@ -655,11 +655,22 @@
 			<h1 class="header-main-type">Carpool</h1>
 
 				<div class="container-fluid notif-con">
-					<div class="row">
-						<ul id="">
-
-						</ul>
-					</div>
+						<div class="row">
+							<div class="col-md-6 top-margin">
+								<button id="addDriverBtn" class="button green" onclick="addDriver()"><p class="makeactbtn">Driver</p></button>
+							</div>
+							<div class="col-md-6 top-margin">
+								<button id="addPassengerBtn" class="button green" onclick="addPassenger()"><p class="makeactbtn">Passenger</p></button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 top-margin">
+								<button id="addDriverBtn" class="button green" onclick="updateDriver()"><p class="makeactbtn">Passenger?</p></button>
+							</div>
+							<div class="col-md-6 top-margin">
+								<button id="addPassengerBtn" class="button green" onclick="isDriver()"><p class="makeactbtn">Driver?</p></button>
+							</div>
+						</div>
 				</div>
 	
 		</div>
@@ -978,6 +989,10 @@
 		var appliedSchools = [];
 		var schoolsAndCount = {};
 		var topTenSchools = {};
+
+		function updateDriver() {
+			isPassenger(loggedInUserKey).then(console.log);
+		}
 
 		// Stats
 
