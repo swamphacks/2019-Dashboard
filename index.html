@@ -418,9 +418,6 @@
 						<div class="col-md-12 top-margin descrip-txt hide" id="profileStatusTxt">
 							Please fill in all fields!
 						</div>
-		
-						<label class="form-lbl redTxt hide" for="q1" id="incorrectFields">You have 1 or more incorrect fields</label>
-		
 						<div class="row">
 							<div class="col-md-6 top-margin">
 								<button id="saveFormBtn" class="button green" onclick="saveExit()"><p class="makeactbtn">Save and Exit</p></button>
@@ -430,7 +427,7 @@
 							</div>
 						</div>
 					</form>
-
+					<label class="form-lbl redTxt hide" for="q1" id="incorrectFields">You have 1 or more incorrect fields</label>
 				</div>
 
 			</div>
@@ -1018,6 +1015,10 @@
 			// save application email to mailchimp
 			var $appForm = $('form[name="application-subscribe-form"]');
 			if ( $appForm.length > 0 ) {
+				$('#saveFormBtn').bind('click', function ( event ) {
+					// prevent from submitting form
+					if ( event ) event.preventDefault();
+				});
 				$('#submitBtn').bind('click', function ( event ) {
 					if ( event ) event.preventDefault();
 					if (submitApplication()) {
@@ -1122,13 +1123,13 @@
 		$('#appEmail').val(userObj.email);
 		// $('#appEmail').prop("disabled", true);
 		// Show admin options
-		if (userObj.email === "debrianfigueroa@ufl.edu" || userObj.email === "sponsors@swamphacks.com") {
+		if (userObj.email === "sponsors@swamphacks.com") {
 
 			$("#op2").removeClass("hide");
 			$("#op2").addClass("show");
 
-			$("#op5").removeClass("hide");
-			$("#op5").addClass("show");
+			// $("#op5").removeClass("hide");
+			// $("#op5").addClass("show");
 
 			// $("#op6").removeClass("hide");
 			// $("#op6").addClass("show");
@@ -1136,8 +1137,8 @@
 			$("#op0").removeClass("show");
 			$("#op0").addClass("hide");
 
-			getStats();
-			reloadStats();
+			// getStats();
+			// reloadStats();
 		}
 
 		if (userObj.applied || userObj.email === "sponsors@swamphacks.com") {
