@@ -653,23 +653,61 @@
 		<div id="carpool" class="hide">
 
 			<h1 class="header-main-type">Carpool</h1>
-
+			<!-- TODO: add option to change from driver to passenger and vice versa ? -->
 				<div class="container-fluid notif-con">
-						<div class="row">
+						<div class="row"  id="carpoolStartContainer">
 							<div class="col-md-6 top-margin">
-								<button id="addDriverBtn" class="button green" onclick="addDriver()"><p class="makeactbtn">Driver</p></button>
+								<button id="addDriverBtn" class="button green" onclick="driverSelected()"><p class="makeactbtn">Driver</p></button>
 							</div>
 							<div class="col-md-6 top-margin">
-								<button id="addPassengerBtn" class="button green" onclick="addPassenger()"><p class="makeactbtn">Passenger</p></button>
+								<button id="addPassengerBtn" class="button green" onclick="passengerSelected()"><p class="makeactbtn">Passenger</p></button>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-6 top-margin">
-								<button id="addDriverBtn" class="button green" onclick="updateDriver()"><p class="makeactbtn">Passenger?</p></button>
+						<div class="row hide" id="driverFormContainer">
+							<form>
+								<!-- fname, lname -->
+								<div class="col-md-6 top-margin">
+									<label class="form-lbl" for="fname" name="">First name <span class="redTxt">* </span></label>
+									<input class="form-field" id="carpoolFname" name="fname" type="text" placeholder="" required/>
+								</div>
+		
+								<div class="col-md-6 top-margin">
+									<label class="form-lbl" for="lname" name="">Last name <span class="redTxt">* </span></label>
+									<input class="form-field" id="carpoolLname" name="lname" type="text" placeholder="" required/>
+								</div>
+								<!-- state from which driving from  -->
+								<div class="col-md-12 top-margin">
+									<label class="form-lbl" for="startLocation" name="">Where are you coming from? <span class="redTxt">* </span></label>
+									<input class="form-field" id="startLocation" name="startLocation" type="text" placeholder="" required/>
+								</div>
+								<!-- car model -->
+								<!-- license plate -->
+								<!-- max number of seats/passengers -->
+								<div class="col-md-12 top-margin">
+									<label class="form-lbl" for="passengerLimit" name="">How many passengers can you take? <span class="redTxt">* </span></label>
+									<input class="form-field" id="passengerLimit" name="passengerLimit" type="number" placeholder="" required/>
+								</div>
+							</form>
+							<div class="col-md-12 top-margin">
+								<button id="driverFormBtn" class="button green" onclick="driverFormSubmission()"><p class="makeactbtn">Submit</p></button>
 							</div>
-							<div class="col-md-6 top-margin">
-								<button id="addPassengerBtn" class="button green" onclick="isDriver()"><p class="makeactbtn">Driver?</p></button>
+						</div>
+						<div class="row hide" id="driverListContainer">
+							list
+							<ul id="driverList">
+
+							</ul>
+						</div>
+						<div class="row hide" id="driverProfileContainer">
+							<label id="driverName"></label>
+							<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="driverStartLocation" name="">Where are you coming from? <span class="redTxt">* </span></label>
+								<input class="form-field" id="driverStartLocation" name="driverStartLocation" type="text" placeholder="" required/>
 							</div>
+							<!-- List of current passengers with button to accept or remove them -->
+							<ul id="passengerList">
+
+							</ul>
 						</div>
 				</div>
 	
@@ -989,11 +1027,6 @@
 		var appliedSchools = [];
 		var schoolsAndCount = {};
 		var topTenSchools = {};
-
-		function updateDriver() {
-			isPassenger(loggedInUserKey).then(console.log);
-		}
-
 		// Stats
 
 		var numSmalls = 0;
@@ -1138,6 +1171,7 @@
 				});
 			}
 		});
+		// end of on ready method
 
 		// add school list to application selection
 		var schools = document.getElementById('schools');
@@ -1181,6 +1215,7 @@
 				//show carpool option
 				$("#op8").removeClass("hide");
 				$("#op8").addClass("show");
+				updateCarpoolSection();
 				//show form on menu
 				$("#op7").removeClass("hide");
 				$("#op7").addClass("show");
@@ -2374,6 +2409,102 @@
 		}
 
 	// %%%%%%%%%%%%% End of Application Functions %%%%%%%%%%%%% //
+
+	// %%%%%%%%%%%%% Carpool Functions %%%%%%%%%%%%% //
+	function updateCarpoolSection() {
+		isDriver(loggedInUserKey).then(function(snapshot) {
+			if (snapshot.val()) {
+				// registered as driver
+				if (snapshot.val().fname && snapshot.val().fname != '') {
+					// filled form already
+					$('#driverProfileContainer').removeClass('hide');
+					$('#driverFormContainer').addClass('hide');
+					// update fields
+					$('#driverName')[0].innerHTML = snapshot.val().fname + ' ' + snapshot.val().lname ;
+					// TODO: add button to update this
+					$('#driverStartLocation').val(snapshot.val().startLocation);
+				} else {
+					// show form
+					$('#driverFormContainer').removeClass('hide');
+					$('#carpoolStartContainer').addClass('hide');
+					// fill fields that we already have
+					$('#carpoolFname').val(userObj.fname);
+					$('#carpoolLname').val(userObj.lname);
+					$('#startLocation').val(userObj.transportationState);
+				}
+			} else {
+				// not a driver
+			}
+		}.bind(this));
+
+		isPassenger(loggedInUserKey).then(function(snapshot) {
+			if (snapshot.val()) {
+				// registered as passenger, show driver list
+				$('#driverListContainer').removeClass('hide');
+				$('#carpoolStartContainer').addClass('hide');
+				let driverListDOM = $('#driverList')[0];
+				getDrivers().on('child_added', function(data) {
+					let driver = data.val();
+					driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname);
+				});
+			} else {
+				// not a passenger
+			}
+		});
+	}
+	// TODO: check when they log in if they are already a driver or passenger and show appropriate div
+	function driverSelected() {
+		addDriver();
+		// show driver form
+		$('#driverFormContainer').removeClass('hide');
+		$('#carpoolStartContainer').addClass('hide');
+		// fill fields that we already have
+		$('#carpoolFname').val(userObj.fname);
+		$('#carpoolLname').val(userObj.lname);
+		$('#startLocation').val(userObj.transportationState);
+	}
+
+	function passengerSelected() {
+		addPassenger();
+		// show driver list
+		$('#driverListContainer').removeClass('hide');
+		$('#carpoolStartContainer').addClass('hide');
+		let driverListDOM = $('#driverList')[0];
+		getDrivers().on('child_added', function(data) {
+			let driver = data.val();
+			driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname);
+		});
+	}
+
+	function driverFormSubmission() {
+		// get data from form
+		const fname = $('#carpoolFname').val().trim();
+		const lname = $('#carpoolLname').val().trim();
+		const startLocation = $('#startLocation').val().trim();
+		const passengerLimit = $('#passengerLimit').val().trim();
+		if (fname != '' && lname != '' && startLocation != '' && passengerLimit != '') {
+			// save it to database
+			let driverInfo = {
+				fname: fname,
+				lname: lname,
+				startLocation: startLocation,
+				passengerLimit: passengerLimit
+			};
+			saveDriverInfo(driverInfo);
+			// send to driver profile
+			$('#driverProfileContainer').removeClass('hide');
+			$('#driverFormContainer').addClass('hide');
+			// update fields
+			$('#driverName')[0].innerHTML = fname + ' ' + lname;
+			// TODO: add button to update this
+			$('#driverStartLocation').val(startLocation);
+			// TODO: load passenger list
+		} else {
+			// TODO: notify that they are missing a field
+		}
+	}
+
+	// %%%%%%%%%%%%% End of Carpool Functions %%%%%%%%%%%%% //
 
 	// %%%%%%%%%%%%% Menu Functions %%%%%%%%%%%%%
 	function createListElement(email, fname, lname, schoolYear, school, transportation,
