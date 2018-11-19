@@ -1143,65 +1143,65 @@
 
 		if (userObj.applied || userObj.email === "sponsors@swamphacks.com") {
 			this.showMenu();
-			if (userObj.transportation == 'yes') {
+			if (userObj.transportation == 'yes') { // Deadline passed
 				//show form on menu
-				$("#op7").removeClass("hide");
-				$("#op7").addClass("show");
-				if (transportationInfo) {
-				// set form fields
-					$('#mce-EMAIL').val(transportationInfo.email);
-					$('#mce-FNAME').val(transportationInfo.fname);
-					$('#mce-MNAME').val(transportationInfo.mname);
-					$('#mce-LNAME').val(transportationInfo.lname);
-					$('#mce-PHONE').val(transportationInfo.phoneNumber);
-					// parse date
-					var parts = transportationInfo.birthdate.split("/");
-					const day = parts[1];
-					const month = parts[0];
-					const year = parts[2];
-					$('#mce-BIRTHDAY-month').val(month);
-					$('#mce-BIRTHDAY-day').val(day);
-					$('#mce-BIRTHDAY-year').val(year);
-					// parse address
-					var addressLine = transportationInfo.address.split(";");
-					const address1 = addressLine[0];
-					const address2 = addressLine[1];
-					const city = addressLine[2];
-					const state = addressLine[3];
-					const zip = addressLine[4];
-					const country = addressLine[5];
-					$("#mce-ADDRESS-addr1").val(address1);
-					$("#mce-ADDRESS-addr2").val(address2);
-					$("#mce-ADDRESS-city").val(city);
-					$("#mce-ADDRESS-state").val(state);
-					$("#mce-ADDRESS-zip").val(zip);
-					$("#mce-ADDRESS-country").val(country);
-					if (transportationInfo.completed) {
-						// disable fields
-						disableTransportForm();
-						$('#transportFormReminder').addClass('hide');
-					} else {
-						$('#transportFormReminder').removeClass('hide');
-					}
-				} else {
-					// set form fields
-					$('#mce-EMAIL').val(userObj.email);
-					$('#mce-FNAME').val(userObj.fname);
-					$('#mce-LNAME').val(userObj.lname);
-					$('#mce-PHONE').val(userObj.phoneNumber);
-					// parse date
-					var parts = userObj.birthdate.split("/");
-					var day = parts[1];
-					var month = parts[0];
-					var year = parts[2];
-					$('#mce-BIRTHDAY-month').val(month);
-					$('#mce-BIRTHDAY-day').val(day);
-					$('#mce-BIRTHDAY-year').val(year);
+				// $("#op7").removeClass("hide");
+				// $("#op7").addClass("show");
+				// if (transportationInfo) {
+				// // set form fields
+				// 	$('#mce-EMAIL').val(transportationInfo.email);
+				// 	$('#mce-FNAME').val(transportationInfo.fname);
+				// 	$('#mce-MNAME').val(transportationInfo.mname);
+				// 	$('#mce-LNAME').val(transportationInfo.lname);
+				// 	$('#mce-PHONE').val(transportationInfo.phoneNumber);
+				// 	// parse date
+				// 	var parts = transportationInfo.birthdate.split("/");
+				// 	const day = parts[1];
+				// 	const month = parts[0];
+				// 	const year = parts[2];
+				// 	$('#mce-BIRTHDAY-month').val(month);
+				// 	$('#mce-BIRTHDAY-day').val(day);
+				// 	$('#mce-BIRTHDAY-year').val(year);
+				// 	// parse address
+				// 	var addressLine = transportationInfo.address.split(";");
+				// 	const address1 = addressLine[0];
+				// 	const address2 = addressLine[1];
+				// 	const city = addressLine[2];
+				// 	const state = addressLine[3];
+				// 	const zip = addressLine[4];
+				// 	const country = addressLine[5];
+				// 	$("#mce-ADDRESS-addr1").val(address1);
+				// 	$("#mce-ADDRESS-addr2").val(address2);
+				// 	$("#mce-ADDRESS-city").val(city);
+				// 	$("#mce-ADDRESS-state").val(state);
+				// 	$("#mce-ADDRESS-zip").val(zip);
+				// 	$("#mce-ADDRESS-country").val(country);
+				// 	if (transportationInfo.completed) {
+				// 		// disable fields
+				// 		disableTransportForm();
+				// 		$('#transportFormReminder').addClass('hide');
+				// 	} else {
+				// 		$('#transportFormReminder').removeClass('hide');
+				// 	}
+				// } else {
+				// 	// set form fields
+				// 	$('#mce-EMAIL').val(userObj.email);
+				// 	$('#mce-FNAME').val(userObj.fname);
+				// 	$('#mce-LNAME').val(userObj.lname);
+				// 	$('#mce-PHONE').val(userObj.phoneNumber);
+				// 	// parse date
+				// 	var parts = userObj.birthdate.split("/");
+				// 	var day = parts[1];
+				// 	var month = parts[0];
+				// 	var year = parts[2];
+				// 	$('#mce-BIRTHDAY-month').val(month);
+				// 	$('#mce-BIRTHDAY-day').val(day);
+				// 	$('#mce-BIRTHDAY-year').val(year);
 
-					$('#transportFormReminder').removeClass('hide');
-				}
+				// 	$('#transportFormReminder').removeClass('hide');
+				// }
 			}
-		}else if (!userObj.applied && savedFormData) {
+		} else if (!userObj.applied && savedFormData) {
 			// show saved form info
 			if (savedFormData.email == userObj.email)
 				addSavedFormData();
@@ -1260,7 +1260,6 @@
     	});
 
 		eventsDataRef.on('value', function(snapshot) {
-
 			var info = snapshot.val();
 			if (!info) {return;}
 			// Sizes
@@ -2204,28 +2203,28 @@
 						$("#op3").removeClass("pure-menu-selected");
 						$("#op5").removeClass("pure-menu-selected");
 						$("#op6").removeClass("pure-menu-selected");
-
+						// Deadline passed
 						// show transportation that if needed
-						if (user.transportation == 'yes') {
-							//show form on menu
-							$("#op7").removeClass("hide");
-							$("#op7").addClass("show");
-							// set form fields
-							$('#mce-EMAIL').val(userObj.email);
-							$('#mce-FNAME').val(userObj.fname);
-							$('#mce-LNAME').val(userObj.lname);
-							$('#mce-PHONE').val(userObj.phoneNumber);
-							// parse date
-							var parts = userObj.birthdate.split("/");
-							var day = parts[1];
-							var month = parts[0];
-							var year = parts[2];
-							$('#mce-BIRTHDAY-month').val(month);
-							$('#mce-BIRTHDAY-day').val(day);
-							$('#mce-BIRTHDAY-year').val(year);
+						// if (user.transportation == 'yes') {
+						// 	//show form on menu
+						// 	$("#op7").removeClass("hide");
+						// 	$("#op7").addClass("show");
+						// 	// set form fields
+						// 	$('#mce-EMAIL').val(userObj.email);
+						// 	$('#mce-FNAME').val(userObj.fname);
+						// 	$('#mce-LNAME').val(userObj.lname);
+						// 	$('#mce-PHONE').val(userObj.phoneNumber);
+						// 	// parse date
+						// 	var parts = userObj.birthdate.split("/");
+						// 	var day = parts[1];
+						// 	var month = parts[0];
+						// 	var year = parts[2];
+						// 	$('#mce-BIRTHDAY-month').val(month);
+						// 	$('#mce-BIRTHDAY-day').val(day);
+						// 	$('#mce-BIRTHDAY-year').val(year);
 
-							$('#transportFormReminder').removeClass('hide');
-						}
+						// 	$('#transportFormReminder').removeClass('hide');
+						// }
 
 						$("#dashboard").addClass("show");
 						$("#dashboard").removeClass("hide");
