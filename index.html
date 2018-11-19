@@ -348,7 +348,7 @@
 							</select>
 						</div>
 
-						<div class="col-md-12 top-margin" id="transportationContainer">
+						<div class="col-md-12 top-margin hide" id="transportationContainer">
 								<label class="form-lbl" for="q1" name="">Do you need transportation to SwampHacks? (We are only providing a bus to GeorgiaTech, all other potential attendees should apply for travel reimbursement if planning on driving)<span class="redTxt">* </span></label>
 								<br>
 								<label class="radio-container" id="transportationRadio0"> Yes
@@ -2056,16 +2056,17 @@
                 canSubmit = false;
                 // mark as 
 				$("#hackerContainer").addClass("requiredCheckbox");
-            }
-            if (!transportation) {
-                canSubmit = false;
-                // mark as 
-				$("#transportationContainer").addClass("requiredCheckbox");
-            } else if (transportation === 'yes' && transportationState == '') {
-				canSubmit = false;
-                // mark as 
-				$("#homeState").addClass("requiredField");
 			}
+			// transportation deadline over
+            // if (!transportation) {
+            //     canSubmit = false;
+            //     // mark as 
+			// 	$("#transportationContainer").addClass("requiredCheckbox");
+            // } else if (transportation === 'yes' && transportationState == '') {
+			// 	canSubmit = false;
+            //     // mark as 
+			// 	$("#homeState").addClass("requiredField");
+			// }
             if (!codeOfConduct) {
                 canSubmit = false;
                 // mark as 
@@ -2137,7 +2138,8 @@
             const linkedinProfile = $('input[name="linkedin"]').val();
             const shirtSize = $('select[name="shirtSize"]').val();
             const diet = $('select[name="diet"]').val();
-			const transportation = $('input[name="transportation"]:checked').val();
+			// const transportation = $('input[name="transportation"]:checked').val();
+			const transportation = 'no';
 			let transportationState = '';
 			if (transportation === 'yes') {
 				transportationState = $("#homeState").val().trim();
@@ -2290,7 +2292,8 @@
             const linkedinProfile = $('input[name="linkedin"]').val();
             const shirtSize = $('select[name="shirtSize"]').val();
             const diet = $('select[name="diet"]').val();
-			const transportation = $('input[name="transportation"]:checked').val();
+			// const transportation = $('input[name="transportation"]:checked').val();
+			const transportation = 'no';
 			let transportationState = '';
 			if (transportation === 'yes') {
 				transportationState = $("#homeState").val().trim();
