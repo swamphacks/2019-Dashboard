@@ -529,11 +529,15 @@
 		<!-- %%%%%%%%%%%%%% Applicant Info %%%%%%%%%%%%%% -->
 	  <div id="info" class="hide">
 
-		<h1 class="header-main-type">Applicant information</h1>
+		<h1 class="header-main-type">Applicant information 	<button id="switchInfoBtn" class="button dark infoSwitchBtn" onclick="toggleUserInfo()">Show Hidden</button></h1>
 
 				<div class="container-fluid notif-con">
 					<div class="row">
 						<ul id="userList">
+
+						</ul>
+
+						<ul class="hide" id="hiddenUserList">
 
 						</ul>
 					</div>
@@ -1854,7 +1858,7 @@
 		$('select[name="schools"]').val(userObj.school);
 		$('select[name="schoolYear"]').val(userObj.schoolYear);
 		$('select[name="studyLevel"]').val(userObj.studyLevel);
-		$("#major").val(major);
+		$("#major").val(userObj.major);
 		$("#firstTimeHacker"+userObj.firstTimeHacker).prop("checked", true);
 		// hide resume field
 		$("#resumeContainer").addClass("hide");
@@ -2337,10 +2341,71 @@
 
 	// %%%%%%%%%%%%% End of Application Functions %%%%%%%%%%%%% //
 
-	// %%%%%%%%%%%%% Menu Functions %%%%%%%%%%%%%
-	function createListElement(email, fname, lname, schoolYear, school, transportation,
-				everydayProblem, extraInfo, firstTimeHacker, hearAbout, hopeToGain, interestReason) {
-		var openLi = '<li class="userInfoItem">';
+	// %%%%%%%%%%%%% Admin Functions %%%%%%%%%%%%% //
+	var infoState = true; // true = user info, false = hidden users
+	var hiddenLoaded = false;
+	function toggleUserInfo() {
+		if (infoState) {
+			// Load list from db if it hasn't been yet loaded
+			if (!hiddenLoaded) {
+				const hiddenUsersRef = ref.child('hiddenUsers');
+				hiddenUsersRef.once('value').then(function(snapshot) {
+					var users = snapshot.val();
+					var hiddenUserList = document.getElementById("hiddenUserList");
+					var index = 0;
+					for (var userId in users) {
+						var user = users[userId];
+						hiddenUserList.innerHTML += createHiddenUserCard(index, user);
+						index += 1;
+					}
+				});
+				hiddenLoaded = true;
+			}
+			// show hidden user list
+			$('#hiddenUserList').removeClass('hide');
+			// hide applicant info
+			$('#userList').addClass('hide');
+			// set button text
+			$('#switchInfoBtn')[0].innerText = 'Show Applicants';
+			infoState = false;
+		} else {
+			// show applicant info
+			$('#userList').removeClass('hide');
+			// hide hidden user list
+			$('#hiddenUserList').addClass('hide');
+			// set button text
+			$('#switchInfoBtn')[0].innerText = 'Show Hidden';
+			infoState = true;
+		}
+	}
+
+	function acceptUser(userId, index) {
+		const userRef = ref.child('users/'+userId);
+		let update = {};
+		update['status'] = 'ACCEPTED';
+		// userRef.update(update);
+	}
+
+	function createHiddenUserCard(index, userData) {
+
+	}
+
+	function hideUser(userData, index) {
+		// TODO: save in data base that they need to be hidden
+		const hiddenUsersRef = ref.child('hiddenUsers');
+		let update = {};
+		udpate[userData.id] = userData;
+		hiddenUsersRef.update(update);
+		// make hidden card and add to hidden list
+		var hiddenUserList = document.getElementById("hiddenUserList");
+		hiddenUserList.innerHTML += createHiddenUserCard(index, userData);
+		// hide card TODO: delete instead?
+		$('#listItem'+index.toString()).addClass('hide');
+	}
+
+	// %%%%%%%%%%%%% Menu Functions %%%%%%%%%%%%% //
+	function createListElement(index, userData) {
+		var openLi = '<li class="userInfoItem" id="listItem'+ index.toString() +'">';
 		var closeLi = '</li>';
 		var openDiv = '<div class="row">';
 		var openHeader = '<div class="row cardHeader">';
@@ -2349,36 +2414,41 @@
 		var closeP = '</p>';
 		// Setup header for card
 		var list = openLi + openHeader + '<div class="col-md-5 cardHeaderTitle">'
-			+ fname + ' ' + lname + closeDiv + 
-			'<div class="col-md-7 cardSchoolInfo">' + schoolYear + ' at ' + school + closeDiv + closeDiv;
+			+ userData.fname + ' ' + userData.lname + closeDiv + 
+			'<div class="col-md-7 cardSchoolInfo">' + userData.schoolYear + ' at ' + userData.school + closeDiv + closeDiv;
 		// Setup card content 
 		list += openContent;
 		// add email
-		list += '<div class="col-md-4">' + '<p id="emailItem"> <b>Email: </b>' + email + closeP + closeDiv;
+		list += '<div class="col-md-4">' + '<p id="emailItem"> <b>Email: </b>' + userData.email + closeP + closeDiv;
 		// add transportation
-		list += '<div class="col-md-4">' + '<p id="transportationItem"> <b>Needs Transportation: </b>' + transportation + closeP + closeDiv;
+		list += '<div class="col-md-4">' + '<p id="transportationItem"> <b>Needs Transportation: </b>' + userData.transportation + closeP + closeDiv;
 		// add first time hacker
-		list += '<div class="col-md-4">' + '<p id="firstTimeItem"> <b>First Time Hacker: </b>' + firstTimeHacker + closeP + closeDiv;
+		list += '<div class="col-md-4">' + '<p id="firstTimeItem"> <b>First Time Hacker: </b>' + userData.firstTimeHacker + closeP + closeDiv;
 		// add responses
-		list += openDiv + '<p id="everydayProblemItem"> <b>What is an everyday problem coding can solve?: </b> <br>' + everydayProblem + closeP + closeDiv;
-		list += openDiv + '<p id="hearAboutItem"> <b>How did you hear about swamphacks?: </b> <br>' + hearAbout + closeP + closeDiv;
-		list += openDiv + '<p id="hopeToGainItem"> <b>What do you hope to gain?: </b> <br>' + hopeToGain + closeP + closeDiv;
-		list += openDiv + '<p id="interestReasonItem"> <b>Why are you interested in swamphacks?: </b> <br>' + interestReason + closeP + closeDiv;
-		list += openDiv + '<p id="extraInfoItem"> <b>Extra information: </b> <br>' + extraInfo + closeP + closeDiv;
-		list += openDiv + '<button class="button cardBtn" style="float: right"> Accept!</button>' + closeDiv;
+		list += openDiv + '<p id="everydayProblemItem"> <b>What is an everyday problem coding can solve?: </b> <br>' + userData.everydayProblem + closeP + closeDiv;
+		list += openDiv + '<p id="hearAboutItem"> <b>How did you hear about swamphacks?: </b> <br>' + userData.hearAbout + closeP + closeDiv;
+		list += openDiv + '<p id="hopeToGainItem"> <b>What do you hope to gain?: </b> <br>' + userData.hopeToGain + closeP + closeDiv;
+		list += openDiv + '<p id="interestReasonItem"> <b>Why are you interested in swamphacks?: </b> <br>' + userData.interestReason + closeP + closeDiv;
+		list += openDiv + '<p id="extraInfoItem"> <b>Extra information: </b> <br>' + userData.extraInfo + closeP + closeDiv;
+		// add accept button
+		list += openDiv + '<button class="button cardBtn" style="float: right; margin-left: 10px" onclick="acceptUser(\''+userData.id+'\','+index+')"> Accept!</button>';
+		// add hide button
+		list += '<button class="button cardBtn" style="float: right" onclick="hideUser(\''+userData+'\','+index+')"> Hide</button>' + closeDiv;
 		// Close content tag
 		list += closeDiv;
 		// close list tag
 		list += closeLi;
 		return list;
 	}
+
+	var userInfoLoaded = false;
 	
 	function loadUserInfo() {
 		var userRef = ref.child("users").orderByChild("email");
 		userRef.once('value').then(function(snapshot) {
 			var users = snapshot.val();
 			var userList = document.getElementById("userList");
-			var html = '';
+			var itemNumber = 0;
 			// wrap in list tag
 			// inside <li> have a row divs
 			// for now put email on first row and transportation need on second row
@@ -2387,8 +2457,8 @@
 				// TODO: filter: only show if they have applied, and if they havent been accepted
 				var user = users[userId];
 				const applied = user['applied'];
-				// if (applied) {
-					const status = user['status'];
+				if (applied && user['status'] === 'PENDING') {
+					var status = user['status'];
 					var email = user['email'] ? user['email'] : 'N/A';
 					var fname = user['fname'] ? user['fname'] : 'N/A';
 					var lname = user['lname'] ? user['lname'] : 'N/A';
@@ -2401,10 +2471,30 @@
 					var hearAbout = user['hearAbout'] ? user['hearAbout'] : 'N/A';
 					var hopeToGain = user['hopeToGain'] ? user['hopeToGain'] : 'N/A';
 					var interestReason = user['interestReason'] ? user['interestReason'] : 'N/A';
-					userList.innerHTML += createListElement(email, fname, lname, schoolYear, school, transportation,
-					everydayProblem, extraInfo, firstTimeHacker, hearAbout, hopeToGain, interestReason);
-				// }
+					var userData = {
+						id: userId,
+						email: email,
+						fname: fname,
+						lname: lname,
+						schoolYear: schoolYear,
+						school: school,
+						transportation: transportation,
+						everydayProblem: everydayProblem,
+						extraInfo: extraInfo,
+						firstTimeHacker: firstTimeHacker,
+						hearAbout: hearAbout,
+						hopeToGain: hopeToGain,
+						interestReason: interestReason
+					};
+					userList.innerHTML += createListElement(itemNumber, userData);
+					itemNumber += 1;
+				}
 			}
+			// Hide the loader
+			$("#animationWindow").removeClass("showflex");
+			$("#animationWindow").addClass("hide");
+
+			userInfoLoaded = true;
 		});
 	}
 
@@ -2421,6 +2511,7 @@
 	  if (item === 0) {
 		$("#op0").addClass("pure-menu-selected");
 		$("#op1").removeClass("pure-menu-selected");
+		$("#op2").removeClass("pure-menu-selected");
         $("#op3").removeClass("pure-menu-selected");
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op6").removeClass("pure-menu-selected");
@@ -2447,6 +2538,7 @@
 
 		$("#op1").addClass("pure-menu-selected");
 		$("#op0").removeClass("pure-menu-selected");
+		$("#op2").removeClass("pure-menu-selected");
         $("#op3").removeClass("pure-menu-selected");
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op6").removeClass("pure-menu-selected");
@@ -2519,8 +2611,13 @@
 		$("#transportationForm").addClass("hide");
 		$("#transportationForm").removeClass("show");
 
-		// load user's information
-		loadUserInfo();
+		if (!userInfoLoaded) {
+			// Show the loader
+			$("#animationWindow").removeClass("hide");
+			$("#animationWindow").addClass("showflex");
+			// load user's information
+			loadUserInfo();
+		}
 	  } else if (item === 3) {
 
 		// Show the confirm logout popup
@@ -2531,7 +2628,8 @@
 
 		$("#op5").addClass("pure-menu-selected");
 		$("#op0").removeClass("pure-menu-selected");
-        $("#op1").removeClass("pure-menu-selected");
+		$("#op1").removeClass("pure-menu-selected");
+		$("#op2").removeClass("pure-menu-selected");
 		$("#op6").removeClass("pure-menu-selected");
 		$("#op7").removeClass("pure-menu-selected");
 
@@ -2566,6 +2664,7 @@
 		$("#op6").addClass("pure-menu-selected");
 		$("#op0").removeClass("pure-menu-selected");
 		$("#op1").removeClass("pure-menu-selected");
+		$("#op2").removeClass("pure-menu-selected");
 		$("#op3").removeClass("pure-menu-selected");
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op7").removeClass("pure-menu-selected");
@@ -2593,6 +2692,7 @@
 		$("#op6").removeClass("pure-menu-selected");
 		$("#op0").removeClass("pure-menu-selected");
 		$("#op1").removeClass("pure-menu-selected");
+		$("#op2").removeClass("pure-menu-selected");
 		$("#op3").removeClass("pure-menu-selected");
 		$("#op5").removeClass("pure-menu-selected");
 

@@ -410,6 +410,12 @@
   transition: 0.3s;
 }
 
+.infoSwitchBtn {
+  color: white;
+  font-size: 15px;
+  width: auto !important;
+}
+
 .header-sub-type {
   width: 100%;
   color: #333333;
