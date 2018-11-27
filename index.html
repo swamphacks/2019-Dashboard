@@ -942,17 +942,16 @@
 	<script src="js/schoolList.js"></script>
 
   <script>
-
 		var ref = firebase.database().ref();
 		var userObj = JSON.parse(localStorage.getItem('loggedInUser'));
 		var loggedInUserKey = localStorage.getItem('loggedInUserKey');
 		var savedFormData = JSON.parse(localStorage.getItem('savedForm'));
 		var transportationInfo = JSON.parse(localStorage.getItem('transportationInfo'));
-		var usersRef = ref.child("applicants");
-		var acceptedRef = ref.child("accepted");
-		var checkedInRef = ref.child("confirmed");
-		var eventsDataRef = ref.child("eventsData");
-		var notifRef = ref.child("announcements");
+		// var usersRef = ref.child("applicants");
+		// var acceptedRef = ref.child("accepted");
+		// var checkedInRef = ref.child("confirmed");
+		// var eventsDataRef = ref.child("eventsData");
+		// var notifRef = ref.child("announcements");
 		var selected = 0;
 		var schools = [];
 		var appliedSchools = [];
@@ -1257,28 +1256,28 @@
 		input.addEventListener( 'blur', function(){ input.classList.remove( 'has-focus' ); });
 		});
 
-		checkedInRef.on('value', function(snapshot) {
+		// checkedInRef.on('value', function(snapshot) {
 
-      		$("#checkIns").text(snapshot.numChildren());
+      	// 	$("#checkIns").text(snapshot.numChildren());
 
-    	});
+    	// });
 
-		eventsDataRef.on('value', function(snapshot) {
-			var info = snapshot.val();
-			if (!info) {return;}
-			// Sizes
-      		$("#teamOneSize").text(info.people.dragonflies);
-			$("#teamTwoSize").text(info.people.turtles);
-			$("#teamThreeSize").text(info.people.herons);
-			$("#teamFourSize").text(info.people.gators);
+		// eventsDataRef.on('value', function(snapshot) {
+		// 	var info = snapshot.val();
+		// 	if (!info) {return;}
+		// 	// Sizes
+      	// 	$("#teamOneSize").text(info.people.dragonflies);
+		// 	$("#teamTwoSize").text(info.people.turtles);
+		// 	$("#teamThreeSize").text(info.people.herons);
+		// 	$("#teamFourSize").text(info.people.gators);
 
-			// Points
-			$("#teamOnePoints").text(info.points.dragonflies);
-			$("#teamTwoPoints").text(info.points.turtles);
-			$("#teamThreePoints").text(info.points.herons);
-			$("#teamFourPoints").text(info.points.gators);
+		// 	// Points
+		// 	$("#teamOnePoints").text(info.points.dragonflies);
+		// 	$("#teamTwoPoints").text(info.points.turtles);
+		// 	$("#teamThreePoints").text(info.points.herons);
+		// 	$("#teamFourPoints").text(info.points.gators);
 
-		});
+		// });
 		// Set Welcome message
 		if (!userObj.fname) {
 			$("#welcomeMessage").text("Welcome, " + userObj.email + "!");
@@ -2382,14 +2381,15 @@
 	function acceptUser(userId, index) {
 		const userRef = ref.child('users/'+userId);
 		let update = {};
-		update['status'] = 'ACCEPTED';
+		// add to accepted list
+		// update['status'] = 'ACCEPTED';
 		// userRef.update(update);
 	}
 
 	function rejectUser(userId, index) {
 		// remove from list
 		// delete from hidden list in db
-		// change status to REJECTED
+		// add to rejected list
 	}
 
 	function createHiddenUserCard(index, userData) {
@@ -2432,28 +2432,28 @@
 	function hideUser(index, id, email, fname, lname, schoolYear, school, transportation, everydayProblem, extraInfo, firstTimeHacker, hearAbout, hopeToGain, interestReason) {
 		const hiddenUsersRef = ref.child('hiddenUsers');
 		var update = {};
-		// var userData = {
-		// 				id: id,
-		// 				email: email,
-		// 				fname: fname,
-		// 				lname: lname,
-		// 				schoolYear: schoolYear,
-		// 				school: school,
-		// 				transportation: transportation,
-		// 				everydayProblem: everydayProblem,
-		// 				extraInfo: extraInfo,
-		// 				firstTimeHacker: firstTimeHacker,
-		// 				hearAbout: hearAbout,
-		// 				hopeToGain: hopeToGain,
-		// 				interestReason: interestReason
-		// 			};
-		// update[id] = userData;
-		// hiddenUsersRef.update(update);
-		// // make hidden card and add to hidden list
+		var userData = {
+						id: id,
+						email: email,
+						fname: fname,
+						lname: lname,
+						schoolYear: schoolYear,
+						school: school,
+						transportation: transportation,
+						everydayProblem: everydayProblem,
+						extraInfo: extraInfo,
+						firstTimeHacker: firstTimeHacker,
+						hearAbout: hearAbout,
+						hopeToGain: hopeToGain,
+						interestReason: interestReason
+					};
+		update[id] = userData;
+		hiddenUsersRef.update(update);
+		// make hidden card and add to hidden list
 		// var hiddenUserList = document.getElementById("hiddenUserList");
 		// hiddenUserList.innerHTML += createHiddenUserCard(index, userData);
-		// // hide card TODO: delete instead?
-		// $('#listItem'+index.toString()).addClass('hide');
+		// hide card TODO: delete instead?
+		$('#listItem'+index.toString()).addClass('hide');
 	}
 
 	// %%%%%%%%%%%%% Menu Functions %%%%%%%%%%%%% //
@@ -2487,11 +2487,9 @@
 		list += openDiv + '<button class="button cardBtn" style="float: right; margin-left: 10px" onclick="acceptUser(\''+userData.id+'\','+index+')"> Accept!</button>';
 		// add hide button
 		list += '<button class="button cardBtn" style="float: right" onclick="hideUser('
-			+index+',\"'+userData.id+'\"'+')"> Hide</button>' + closeDiv;
-		// list += '<button class="button cardBtn" style="float: right" onclick="hideUser('
-		// 	+index+',\"'+userData.id+'\"'+',\"'+userData.email+'\"'+',\"'+userData.fname+'\"'+',\"'+userData.lname+'\"'+',\"'+userData.schoolYear+'\"'
-		// 	+',\"'+userData.school+'\"'+',\"'+userData.transportation+'\"'+',\"'+userData.everydayProblem+'\"'+',\"'+userData.extraInfo+'\"'
-		// 	+',\"'+userData.firstTimeHacker+'\"'+',\"'+userData.hearAbout+'\"'+',\"'+userData.hopeToGain+'\"'+',\"'+userData.interestReason+'\"'+')"> Hide</button>' + closeDiv;
+			+index+',\''+userData.id+'\''+',\''+userData.email+'\''+',\''+userData.fname+'\''+',\''+userData.lname+'\''+',\''+userData.schoolYear+'\''
+			+',\''+userData.school+'\''+',\''+userData.transportation+'\''+',\''+userData.everydayProblem+'\''+',\''+userData.extraInfo+'\''
+			+',\''+userData.firstTimeHacker+'\''+',\''+userData.hearAbout+'\''+',\''+userData.hopeToGain+'\''+',\''+userData.interestReason+'\''+')"> Hide</button>' + closeDiv;
 		// Close content tag
 		list += closeDiv;
 		// close list tag
