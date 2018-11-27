@@ -2386,21 +2386,74 @@
 		// userRef.update(update);
 	}
 
-	function createHiddenUserCard(index, userData) {
-
+	function rejectUser(userId, index) {
+		// remove from list
+		// delete from hidden list in db
+		// change status to REJECTED
 	}
 
-	function hideUser(userData, index) {
-		// TODO: save in data base that they need to be hidden
+	function createHiddenUserCard(index, userData) {
+		var openLi = '<li class="userInfoItem" id="hiddenListItem'+ index.toString() +'">';
+		var closeLi = '</li>';
+		var openDiv = '<div class="row">';
+		var openHeader = '<div class="row cardHeader">';
+		var openContent = '<div class="row cardContent">';
+		var closeDiv = '</div>';
+		var closeP = '</p>';
+		// Setup header for card
+		var list = openLi + openHeader + '<div class="col-md-5 cardHeaderTitle">'
+			+ userData.fname + ' ' + userData.lname + closeDiv + 
+			'<div class="col-md-7 cardSchoolInfo">' + userData.schoolYear + ' at ' + userData.school + closeDiv + closeDiv;
+		// Setup card content 
+		list += openContent;
+		// add email
+		list += '<div class="col-md-4">' + '<p id="emailItem"> <b>Email: </b>' + userData.email + closeP + closeDiv;
+		// add transportation
+		list += '<div class="col-md-4">' + '<p id="transportationItem"> <b>Needs Transportation: </b>' + userData.transportation + closeP + closeDiv;
+		// add first time hacker
+		list += '<div class="col-md-4">' + '<p id="firstTimeItem"> <b>First Time Hacker: </b>' + userData.firstTimeHacker + closeP + closeDiv;
+		// add responses
+		list += openDiv + '<p id="everydayProblemItem"> <b>What is an everyday problem coding can solve?: </b> <br>' + userData.everydayProblem + closeP + closeDiv;
+		list += openDiv + '<p id="hearAboutItem"> <b>How did you hear about swamphacks?: </b> <br>' + userData.hearAbout + closeP + closeDiv;
+		list += openDiv + '<p id="hopeToGainItem"> <b>What do you hope to gain?: </b> <br>' + userData.hopeToGain + closeP + closeDiv;
+		list += openDiv + '<p id="interestReasonItem"> <b>Why are you interested in swamphacks?: </b> <br>' + userData.interestReason + closeP + closeDiv;
+		list += openDiv + '<p id="extraInfoItem"> <b>Extra information: </b> <br>' + userData.extraInfo + closeP + closeDiv;
+		// add accept button
+		list += openDiv + '<button class="button cardBtn" style="float: right; margin-left: 10px" onclick="acceptUser(\''+userData.id+'\','+index+')"> Accept!</button>';
+		// add Reject button
+		list += '<button class="button cardBtn lightRed" style="float: right" onclick="rejectUser(\''+userData.id+'\','+index+')"> Reject</button>' + closeDiv;
+		// Close content tag
+		list += closeDiv;
+		// close list tag
+		list += closeLi;
+		return list;
+	}
+
+	function hideUser(index, id, email, fname, lname, schoolYear, school, transportation, everydayProblem, extraInfo, firstTimeHacker, hearAbout, hopeToGain, interestReason) {
 		const hiddenUsersRef = ref.child('hiddenUsers');
-		let update = {};
-		udpate[userData.id] = userData;
-		hiddenUsersRef.update(update);
-		// make hidden card and add to hidden list
-		var hiddenUserList = document.getElementById("hiddenUserList");
-		hiddenUserList.innerHTML += createHiddenUserCard(index, userData);
-		// hide card TODO: delete instead?
-		$('#listItem'+index.toString()).addClass('hide');
+		var update = {};
+		// var userData = {
+		// 				id: id,
+		// 				email: email,
+		// 				fname: fname,
+		// 				lname: lname,
+		// 				schoolYear: schoolYear,
+		// 				school: school,
+		// 				transportation: transportation,
+		// 				everydayProblem: everydayProblem,
+		// 				extraInfo: extraInfo,
+		// 				firstTimeHacker: firstTimeHacker,
+		// 				hearAbout: hearAbout,
+		// 				hopeToGain: hopeToGain,
+		// 				interestReason: interestReason
+		// 			};
+		// update[id] = userData;
+		// hiddenUsersRef.update(update);
+		// // make hidden card and add to hidden list
+		// var hiddenUserList = document.getElementById("hiddenUserList");
+		// hiddenUserList.innerHTML += createHiddenUserCard(index, userData);
+		// // hide card TODO: delete instead?
+		// $('#listItem'+index.toString()).addClass('hide');
 	}
 
 	// %%%%%%%%%%%%% Menu Functions %%%%%%%%%%%%% //
@@ -2433,7 +2486,12 @@
 		// add accept button
 		list += openDiv + '<button class="button cardBtn" style="float: right; margin-left: 10px" onclick="acceptUser(\''+userData.id+'\','+index+')"> Accept!</button>';
 		// add hide button
-		list += '<button class="button cardBtn" style="float: right" onclick="hideUser(\''+userData+'\','+index+')"> Hide</button>' + closeDiv;
+		list += '<button class="button cardBtn" style="float: right" onclick="hideUser('
+			+index+',\"'+userData.id+'\"'+')"> Hide</button>' + closeDiv;
+		// list += '<button class="button cardBtn" style="float: right" onclick="hideUser('
+		// 	+index+',\"'+userData.id+'\"'+',\"'+userData.email+'\"'+',\"'+userData.fname+'\"'+',\"'+userData.lname+'\"'+',\"'+userData.schoolYear+'\"'
+		// 	+',\"'+userData.school+'\"'+',\"'+userData.transportation+'\"'+',\"'+userData.everydayProblem+'\"'+',\"'+userData.extraInfo+'\"'
+		// 	+',\"'+userData.firstTimeHacker+'\"'+',\"'+userData.hearAbout+'\"'+',\"'+userData.hopeToGain+'\"'+',\"'+userData.interestReason+'\"'+')"> Hide</button>' + closeDiv;
 		// Close content tag
 		list += closeDiv;
 		// close list tag
