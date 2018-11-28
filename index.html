@@ -2184,7 +2184,8 @@
 						authorizeOption: authorizeOption,
                         isVolunteer: false,
                         status: "PENDING",
-                        applied: true
+						applied: true,
+						appliedTime: firebase.database.ServerValue.TIMESTAMP
                     };
                     // save user on database
                     var userRef = ref.child("users");
