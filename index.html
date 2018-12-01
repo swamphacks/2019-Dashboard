@@ -149,7 +149,12 @@
 	  <div id="application" class="show">
 		<h1 class="header-main-type">Application</h1>
 		<div class="container-fluid notif-con">
-			<div class="row">
+			<div class="row hide" id="closedApp">
+				<div class="col-md-12">
+					<p>Applications have been closed.</p>
+				</div>
+			</div>
+			<div class="row" id="openApp">
 				<div class="row">
 					<div class="col-md-12">
 						<!-- <h3 class="header-sub-type">Welcome, Albert!</h3> -->
@@ -445,7 +450,18 @@
 						</div>
 					</div>
 					<div class="row top-margin">
-						<div class="col-md-12">
+						<div class="col-md-12 hide" id="adminDashboard">
+							<div class="col-md-6 top-margin">
+								<button id="disableAppBtn" class="button green" onclick="disableApplications()"><p class="makeactbtn">Disable Applications</p></button>
+							</div>
+							<div class="col-md-6 top-margin">
+								<button id="enableAppBtn" class="button green" onclick="enableApplications()"><p class="makeactbtn">Enable Applications</p></button>
+							</div>
+							<div class="col-md-12 top-margin">
+								<button id="resetAcceptBtn" class="button lightRed" onclick="resetAllAcceptance()"><p class="makeactbtn">Reset All Acceptance</p></button>
+							</div>
+						</div>
+						<div class="col-md-12" id="userDashboard">
 							<h3 class="header-sub-type" id="welcomeMessage">Welcome, Albert!</h3>
 							<p class="dashboardInfo">
 								Thank you for submitting an application to SwampHacks V. The timeline below shows you where you are in the application process. We will be reviewing applications on a rolling basis and you should receive a response from us soon. Until then, sit tight. We can’t wait to see you at SwampHacks in 2019!
@@ -532,6 +548,11 @@
 		<h1 class="header-main-type">Applicant information 	<button id="switchInfoBtn" class="button dark infoSwitchBtn" onclick="toggleUserInfo()">Show Hidden</button></h1>
 
 				<div class="container-fluid notif-con">
+					<div class="row">
+						<button class="button green hide" id="acceptAllBtn" onclick="acceptAll()">
+							<p>Accept All</p>
+						</button>
+					</div>
 					<div class="row">
 						<ul id="userList">
 
@@ -1128,6 +1149,11 @@
 		// Show admin options
 		if (userObj.email === "sponsors@swamphacks.com") {
 
+			// show admin dashboard
+			$('#adminDashboard').removeClass('hide');
+			$('#userDashboard').addClass('hide');
+			$('#qrcode').addClass('hide');
+
 			$("#op2").removeClass("hide");
 			$("#op2").addClass("show");
 
@@ -1209,6 +1235,31 @@
 			if (savedFormData.email == userObj.email)
 				addSavedFormData();
 		}
+
+		// Disable application if needed
+		const appStatusRef = ref.child('ApplicationStatus');
+		// initial setup
+		appStatusRef.on('child_added', function(data) {
+			let status = data.val();
+			// if false hide application and its tab
+			if (!status) {
+				$('#openApp').addClass('hide');
+				$('#closedApp').removeClass('hide');
+			}
+		});
+		// update visibility
+		appStatusRef.on('child_changed', function(data) {
+			let status = data.val();
+			// if true show application and its tab
+			// if false hide application and its tab
+			if (!status) {
+				$('#openApp').addClass('hide');
+				$('#closedApp').removeClass('hide');
+			} else {
+				$('#openApp').removeClass('hide');
+				$('#closedApp').addClass('hide');
+			}
+		});
 
 		// create qr code
 		var qrcode = new QRCode(document.getElementById("qrcode"), {
@@ -1346,21 +1397,23 @@
 				// $("#rejectCon").addClass("show");
 				// $("#rejectCon").removeClass("hide");
 			} else if (userObj.status === "ACCEPTED") {
-				// update timeline
-				$("#statusTimeline").addClass("limeGreen");
-				$("#statusCircle").addClass("lightGreen");
-				$("#statusTimelineText").text("Accepted!");	
-				// Show Confirm and Deny buttons
-				$("#confirmBtn").addClass("show");
-				$("#rejectSpot").addClass("show");
+				// TODO: Uncomment when ready to notify users
+				// // update timeline
+				// $("#statusTimeline").addClass("limeGreen");
+				// $("#statusCircle").addClass("lightGreen");
+				// $("#statusTimelineText").text("Accepted!");	
+				// // Show Confirm and Deny buttons
+				// $("#confirmBtn").addClass("show");
+				// $("#rejectSpot").addClass("show");
 
 				// hide qrcode if they haven't been confirmed yet
 				$('#qrcode').addClass('hide');
 			} else if (userObj.status === "NOT ACCEPTED") {
-				// update timeline
-				$("#statusTimeline").addClass("red");
-				$("#statusCircle").addClass("red");
-				$("#statusTimelineText").text("Not Accepted");
+				// TODO: Uncomment when ready to notify users
+				// // update timeline
+				// $("#statusTimeline").addClass("red");
+				// $("#statusCircle").addClass("red");
+				// $("#statusTimelineText").text("Not Accepted");
 				
 				// hide qrcode if they haven't been confirmed yet
 				$('#qrcode').addClass('hide');	
@@ -2342,6 +2395,22 @@
 	// %%%%%%%%%%%%% End of Application Functions %%%%%%%%%%%%% //
 
 	// %%%%%%%%%%%%% Admin Functions %%%%%%%%%%%%% //
+	function disableApplications() {
+		// update status on db
+		const appStatusRef = ref.child('ApplicationStatus');
+		let statusUpdate = {'status': false};
+		appStatusRef.update(statusUpdate);
+		// change application tab to display applications are closed
+	}
+
+	function enableApplications() {
+		// update status on db
+		const appStatusRef = ref.child('ApplicationStatus');
+		let statusUpdate = {'status': true};
+		appStatusRef.update(statusUpdate);
+		// change application tab to display applications
+	}
+
 	var infoState = true; // true = user info, false = hidden users
 	var hiddenLoaded = false;
 	function toggleUserInfo() {
@@ -2379,18 +2448,50 @@
 		}
 	}
 
-	function acceptUser(userId, index) {
-		const userRef = ref.child('users/'+userId);
-		let update = {};
-		// add to accepted list
-		// update['status'] = 'ACCEPTED';
-		// userRef.update(update);
+	function resetAllAcceptance() {
+		// confirm that they want to do this
+		if(confirm("Are you sure you want to do this?")) {
+			// Set all user status to PENDING
+			const usersRef = ref.child('users');
+			usersRef.once('value').then(function(snapshot) {
+				let users = snapshot.val();
+				let updates = {'status': 'PENDING'};
+				for(let key in users) {
+					let applicantRef = usersRef.child(key);
+					applicantRef.update(updates);
+				}
+			});
+		}
 	}
 
-	function rejectUser(userId, index) {
+	function acceptUser(userId, email, index) {
+		// add to accepted list
+		const acceptedRef = ref.child('acceptedApplicants');
+		const data = { 'email': email };
+		let acceptedUpdates = {};
+		acceptedUpdates[userId] = data;
+		acceptedRef.update(acceptedUpdates);
+		// Update status
+		const applicantRef = ref.child('users/'+userId);
+		let statusUpdates = {};
+		statusUpdates['status'] = 'ACCEPTED';
+		applicantRef.update(statusUpdates);
 		// remove from list
+		// hide card TODO: delete instead?
+		$('#listItem'+index.toString()).addClass('hide');
+	}
+
+	function rejectUser(userId, email, index) {
+		// remove from list
+		// hide card TODO: delete instead?
+		$('#listItem'+index.toString()).addClass('hide');
 		// delete from hidden list in db
 		// add to rejected list
+		const rejectedRef = ref.child('rejectedApplicants');
+		const data = { 'email': email };
+		let rejectedUpdates = {};
+		rejectedUpdates[userId] = data;
+		rejectedRef.update(rejectedUpdates);
 	}
 
 	function createHiddenUserCard(index, userData) {
@@ -2420,9 +2521,9 @@
 		list += openDiv + '<p id="interestReasonItem"> <b>Why are you interested in swamphacks?: </b> <br>' + userData.interestReason + closeP + closeDiv;
 		list += openDiv + '<p id="extraInfoItem"> <b>Extra information: </b> <br>' + userData.extraInfo + closeP + closeDiv;
 		// add accept button
-		list += openDiv + '<button class="button cardBtn" style="float: right; margin-left: 10px" onclick="acceptUser(\''+userData.id+'\','+index+')"> Accept!</button>';
+		list += openDiv + '<button class="button cardBtn" style="float: right; margin-left: 10px" onclick="acceptUser(\''+userData.id+'\',\''+userData.email+'\','+index+')"> Accept!</button>';
 		// add Reject button
-		list += '<button class="button cardBtn lightRed" style="float: right" onclick="rejectUser(\''+userData.id+'\','+index+')"> Reject</button>' + closeDiv;
+		list += '<button class="button cardBtn lightRed" style="float: right" onclick="rejectUser(\''+userData.id+'\',\''+userData.email+'\','+index+')"> Reject</button>' + closeDiv;
 		// Close content tag
 		list += closeDiv;
 		// close list tag
@@ -2485,12 +2586,13 @@
 		list += openDiv + '<p id="interestReasonItem"> <b>Why are you interested in swamphacks?: </b> <br>' + userData.interestReason + closeP + closeDiv;
 		list += openDiv + '<p id="extraInfoItem"> <b>Extra information: </b> <br>' + userData.extraInfo + closeP + closeDiv;
 		// add accept button
-		list += openDiv + '<button class="button cardBtn" style="float: right; margin-left: 10px" onclick="acceptUser(\''+userData.id+'\','+index+')"> Accept!</button>';
+		list += openDiv + '<button class="button cardBtn" style="float: right; margin-left: 10px" onclick="acceptUser(\''+userData.id+'\',\''+userData.email+'\','+index+')"> Accept!</button>';
 		// add hide button
 		list += '<button class="button cardBtn" style="float: right" onclick="hideUser('
 			+index+',\''+userData.id+'\''+',\''+userData.email+'\''+',\''+userData.fname+'\''+',\''+userData.lname+'\''+',\''+userData.schoolYear+'\''
 			+',\''+userData.school+'\''+',\''+userData.transportation+'\''+',\''+userData.everydayProblem+'\''+',\''+userData.extraInfo+'\''
-			+',\''+userData.firstTimeHacker+'\''+',\''+userData.hearAbout+'\''+',\''+userData.hopeToGain+'\''+',\''+userData.interestReason+'\''+')"> Hide</button>' + closeDiv;
+			+',\''+userData.firstTimeHacker+'\''+',\''+userData.hearAbout+'\''+',\''+userData.hopeToGain+'\''+',\''+userData.interestReason+'\''+')"> Hide</button>';
+		list += '<button class="button cardBtn lightRed" style="float: right; margin-right: 10px" onclick="rejectUser(\''+userData.id+'\',\''+userData.email+'\','+index+')"> Reject</button>' + closeDiv;
 		// Close content tag
 		list += closeDiv;
 		// close list tag
@@ -2501,18 +2603,13 @@
 	var userInfoLoaded = false;
 	
 	function loadUserInfo() {
-		var userRef = ref.child("users").orderByChild("email");
-		userRef.once('value').then(function(snapshot) {
-			var users = snapshot.val();
+		var userRef = ref.child("users");
+		userRef.orderByChild("appliedTime").once('value').then(function(snapshot) {
 			var userList = document.getElementById("userList");
 			var itemNumber = 0;
-			// wrap in list tag
-			// inside <li> have a row divs
-			// for now put email on first row and transportation need on second row
-			// close tags
-			for (var userId in users) {
-				// TODO: filter: only show if they have applied, and if they havent been accepted
-				var user = users[userId];
+			snapshot.forEach(function(childSnapshot) {
+				let userId = childSnapshot.key;
+				let user = childSnapshot.val();
 				const applied = user['applied'];
 				if (applied && user['status'] === 'PENDING') {
 					var status = user['status'];
@@ -2546,7 +2643,7 @@
 					userList.innerHTML += createListElement(itemNumber, userData);
 					itemNumber += 1;
 				}
-			}
+			});
 			// Hide the loader
 			$("#animationWindow").removeClass("showflex");
 			$("#animationWindow").addClass("hide");

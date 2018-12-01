@@ -36,7 +36,6 @@
 	</div>
 
   <div id="layout" class="">
-
       <div id="menuLogin" class="">
 
 				<div class="pure-menu-heading" href="#">
@@ -50,7 +49,35 @@
 
 				<div class="menu-items-con-login">
 
-					<div class="row log">
+				<div id="regClosed" class="hide">
+					<h2>Sorry Registration has been closed.</h2>
+					<!-- log in  -->
+					<div class="margin-buffer">
+			
+							<div class="col-md-12" style="margin-top: 11px; text-align: center">
+								<button class="button txtbtnouter">
+									<!-- <span class="line"></span> -->
+									<a href="login.html" style="display: inline-block"><p class="textbtn"><b>Sign In</b></p></a>
+									<!-- <span class="line"></span> -->
+								</button>
+							</div>
+			
+							<div class="col-md-12">
+									<button class="button google" onclick="googleSignIn()">Google Sign In</button>
+							</div>
+			
+							<!-- <div class="col-md-12 top-margin">
+									<button class="button facebook" onclick="facebookSignIn()">Facebook Sign In</button>
+							</div> -->
+							<!-- <div class="col-md-12 descrip-txt login-txt">
+								Create your account with the email you applied with. This form will not let
+								you do otherwise!
+							</div> -->
+			
+						</div>
+					</div>
+
+					<div class="row log" id="regOpen">
 						<form id="loginForm" class="" autocomplete="off">
 							<div class="col-md-12 top-margin">
 								<label class="form-lbl" for="q1" name="">Email</label>
@@ -105,18 +132,18 @@
 
       </div>
 
-			<div id="login-side">
-				<!-- <img class="clock" src="img/clock.jpg"></img> -->
-				<div class="imgcon">
-					<img class="colorlogo" src="img/colorlogo.svg"></img>
-				</div>
+	  <div id="login-side">
+		<!-- <img class="clock" src="img/clock.jpg"></img> -->
+		<div class="imgcon">
+			<img class="colorlogo" src="img/colorlogo.svg"></img>
+		</div>
 
-				<div class="top-blk">
+		<div class="top-blk">
 
-				</div>
-				<div class="bottom-blk">
+		</div>
+		<div class="bottom-blk">
 
-				</div>
+		</div>
 
       </div>
 
@@ -149,6 +176,31 @@
 		var firstClick = true;
 		var userExists = true;
 		var repeatCheck = true;
+
+		// Disable registration if needed
+		const appStatusRef = ref.child('ApplicationStatus');
+		// initial setup
+		appStatusRef.on('child_added', function(data) {
+			let status = data.val();
+			// if false hide registration
+			if (!status) {
+				$('#regOpen').addClass('hide');
+				$('#regClosed').removeClass('hide');
+			}
+		});
+		// update visibility
+		appStatusRef.on('child_changed', function(data) {
+			let status = data.val();
+			// if true show registration
+			// if false hide registration
+			if (!status) {
+				$('#regOpen').addClass('hide');
+				$('#regClosed').removeClass('hide');
+			} else {
+				$('#regClosed').addClass('hide');
+				$('#regOpen').removeClass('hide');
+			}
+		});
 
 		$("form").submit(function() {
 			repeatCheck = true;
