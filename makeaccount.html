@@ -105,9 +105,9 @@
 						<div class="margin-buffer">
 
 							<div class="col-md-12" style="margin-top: 11px; text-align: center">
-								<button class="button txtbtnouter">
+								<button class="button txtbtnouter" onclick="sendToSignIn()">
 									<!-- <span class="line"></span> -->
-									<a href="login.html" style="display: inline-block"><p class="textbtn">or <b>Sign In</b></p></a>
+									<a href="#" style="display: inline-block"><p class="textbtn">or <b>Sign In</b></p></a>
 									<!-- <span class="line"></span> -->
 								</button>
 							</div>
@@ -391,6 +391,11 @@
 
 			}
 
+		}
+
+		function sendToSignIn() {
+			console.log('called');
+			window.location.href = 'login.html';
 		}
 
 		function showPassPressed(field, icon) {

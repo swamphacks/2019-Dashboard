@@ -96,9 +96,9 @@
 							</div> -->
 
 							<div class="col-md-12 top-margin" style="margin-top: 11px; text-align: center">
-								<button class="button txtbtnouter">
+								<button class="button txtbtnouter" onclick="sendToSignUp()">
 									<!-- <span class="line" style="width: 25%!important"></span> -->
-									<a href="makeaccount.html" style="display: inline-block"><p class="textbtn">or <b>Create Account</b></p></a>
+									<a href="#" style="display: inline-block"><p class="textbtn">or <b>Create Account</b></p></a>
 									<!-- <span class="line" style="width: 25%!important"></span> -->
 								</button>
 							</div>
@@ -273,6 +273,11 @@
 
 			}
 
+		}
+
+		function sendToSignUp() {
+			console.log('called');
+			window.location.href = 'makeaccount.html';
 		}
 
 		function resetPasswordClicked() {
