@@ -2411,6 +2411,15 @@
 		// change application tab to display applications
 	}
 
+	function getUserStatus(userId) {
+		const userRef = ref.child('users/'+userId);
+		return new Promise(function(resolve, reject) {
+			userRef.once('value').then(function(snapshot) {
+				resolve(snapshot.val().status);
+			});
+		});
+	}
+
 	var infoState = true; // true = user info, false = hidden users
 	var hiddenLoaded = false;
 	function toggleUserInfo() {
@@ -2423,9 +2432,13 @@
 					var hiddenUserList = document.getElementById("hiddenUserList");
 					var index = 0;
 					for (var userId in users) {
-						var user = users[userId];
-						hiddenUserList.innerHTML += createHiddenUserCard(index, user);
-						index += 1;
+						getUserStatus(userId).then(function(status) {
+							if (status === 'PENDING') {
+								var user = users[userId];
+								hiddenUserList.innerHTML += createHiddenUserCard(index, user);
+								index += 1;
+							}
+						});
 					}
 				});
 				hiddenLoaded = true;
@@ -2600,6 +2613,15 @@
 		return list;
 	}
 
+	function inHiddenList(userId) {
+		const hiddenListRef = ref.child('hiddenUsers');
+		return new Promise(function(resolve, reject) {
+			hiddenListRef.child(userId).once('value').then(function(snapshot) {
+				resolve(snapshot.exists());
+			});
+		});
+	}
+
 	var userInfoLoaded = false;
 	
 	function loadUserInfo() {
@@ -2611,38 +2633,40 @@
 				let userId = childSnapshot.key;
 				let user = childSnapshot.val();
 				const applied = user['applied'];
-				if (applied && user['status'] === 'PENDING') {
-					var status = user['status'];
-					var email = user['email'] ? user['email'] : 'N/A';
-					var fname = user['fname'] ? user['fname'] : 'N/A';
-					var lname = user['lname'] ? user['lname'] : 'N/A';
-					var schoolYear = user['schoolYear'] ? user['schoolYear'] : 'N/A';
-					var school = user['school'] ? user['school'] : 'N/A';
-					var transportation = user['transportation'] ? user['transportation'] : 'N/A';
-					var everydayProblem = user['everydayProblem'] ? user['everydayProblem'] : 'N/A';
-					var extraInfo = user['extraInfo'] ? user['extraInfo'] : 'N/A';
-					var firstTimeHacker = user['firstTimeHacker'] ? user['firstTimeHacker'] : 'N/A';
-					var hearAbout = user['hearAbout'] ? user['hearAbout'] : 'N/A';
-					var hopeToGain = user['hopeToGain'] ? user['hopeToGain'] : 'N/A';
-					var interestReason = user['interestReason'] ? user['interestReason'] : 'N/A';
-					var userData = {
-						id: userId,
-						email: email,
-						fname: fname,
-						lname: lname,
-						schoolYear: schoolYear,
-						school: school,
-						transportation: transportation,
-						everydayProblem: everydayProblem,
-						extraInfo: extraInfo,
-						firstTimeHacker: firstTimeHacker,
-						hearAbout: hearAbout,
-						hopeToGain: hopeToGain,
-						interestReason: interestReason
-					};
-					userList.innerHTML += createListElement(itemNumber, userData);
-					itemNumber += 1;
-				}
+				inHiddenList(userId).then(function(inHidden) {
+					if (applied && user['status'] === 'PENDING' && !inHidden) {
+						var status = user['status'];
+						var email = user['email'] ? user['email'] : 'N/A';
+						var fname = user['fname'] ? user['fname'] : 'N/A';
+						var lname = user['lname'] ? user['lname'] : 'N/A';
+						var schoolYear = user['schoolYear'] ? user['schoolYear'] : 'N/A';
+						var school = user['school'] ? user['school'] : 'N/A';
+						var transportation = user['transportation'] ? user['transportation'] : 'N/A';
+						var everydayProblem = user['everydayProblem'] ? user['everydayProblem'] : 'N/A';
+						var extraInfo = user['extraInfo'] ? user['extraInfo'] : 'N/A';
+						var firstTimeHacker = user['firstTimeHacker'] ? user['firstTimeHacker'] : 'N/A';
+						var hearAbout = user['hearAbout'] ? user['hearAbout'] : 'N/A';
+						var hopeToGain = user['hopeToGain'] ? user['hopeToGain'] : 'N/A';
+						var interestReason = user['interestReason'] ? user['interestReason'] : 'N/A';
+						var userData = {
+							id: userId,
+							email: email,
+							fname: fname,
+							lname: lname,
+							schoolYear: schoolYear,
+							school: school,
+							transportation: transportation,
+							everydayProblem: everydayProblem,
+							extraInfo: extraInfo,
+							firstTimeHacker: firstTimeHacker,
+							hearAbout: hearAbout,
+							hopeToGain: hopeToGain,
+							interestReason: interestReason
+						};
+						userList.innerHTML += createListElement(itemNumber, userData);
+						itemNumber += 1;
+					}
+				});
 			});
 			// Hide the loader
 			$("#animationWindow").removeClass("showflex");
