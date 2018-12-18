@@ -98,10 +98,15 @@ function removeDriver(userKey) {
     driverRef.child(userKey).remove();
 }
 
-function updatePassengerCount(key, passengerCount) {
-    let driverItem = $('#passenger'+key)[0];
-    console.log('item', driverItem);
-    driverItem.text(passengerCount.toString());
+function updatePassengerCount(key, passengerCount, passengerLimit) {
+    // remove from list if limit is reached
+    if (passengerCount >= passengerLimit) {
+        $('#driverItemId'+key).addClass('hide');
+        
+    } else {
+        let driverItem = $('#passenger'+key);
+        driverItem.text(passengerCount.toString());
+    }
 }
 
 // function makeFakeDrivers() {

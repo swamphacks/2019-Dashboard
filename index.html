@@ -2442,11 +2442,6 @@
 				// registered as passenger, show driver list
 				$('#driverListContainer').removeClass('hide');
 				$('#carpoolStartContainer').addClass('hide');
-				let driverListDOM = $('#driverList')[0];
-				getDrivers().on('child_added', function(data) {
-					let driver = data.val();
-					driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname, driver.startLocation, data.key, driver.currentPassengerCount, driver.passengerLimit);
-				});
 			} else {
 				// not a passenger
 			}
@@ -2470,12 +2465,18 @@
 		$('#driverListContainer').removeClass('hide');
 		$('#carpoolStartContainer').addClass('hide');
 		let driverListDOM = $('#driverList')[0];
+		getDrivers().on('child_added', function(data) {
+			let driver = data.val();
+			if (driver.currentPassengerCount < driver.passengerLimit) {
+				driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname, driver.startLocation, data.key, driver.currentPassengerCount, driver.passengerLimit);
+			}
+		});
 		getDrivers().on('child_changed', function(data) {
 			let passengerCount = data.val().currentPassengerCount;
 			let driverId = data.key;
-			console.log('count', passengerCount);
+			let passengerLimit = data.val().passengerLimit;
 			// update driver passenger count
-			updatePassengerCount(key, passengerCount);
+			updatePassengerCount(driverId, passengerCount, passengerLimit);
 		});
 	}
 
