@@ -20,11 +20,11 @@ function addPassenger() {
     passengerRef.update(data);
 }
 // TODO: make sure they are not a passenger
-function addDriver() {
-    let data = {};
-    data[loggedInUserKey] = true;
-    driverRef.update(data);
-}
+// function addDriver() {
+//     let data = {};
+//     data[loggedInUserKey] = true;
+//     driverRef.update(data);
+// }
 // TODO: check limit of passenger from driver info
 function acceptPassenger(userKey) {
     
