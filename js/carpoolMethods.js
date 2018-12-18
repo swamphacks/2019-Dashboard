@@ -91,3 +91,42 @@ function removePassengers(userKey) {
 function removeDriver(userKey) {
     driverRef.child(userKey).remove();
 }
+
+function makeFakeDrivers() {
+    const driversRef = ref.child('carpoolDrivers');
+    let drivers = [
+        {
+            fname: 'John',
+            lname: 'Smith',
+            startLocation: 'Jacksonville',
+            passengerLimit: '3',
+            plate: '78NK7Q',
+            model: 'Toyota Corolla'
+        },
+        {
+            fname: 'Jane',
+            lname: 'Doe',
+            startLocation: 'Orlando',
+            passengerLimit: '2',
+            plate: '9HT75J',
+            model: 'Honda Civic'
+        },
+        {
+            fname: 'Alex',
+            lname: 'Gomez',
+            startLocation: 'Miami',
+            passengerLimit: '4',
+            plate: '305MIA',
+            model: 'Cadillac Escalade'
+        },
+        {
+            fname: 'Julian',
+            lname: 'Moreno',
+            startLocation: 'Tallahasee',
+            passengerLimit: '2',
+            plate: '9G8FH5',
+            model: 'Nissan Altima'
+        }
+    ];
+    driversRef.set(drivers);
+}
