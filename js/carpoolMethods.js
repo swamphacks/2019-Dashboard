@@ -100,6 +100,7 @@ function removeDriver(userKey) {
 
 function updatePassengerCount(key, passengerCount) {
     let driverItem = $('#passenger'+key)[0];
+    console.log('item', driverItem);
     driverItem.text(passengerCount.toString());
 }
 

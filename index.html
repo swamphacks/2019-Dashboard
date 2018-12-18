@@ -2474,6 +2474,7 @@
 		getDrivers().on('child_changed', function(data) {
 			let passengerCount = data.val().currentPassengerCount;
 			let driverId = data.key;
+			console.log('count', passengerCount);
 			// update driver passenger count
 			updatePassengerCount(key, passengerCount);
 		});
