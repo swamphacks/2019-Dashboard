@@ -126,9 +126,17 @@
 					<li id="op6" class="pure-menu-item top-ln hide">
                       <a href="#" class="pure-menu-link" onclick="menuClick(6)">Send iOS Notif</a>
 					</li>
+
+					<li id="op8" class="pure-menu-item top-ln">
+						<a href="#" class="pure-menu-link" onclick="menuClick(8)">Schedule</a>
+					</li>
 					
 					<li id="op4" class="pure-menu-item bottom-ln">
 						<a href="http://2019.swamphacks.com" target="_blank" class="pure-menu-link" onclick="menuClick(4)">2019 Website</a>
+					</li>
+
+					<li id="op9" class="pure-menu-item top-ln">
+						<a href="#" class="pure-menu-link" onclick="menuClick(9)">Sponsors</a>
 					</li>
 
                     <li id="op3" class="pure-menu-item top-ln">
@@ -505,19 +513,7 @@
 										</div>
 									</div>
 							</div>
-
-
-							<!-- <p class="descrip-txt"><br><b>Congratulations</b>, you're going to SwampHacks! <br><br>When you get the chance, <b>be sure to confirm your spot and fill out the necessary information in the profile tab on the left</b>. For any questions or concerns, feel free to email us at info@swamphacks.com. -->
-
-							<!-- As the event draws nearer, we'll be sending more emails to keep you in the loop about SwampHacks!
-
-							<br><br>Deadline to accept your spot:<b> January 12th, 2017</b>
-							</p> -->
 						</div>
-
-						<!-- <div class="col-md-12 notif top-margin">
-							<p class="notif-txt">Your Status: <span class="status green" id="dashStatus">ACCEPTED</span></p>
-						</div> -->
 
 						<!-- <div class="col-md-12 top-margin descrip-txt">
 							Let us know if you're coming by confirming your spot! Please remember to update
@@ -549,7 +545,7 @@
 
 				<div class="container-fluid notif-con">
 					<div class="row">
-						<button class="button green hide" id="acceptAllBtn" onclick="acceptAll()">
+						<button class="button green" id="acceptAllBtn" onclick="acceptAll()">
 							<p>Accept All</p>
 						</button>
 					</div>
@@ -943,7 +939,29 @@
 				</div>
 			</div>
 
-      </div>
+	  </div>
+	  
+	<!-- %%%%%%%%%%%%%% Schedule %%%%%%%%%%%%%% -->
+	<div id="schedule" class="hide">
+
+		<h1 class="header-main-type">Schedule</h1>
+
+		<div class="container-fluid notif-con">
+
+		</div>
+
+	</div>
+
+	<!-- %%%%%%%%%%%%%% Sponsors %%%%%%%%%%%%%% -->
+	<div id="sponsors" class="hide">
+
+		<h1 class="header-main-type">Sponsors</h1>
+
+		<div class="container-fluid notif-con">
+
+		</div>
+
+	</div>
 
   </div>
 
@@ -1474,7 +1492,7 @@
 			// Fill application page with user information
 			addApplicationInfo();
 		}
-
+		// TODO: update reject and confirm buttons
 		function rejectSpotBtnClicked() {
 
 			if (userObj.dietaryRestrictions === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
@@ -1569,75 +1587,6 @@
 					 });
 
 				});
-
-			}
-
-		}
-
-		function updateInfoBtnClicked() {
-
-			if (userObj.dietaryRestrictions === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
-
-			} else {
-
-				var dietaryRestrictions = $("#diet").val();
-				var tshirtSize = $("#shirtSize").val();
-				var extraInfo = $("#extraInfo").val();
-
-				if (dietaryRestrictions !== "" && tshirtSize !== "") {
-
-					var loggedInUserRef = acceptedRef.child(loggedInUserKey);
-
-					if (extraInfo !== "") {
-
-						loggedInUserRef.update({
-							dietaryRestrictions: dietaryRestrictions,
-							tshirtSize: tshirtSize,
-							extraInfo: extraInfo
-						});
-
-					} else {
-
-						loggedInUserRef.update({
-							dietaryRestrictions: dietaryRestrictions,
-							tshirtSize: tshirtSize
-						});
-
-					}
-
-					acceptedRef.orderByChild("email").equalTo(userObj.email).on("value", function(snapshot) {
-
-						 // Getting the info of the found user and storing it in local storage
-						 snapshot.forEach(function(childSnapshot) {
-
-							 var key = childSnapshot.key;
-							 var childData = childSnapshot.val();
-							 localStorage.setItem('loggedInUser', JSON.stringify(childData));
-							 localStorage.setItem('loggedInUserKey', key);
-
-							 userObj = JSON.parse(localStorage.getItem('loggedInUser'));
-					 		 loggedInUserKey = localStorage.getItem('loggedInUserKey');
-
-						 });
-
-					});
-
-					// SUCCESS
-					$("#profileStatusTxt").text("Info Updated!");
-					$("#profileStatusTxt").addClass("show");
-					$("#profileStatusTxt").addClass("greenTxt");
-					$("#profileStatusTxt").removeClass("redTxt");
-					$(".fa-exclamation-triangle").addClass("hide");
-
-				} else {
-
-					// ERROR
-					$("#profileStatusTxt").text("Please fill in your t-shirt size and dietary restriction!");
-					$("#profileStatusTxt").addClass("show");
-					$("#profileStatusTxt").addClass("redTxt");
-					$("#profileStatusTxt").removeClass("greenTxt");
-
-				}
 
 			}
 
@@ -2395,6 +2344,19 @@
 	// %%%%%%%%%%%%% End of Application Functions %%%%%%%%%%%%% //
 
 	// %%%%%%%%%%%%% Admin Functions %%%%%%%%%%%%% //
+	function acceptAll() {
+		const usersRef = ref.child('users');
+		// update all status'
+		usersRef.once('value').then(function(snapshot) {
+			let users = snapshot.val();
+			let index = 0;
+			for (let userId in users) {
+				acceptUser(userId, users[userId]['email'], index);
+				index++;
+			}
+		});
+	}
+
 	function disableApplications() {
 		// update status on db
 		const appStatusRef = ref.child('ApplicationStatus');
@@ -2694,6 +2656,8 @@
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op6").removeClass("pure-menu-selected");
 		$("#op7").removeClass("pure-menu-selected");
+		$("#op8").removeClass("pure-menu-selected");
+		$("#op9").removeClass("pure-menu-selected");
 
 		$("#application").addClass("show");
         $("#application").removeClass("hide");
@@ -2712,6 +2676,13 @@
 		
 		$("#transportationForm").addClass("hide");
 		$("#transportationForm").removeClass("show");
+
+		$("#schedule").addClass("hide");
+		$("#schedule").removeClass("show");
+
+		$("#sponsors").addClass("hide");
+		$("#sponsors").removeClass("show");
+
 	  } else if (item === 1) {
 
 		$("#op1").addClass("pure-menu-selected");
@@ -2721,6 +2692,8 @@
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op6").removeClass("pure-menu-selected");
 		$("#op7").removeClass("pure-menu-selected");
+		$("#op8").removeClass("pure-menu-selected");
+		$("#op9").removeClass("pure-menu-selected");
 
         $("#dashboard").addClass("show");
 		$("#dashboard").removeClass("hide");
@@ -2739,6 +2712,12 @@
 		
 		$("#transportationForm").addClass("hide");
 		$("#transportationForm").removeClass("show");
+
+		$("#schedule").addClass("hide");
+		$("#schedule").removeClass("show");
+
+		$("#sponsors").addClass("hide");
+		$("#sponsors").removeClass("show");
 
 		if (userObj.status !== undefined) {
 
@@ -2770,6 +2749,8 @@
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op6").removeClass("pure-menu-selected");
 		$("#op7").removeClass("pure-menu-selected");
+		$("#op8").removeClass("pure-menu-selected");
+		$("#op9").removeClass("pure-menu-selected");
 
 		$("#info").addClass("show");
         $("#info").removeClass("hide");
@@ -2788,6 +2769,12 @@
 		
 		$("#transportationForm").addClass("hide");
 		$("#transportationForm").removeClass("show");
+
+		$("#schedule").addClass("hide");
+		$("#schedule").removeClass("show");
+
+		$("#sponsors").addClass("hide");
+		$("#sponsors").removeClass("show");
 
 		if (!userInfoLoaded) {
 			// Show the loader
@@ -2810,6 +2797,8 @@
 		$("#op2").removeClass("pure-menu-selected");
 		$("#op6").removeClass("pure-menu-selected");
 		$("#op7").removeClass("pure-menu-selected");
+		$("#op8").removeClass("pure-menu-selected");
+		$("#op9").removeClass("pure-menu-selected");
 
 		$("#application").addClass("hide");
         $("#application").removeClass("show");
@@ -2829,13 +2818,19 @@
 		$("#transportationForm").addClass("hide");
 		$("#transportationForm").removeClass("show");
 
-		appliedSchools = [];
-		schoolsAndCount = {};
-		topTenSchools = {};
+		$("#schedule").addClass("hide");
+		$("#schedule").removeClass("show");
 
-		getStats();
-		reloadStats();
-		checkAgainstList();
+		$("#sponsors").addClass("hide");
+		$("#sponsors").removeClass("show");
+
+		// appliedSchools = [];
+		// schoolsAndCount = {};
+		// topTenSchools = {};
+
+		// getStats();
+		// reloadStats();
+		// checkAgainstList();
 
 	  } else if (item === 6) {
 
@@ -2846,6 +2841,8 @@
 		$("#op3").removeClass("pure-menu-selected");
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op7").removeClass("pure-menu-selected");
+		$("#op8").removeClass("pure-menu-selected");
+		$("#op9").removeClass("pure-menu-selected");
 
 		$("#application").addClass("hide");
         $("#application").removeClass("show");
@@ -2865,6 +2862,12 @@
 		$("#transportationForm").addClass("hide");
 		$("#transportationForm").removeClass("show");
 
+		$("#schedule").addClass("hide");
+		$("#schedule").removeClass("show");
+
+		$("#sponsors").addClass("hide");
+		$("#sponsors").removeClass("show");
+
 	  } else if (item === 7) {
 		$("#op7").addClass("pure-menu-selected");
 		$("#op6").removeClass("pure-menu-selected");
@@ -2873,6 +2876,8 @@
 		$("#op2").removeClass("pure-menu-selected");
 		$("#op3").removeClass("pure-menu-selected");
 		$("#op5").removeClass("pure-menu-selected");
+		$("#op8").removeClass("pure-menu-selected");
+		$("#op9").removeClass("pure-menu-selected");
 
 
 		$("#transportationForm").addClass("show");
@@ -2892,6 +2897,82 @@
 
 		$("#notif").addClass("hide");
 		$("#notif").removeClass("show");
+
+		$("#schedule").addClass("hide");
+		$("#schedule").removeClass("show");
+
+		$("#sponsors").addClass("hide");
+		$("#sponsors").removeClass("show");
+
+	   } else if (item === 8) {
+		$("#op8").addClass("pure-menu-selected");
+		$("#op7").removeClass("pure-menu-selected");
+		$("#op6").removeClass("pure-menu-selected");
+		$("#op0").removeClass("pure-menu-selected");
+		$("#op1").removeClass("pure-menu-selected");
+		$("#op2").removeClass("pure-menu-selected");
+		$("#op3").removeClass("pure-menu-selected");
+		$("#op5").removeClass("pure-menu-selected");
+		$("#op9").removeClass("pure-menu-selected");
+
+		$("#schedule").addClass("show");
+		$("#schedule").removeClass("hide");
+
+		$("#transportationForm").addClass("hide");
+		$("#transportationForm").removeClass("show");
+
+		$("#application").addClass("hide");
+		$("#application").removeClass("show");
+
+		$("#info").addClass("hide");
+		$("#info").removeClass("show");
+
+		$("#dashboard").addClass("hide");
+		$("#dashboard").removeClass("show");
+
+		$("#login").addClass("hide");
+		$("#login").removeClass("show");
+
+		$("#notif").addClass("hide");
+		$("#notif").removeClass("show");
+
+		$("#sponsors").addClass("hide");
+		$("#sponsors").removeClass("show");
+
+	   } else if (item === 9) {
+		$("#op9").addClass("pure-menu-selected");
+		$("#op7").removeClass("pure-menu-selected");
+		$("#op6").removeClass("pure-menu-selected");
+		$("#op0").removeClass("pure-menu-selected");
+		$("#op1").removeClass("pure-menu-selected");
+		$("#op2").removeClass("pure-menu-selected");
+		$("#op3").removeClass("pure-menu-selected");
+		$("#op5").removeClass("pure-menu-selected");
+		$("#op8").removeClass("pure-menu-selected");
+
+		$("#sponsors").addClass("show");
+		$("#sponsors").removeClass("hide");
+
+		$("#transportationForm").addClass("hide");
+		$("#transportationForm").removeClass("show");
+
+		$("#application").addClass("hide");
+		$("#application").removeClass("show");
+
+		$("#info").addClass("hide");
+		$("#info").removeClass("show");
+
+		$("#dashboard").addClass("hide");
+		$("#dashboard").removeClass("show");
+
+		$("#login").addClass("hide");
+		$("#login").removeClass("show");
+
+		$("#notif").addClass("hide");
+		$("#notif").removeClass("show");
+
+		$("#schedule").addClass("hide");
+		$("#schedule").removeClass("show");
 
 	   }
 	}
@@ -3139,6 +3220,14 @@
 			} else if (selected == 7) {
 
 				$("#headertxt").text("Transportation Form");
+
+			}  else if (selected == 8) {
+
+				$("#headertxt").text("Schedule");
+
+			} else if (selected == 9) {
+
+				$("#headertxt").text("Sponsors");
 
 			}
 
