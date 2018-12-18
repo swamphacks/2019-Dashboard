@@ -2470,9 +2470,11 @@
 		$('#driverListContainer').removeClass('hide');
 		$('#carpoolStartContainer').addClass('hide');
 		let driverListDOM = $('#driverList')[0];
-		getDrivers().on('child_added', function(data) {
-			let driver = data.val();
-			driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname);
+		getDrivers().on('child_changed', function(data) {
+			let passengerCount = data.val().currentPassengerCount;
+			let driverId = data.key;
+			// update driver passenger count
+			updatePassengerCount(key, passengerCount);
 		});
 	}
 

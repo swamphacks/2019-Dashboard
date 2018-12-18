@@ -92,41 +92,54 @@ function removeDriver(userKey) {
     driverRef.child(userKey).remove();
 }
 
-function makeFakeDrivers() {
-    const driversRef = ref.child('carpoolDrivers');
-    let drivers = [
-        {
-            fname: 'John',
-            lname: 'Smith',
-            startLocation: 'Jacksonville',
-            passengerLimit: '3',
-            plate: '78NK7Q',
-            model: 'Toyota Corolla'
-        },
-        {
-            fname: 'Jane',
-            lname: 'Doe',
-            startLocation: 'Orlando',
-            passengerLimit: '2',
-            plate: '9HT75J',
-            model: 'Honda Civic'
-        },
-        {
-            fname: 'Alex',
-            lname: 'Gomez',
-            startLocation: 'Miami',
-            passengerLimit: '4',
-            plate: '305MIA',
-            model: 'Cadillac Escalade'
-        },
-        {
-            fname: 'Julian',
-            lname: 'Moreno',
-            startLocation: 'Tallahasee',
-            passengerLimit: '2',
-            plate: '9G8FH5',
-            model: 'Nissan Altima'
-        }
-    ];
-    driversRef.set(drivers);
+function updatePassengerCount(key, passengerCount) {
+    let driverItem = $('#passenger'+key)[0];
+    driverItem.text(passengerCount.toString());
 }
+
+// function makeFakeDrivers() {
+//     const driversRef = ref.child('carpoolDrivers');
+//     let drivers = [
+//         {
+//             fname: 'John',
+//             lname: 'Smith',
+//             startLocation: 'Jacksonville',
+//             passengerLimit: '3',
+//             plate: '78NK7Q',
+//             model: 'Toyota Corolla',
+//             currentPassengerCount: 0,
+//             currentPassengers: []
+//         },
+//         {
+//             fname: 'Jane',
+//             lname: 'Doe',
+//             startLocation: 'Orlando',
+//             passengerLimit: '2',
+//             plate: '9HT75J',
+//             model: 'Honda Civic',
+//             currentPassengerCount: 0,
+//             currentPassengers: []
+//         },
+//         {
+//             fname: 'Alex',
+//             lname: 'Gomez',
+//             startLocation: 'Miami',
+//             passengerLimit: '4',
+//             plate: '305MIA',
+//             model: 'Cadillac Escalade',
+//             currentPassengerCount: 0,
+//             currentPassengers: []
+//         },
+//         {
+//             fname: 'Julian',
+//             lname: 'Moreno',
+//             startLocation: 'Tallahasee',
+//             passengerLimit: '2',
+//             plate: '9G8FH5',
+//             model: 'Nissan Altima',
+//             currentPassengerCount: 0,
+//             currentPassengers: []
+//         }
+//     ];
+//     driversRef.set(drivers);
+// }
