@@ -20,11 +20,11 @@ function addPassenger() {
     passengerRef.update(data);
 }
 // TODO: make sure they are not a passenger
-function addDriver() {
-    let data = {};
-    data[loggedInUserKey] = true;
-    driverRef.update(data);
-}
+// function addDriver() {
+//     let data = {};
+//     data[loggedInUserKey] = true;
+//     driverRef.update(data);
+// }
 // TODO: check limit of passenger from driver info
 function acceptPassenger(userKey) {
     
@@ -97,3 +97,55 @@ function removePassengers(userKey) {
 function removeDriver(userKey) {
     driverRef.child(userKey).remove();
 }
+
+function updatePassengerCount(key, passengerCount) {
+    let driverItem = $('#passenger'+key)[0];
+    driverItem.text(passengerCount.toString());
+}
+
+// function makeFakeDrivers() {
+//     const driversRef = ref.child('carpoolDrivers');
+//     let drivers = [
+//         {
+//             fname: 'John',
+//             lname: 'Smith',
+//             startLocation: 'Jacksonville',
+//             passengerLimit: '3',
+//             plate: '78NK7Q',
+//             model: 'Toyota Corolla',
+//             currentPassengerCount: 0,
+//             currentPassengers: []
+//         },
+//         {
+//             fname: 'Jane',
+//             lname: 'Doe',
+//             startLocation: 'Orlando',
+//             passengerLimit: '2',
+//             plate: '9HT75J',
+//             model: 'Honda Civic',
+//             currentPassengerCount: 0,
+//             currentPassengers: []
+//         },
+//         {
+//             fname: 'Alex',
+//             lname: 'Gomez',
+//             startLocation: 'Miami',
+//             passengerLimit: '4',
+//             plate: '305MIA',
+//             model: 'Cadillac Escalade',
+//             currentPassengerCount: 0,
+//             currentPassengers: []
+//         },
+//         {
+//             fname: 'Julian',
+//             lname: 'Moreno',
+//             startLocation: 'Tallahasee',
+//             passengerLimit: '2',
+//             plate: '9G8FH5',
+//             model: 'Nissan Altima',
+//             currentPassengerCount: 0,
+//             currentPassengers: []
+//         }
+//     ];
+//     driversRef.set(drivers);
+// }
