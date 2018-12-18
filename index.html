@@ -23,7 +23,8 @@
 		/* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
 		We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
 	</style>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/carpool.css" />
 	<!-- <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"> -->
 		<!-- Favicon
     ================================================== -->
@@ -693,7 +694,7 @@
 							</div>
 						</div>
 						<div class="row hide" id="driverListContainer">
-							list
+							
 							<ul id="driverList">
 
 							</ul>
@@ -2445,7 +2446,7 @@
 				let driverListDOM = $('#driverList')[0];
 				getDrivers().on('child_added', function(data) {
 					let driver = data.val();
-					driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname);
+					driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname, driver.startLocation, data.key, driver.currentPassengerCount, driver.passengerLimit);
 				});
 			} else {
 				// not a passenger
@@ -2470,10 +2471,11 @@
 		$('#driverListContainer').removeClass('hide');
 		$('#carpoolStartContainer').addClass('hide');
 		let driverListDOM = $('#driverList')[0];
-		getDrivers().on('child_added', function(data) {
-			let driver = data.val();
-			driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname);
-		});
+		// getDrivers().on('child_added', function(data) {
+		// 	let driver = data.val();
+		// 	console.log(data.key);
+		// 	driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname, driver.startLocation);
+		// });
 	}
 
 	function driverFormSubmission() {
@@ -2488,10 +2490,10 @@
 				fname: fname,
 				lname: lname,
 				startLocation: startLocation,
-				passengerLimit: passengerLimit
+				passengerLimit: passengerLimit,
+				currentPassengerCount: 0
 			};
 			saveDriverInfo(driverInfo);
-			addDriver();
 			// send to driver profile
 			$('#driverProfileContainer').removeClass('hide');
 			$('#driverFormContainer').addClass('hide');
