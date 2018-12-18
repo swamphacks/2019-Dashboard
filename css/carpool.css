@@ -5,7 +5,9 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
     margin-top: 20px;
-    padding: 5px 50px;
+    padding: 10px 50px;
+    letter-spacing: 0.5px;
+    font-size: 17px;
 }
 
 .driverItem:hover {
@@ -18,5 +20,12 @@
 }
 
 .driverCardName {
-    
+    font-family: 'Montserrat-Regular', serif;
+    font-size: 45px;
+    border-bottom: 2px solid;
+}
+
+.textRow {
+    font-family: 'Poppins-Regular', sans-serif;
+    padding: 0px 15px;
 }

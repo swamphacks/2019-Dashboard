@@ -694,7 +694,6 @@
 							</div>
 						</div>
 						<div class="row hide" id="driverListContainer">
-							
 							<ul id="driverList">
 
 							</ul>
@@ -2412,6 +2411,7 @@
 	// %%%%%%%%%%%%% End of Application Functions %%%%%%%%%%%%% //
 
 	// %%%%%%%%%%%%% Carpool Functions %%%%%%%%%%%%% //
+	let carpoolTitle = 'Carpool';
 	function updateCarpoolSection() {
 		isDriver(loggedInUserKey).then(function(snapshot) {
 			if (snapshot.val()) {
@@ -2440,14 +2440,7 @@
 
 		isPassenger(loggedInUserKey).then(function(snapshot) {
 			if (snapshot.val()) {
-				// registered as passenger, show driver list
-				$('#driverListContainer').removeClass('hide');
-				$('#carpoolStartContainer').addClass('hide');
-				let driverListDOM = $('#driverList')[0];
-				getDrivers().on('child_added', function(data) {
-					let driver = data.val();
-					driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname, driver.startLocation, data.key, driver.currentPassengerCount, driver.passengerLimit);
-				});
+				passengerSelected();
 			} else {
 				// not a passenger
 			}
@@ -2467,10 +2460,15 @@
 
 	function passengerSelected() {
 		// addPassenger();
+		carpoolTitle = 'Driver\'s List';
 		// show driver list
 		$('#driverListContainer').removeClass('hide');
 		$('#carpoolStartContainer').addClass('hide');
 		let driverListDOM = $('#driverList')[0];
+		getDrivers().on('child_added', function(data) {
+			let driver = data.val();
+			driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname, driver.startLocation, data.key, driver.currentPassengerCount, driver.passengerLimit, driver.model);
+		});
 		getDrivers().on('child_changed', function(data) {
 			let passengerCount = data.val().currentPassengerCount;
 			let driverId = data.key;
@@ -3092,7 +3090,7 @@
 
 			} else if (selected == 98) {
 
-				$("#headertxt").text("Carpool");
+				$("#headertxt").text(carpoolTitle);
 
 			}
 

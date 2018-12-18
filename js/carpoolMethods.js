@@ -68,8 +68,8 @@ function getDrivers() {
     return driverRef.orderByChild('fname');
 }
 
-function addDriverItem(fname, lname, startLocation, key, passengerCount, passengerLimit) {
-    //model = model ? model : 'N/A';
+function addDriverItem(fname, lname, startLocation, key, passengerCount, passengerLimit, model) {
+    model = model ? model : 'N/A';
     const itemClass = 'driverItem';
     const itemId = 'driverItemId' + key;
     const listOpen = '<li class="' + itemClass + '" id="' +itemId + '">';
@@ -79,7 +79,9 @@ function addDriverItem(fname, lname, startLocation, key, passengerCount, passeng
     const passengerCountTag = '<span id="passenger'+ key +'">'+ passengerCount.toString() + '</span>';
     const current = '<br> <b>Current passengers in car:</b> ' + passengerCountTag;
     const limit = '<br> <b>Total passenger limit:</b> ' + passengerLimit.toString();
-    return listOpen + header + location + current + limit + listClose;
+    const modelLabel = '<br> <b>Car make and model:</b> ' + model;
+    return listOpen + header + '<div class="row textRow">' + location + current + limit + modelLabel + '</div>'
+         + '<div class="row">' + '<div class="col" align="center">' + '<button class="button cardBtn">Add Me</button>' + '</div>' + '</div>' + listClose;
 }
 
 function addPassengerItem(fname, lname) {
