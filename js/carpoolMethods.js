@@ -98,14 +98,22 @@ function removeDriver(userKey) {
     driverRef.child(userKey).remove();
 }
 
-function updatePassengerCount(key, passengerCount, passengerLimit) {
+function updatePassengerCount(key, driver) {
     // remove from list if limit is reached
-    if (passengerCount >= passengerLimit) {
+    if (driver.currentPassengerCount >= driver.passengerLimit) {
         $('#driverItemId'+key).addClass('hide');
-        
+        $('#driverItemId'+key).removeClass('show');
     } else {
         let driverItem = $('#passenger'+key);
-        driverItem.text(passengerCount.toString());
+        if (driverItem.length == 0) {
+            let driverListDOM = $('#driverList')[0];
+            driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname, driver.startLocation,
+                key, driver.currentPassengerCount, driver.passengerLimit);
+        } else {
+            driverItem.text(driver.currentPassengerCount.toString());
+            $('#driverItemId'+key).addClass('show');
+            $('#driverItemId'+key).removeClass('hide');
+        }
     }
 }
 

@@ -653,7 +653,7 @@
 		<!-- %%%%%%%%%%%%%% Carpool  %%%%%%%%%%%%%% -->
 		<div id="carpool" class="hide">
 
-			<h1 class="header-main-type">Carpool</h1>
+			<h1 class="header-main-type" id="carpoolMainTitle">Carpool</h1>
 			<!-- TODO: add option to change from driver to passenger and vice versa ? -->
 				<div class="container-fluid notif-con">
 						<div class="row"  id="carpoolStartContainer">
@@ -2411,6 +2411,7 @@
 	// %%%%%%%%%%%%% End of Application Functions %%%%%%%%%%%%% //
 
 	// %%%%%%%%%%%%% Carpool Functions %%%%%%%%%%%%% //
+	let carpoolTitle = 'Carpool';
 	function updateCarpoolSection() {
 		isDriver(loggedInUserKey).then(function(snapshot) {
 			if (snapshot.val()) {
@@ -2439,9 +2440,7 @@
 
 		isPassenger(loggedInUserKey).then(function(snapshot) {
 			if (snapshot.val()) {
-				// registered as passenger, show driver list
-				$('#driverListContainer').removeClass('hide');
-				$('#carpoolStartContainer').addClass('hide');
+				passengerSelected();
 			} else {
 				// not a passenger
 			}
@@ -2461,6 +2460,10 @@
 
 	function passengerSelected() {
 		// addPassenger();
+		// update title when scrolling down
+		carpoolTitle = 'Driver\'s List';
+		// update normal title
+		$('#carpoolMainTitle').text(carpoolTitle);
 		// show driver list
 		$('#driverListContainer').removeClass('hide');
 		$('#carpoolStartContainer').addClass('hide');
@@ -2472,11 +2475,9 @@
 			}
 		});
 		getDrivers().on('child_changed', function(data) {
-			let passengerCount = data.val().currentPassengerCount;
 			let driverId = data.key;
-			let passengerLimit = data.val().passengerLimit;
 			// update driver passenger count
-			updatePassengerCount(driverId, passengerCount, passengerLimit);
+			updatePassengerCount(driverId, data.val());
 		});
 	}
 
@@ -3090,9 +3091,8 @@
 
 				$("#headertxt").text("Transportation Form");
 
-			} else if (selected == 98) {
-
-				$("#headertxt").text("Carpool");
+			} else if (selected == 8) {
+				$("#headertxt").text(carpoolTitle);
 
 			}
 
