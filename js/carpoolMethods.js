@@ -81,7 +81,7 @@ function addDriverItem(fname, lname, startLocation, key, passengerCount, passeng
     const limit = '<br> <b>Total passenger limit:</b> ' + passengerLimit.toString();
     const modelLabel = '<br> <b>Car make and model:</b> ' + model;
     return listOpen + header + '<div class="row textRow">' + location + current + limit + modelLabel + '</div>'
-         + '<div class="row">' + '<div class="col" align="center">' + '<button class="button cardBtn">Add Me</button>' + '</div>' + '</div>' + listClose;
+         + '<div class="row">' + '<div class="col" align="center">' + '<button class="button cardBtn" onclick="addCarPassenger("'+key+'")">Add Me</button>' + '</div>' + '</div>' + listClose;
 }
 
 function addPassengerItem(fname, lname) {
@@ -92,6 +92,26 @@ function addPassengerItem(fname, lname) {
     return listOpen + fname + ' ' + lname + listClose;
 }
 
+function addCarPassenger(driverKey) {
+    let passengerKey = loggedInUserKey;
+    // add passenger to driver's passenger list
+    let update = {"driver" : driverKey};
+    passengerRef.update(update);
+    // increment current passenger count 
+    getDriverInfo(driverKey).then(function(snapshot){
+        let driver = snapshot.val();
+        let passengerCount = snapshot.val().currentPassengerCount;
+        passengerCount += 1;
+        let countUpdate = {"currentPassengerCount" : passengerCount};
+        // update passenger view of page
+        $('#driverList').addClass('hide');
+        $('#currentDriverInfo').removeClass('hide');
+        $('#currentDriverName').text(driver.fname + ' ' + driver.lname);
+        $('#currentDriverLocation').text(driver.startLocation);
+        $('#currentDriverModel').text(driver.model);
+    }); 
+}
+
 function removePassengers(userKey) {
     passengerRef.child(userKey).remove();
 }
@@ -100,10 +120,23 @@ function removeDriver(userKey) {
     driverRef.child(userKey).remove();
 }
 
-function updatePassengerCount(key, passengerCount) {
-    let driverItem = $('#passenger'+key)[0];
-    console.log('item', driverItem);
-    driverItem.text(passengerCount.toString());
+function updatePassengerCount(key, driver) {
+    // remove from list if limit is reached
+    if (driver.currentPassengerCount >= driver.passengerLimit) {
+        $('#driverItemId'+key).addClass('hide');
+        $('#driverItemId'+key).removeClass('show');
+    } else {
+        let driverItem = $('#passenger'+key);
+        if (driverItem.length == 0) {
+            let driverListDOM = $('#driverList')[0];
+            driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname, driver.startLocation,
+                key, driver.currentPassengerCount, driver.passengerLimit);
+        } else {
+            driverItem.text(driver.currentPassengerCount.toString());
+            $('#driverItemId'+key).addClass('show');
+            $('#driverItemId'+key).removeClass('hide');
+        }
+    }
 }
 
 // function makeFakeDrivers() {

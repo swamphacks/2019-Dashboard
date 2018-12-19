@@ -653,7 +653,7 @@
 		<!-- %%%%%%%%%%%%%% Carpool  %%%%%%%%%%%%%% -->
 		<div id="carpool" class="hide">
 
-			<h1 class="header-main-type">Carpool</h1>
+			<h1 class="header-main-type" id="carpoolMainTitle">Carpool</h1>
 			<!-- TODO: add option to change from driver to passenger and vice versa ? -->
 				<div class="container-fluid notif-con">
 						<div class="row"  id="carpoolStartContainer">
@@ -697,6 +697,12 @@
 							<ul id="driverList">
 
 							</ul>
+							<div id="currentDriverInfo" class="row hide">
+								<p>Name: <span id="currentDriverName"></span></p>
+								<p>Driving from: <span id="currentDriverLocation"></span></p>
+								<p>Car Model: <span id="currentDriverModel"></span></p>
+								<button class="button passengerLeaveBtn" onclick="leaveCarGroup()">See Ya!</button>
+							</div>
 						</div>
 						<div class="row hide" id="driverProfileContainer">
 							<label id="driverName"></label>
@@ -850,7 +856,6 @@
 							</div>
 						</div>
 					</div>
-
 
 					<div class="col-md-12 top-margin">
 						<h3 class="header-sub-type">T-Shirts</h3>
@@ -2460,21 +2465,24 @@
 
 	function passengerSelected() {
 		// addPassenger();
-		carpoolTitle = 'Driver\'s List';
+		// update title when scrolling down
+		carpoolTitle = 'Driver List';
+		// update normal title
+		$('#carpoolMainTitle').text(carpoolTitle);
 		// show driver list
 		$('#driverListContainer').removeClass('hide');
 		$('#carpoolStartContainer').addClass('hide');
 		let driverListDOM = $('#driverList')[0];
 		getDrivers().on('child_added', function(data) {
 			let driver = data.val();
-			driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname, driver.startLocation, data.key, driver.currentPassengerCount, driver.passengerLimit, driver.model);
+			if (driver.currentPassengerCount < driver.passengerLimit) {
+				driverListDOM.innerHTML += addDriverItem(driver.fname, driver.lname, driver.startLocation, data.key, driver.currentPassengerCount, driver.passengerLimit, driver.model);
+			}
 		});
 		getDrivers().on('child_changed', function(data) {
-			let passengerCount = data.val().currentPassengerCount;
 			let driverId = data.key;
-			console.log('count', passengerCount);
 			// update driver passenger count
-			updatePassengerCount(key, passengerCount);
+			updatePassengerCount(driverId, data.val());
 		});
 	}
 
@@ -2505,6 +2513,10 @@
 		} else {
 			// TODO: notify that they are missing a field
 		}
+	}
+
+	function leaveCarGroup() {
+
 	}
 
 	// %%%%%%%%%%%%% End of Carpool Functions %%%%%%%%%%%%% //
@@ -3088,8 +3100,7 @@
 
 				$("#headertxt").text("Transportation Form");
 
-			} else if (selected == 98) {
-
+			} else if (selected == 8) {
 				$("#headertxt").text(carpoolTitle);
 
 			}
