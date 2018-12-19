@@ -736,6 +736,34 @@ td b {
   transform: translateY(0%);
 }
 
+.sponsorContainer {
+  text-align: center;
+}
+
+.sponsorLogo {
+  padding: 20px;
+  transition: transform 0.5s;
+}
+
+.sponsorLogo:hover {
+  transform: scale(1.08);
+}
+
+.sponsorAnchor {
+  color: transparent;
+  text-decoration: none;
+}
+
+.sponsorAnchor:hover {
+  color: transparent;
+  text-decoration: none;
+}
+
+.sponsorAnchor:focus {
+  color: transparent;
+  text-decoration: none;
+}
+
 .otherInput {
   visibility: hidden;
   width: 90%;
