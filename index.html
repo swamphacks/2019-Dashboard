@@ -947,7 +947,21 @@
 		<h1 class="header-main-type">Schedule</h1>
 
 		<div class="container-fluid notif-con">
-
+			<!-- Friday -->
+			<button class="button eventButton" onclick="toggleFridayEvents()">Friday Events</button>
+			<div id="fridayEventContainer">
+				<ul class="eventList" id="fridayEvents"></ul>
+			</div>
+			<!-- Saturday -->
+			<button class="button eventButton" onclick="toggleSaturdayEvents()">Saturday Events</button>
+			<div id="saturdayEventContainer">
+				<ul class="eventList" id="saturdayEvents"></ul>
+			</div>
+			<!-- Sunday -->
+			<button class="button eventButton" onclick="toggleSundayEvents()">Sunday Events</button>
+			<div id="sundayEventContainer">
+				<ul class="eventList" id="sundayEvents"></ul>
+			</div>
 		</div>
 
 	</div>
@@ -974,7 +988,7 @@
 				<a class="sponsorAnchor" href="https://www.jpmorgan.com/country/US/en/jpmorgan" target="_blank">
 					<img class="sponsorLogo" src="./img/sponsorLogos/JPBlack.png" width="30%" height="30%">
 				</a>
-				<a class="sponsorAnchor" href="https://www.infotech.com/" target="_blank">
+				<a class="sponsorAnchor" href="https://www.infotechfl.com/" target="_blank">
 					<img class="sponsorLogo" src="./img/sponsorLogos/infoTechBlack.png" width="30%" height="30%">
 				</a>
 				<a class="sponsorAnchor" href="https://www.microsoft.com/en-us/"target="_blank">
@@ -1016,6 +1030,7 @@
 	<script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
 	<script src="firebaseconfig.js"></script>
 	<script src="js/schoolList.js"></script>
+	<script src="js/eventList.js"></script>
 
   <script>
 		var ref = firebase.database().ref();
@@ -1045,6 +1060,56 @@
 		var numVegan = 0;
 		var numHalal = 0;
 		var numNone = 0;
+
+		function createEventItem(event) {
+			// color code by event type
+			var eventTypeClass = event.type + 'Color';
+			var openLi = '<li class="scheduleEvent row '+ eventTypeClass +'">';
+			var closeLi = '</li>';
+			var closeDiv = '</div>';
+			var closeP = '</p>';
+			var list = openLi;
+			// add event name
+			list += '<div class="col-md-6"> <h3 class="eventName">' + event.name + '</h3> </div>';
+			// add event time
+			list += '<div class="col-md-6"> <h3 class="eventTime">' 
+				+ new Date(event.startTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+			if (event.endTime) {
+				list += ' - ' + new Date(event.endTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + '</h3>';
+			}
+			list += closeDiv;
+			// add location
+			if (event.location !== '') {
+				list += '<div class="row"> <b> Location: </b>' + event.location + closeDiv;
+			}
+			// close list tag
+			list += closeLi;
+			return list;
+		}
+
+		function setupSchedule() {
+			let html = '';
+			// friday section
+			const fridayEventsList = document.getElementById('fridayEvents');
+			for (let event of fridayEvents) {
+				html += createEventItem(event);
+			}
+			fridayEventsList.innerHTML += html;
+			html = '';
+			// saturday section
+			const saturdayEventsList = document.getElementById('saturdayEvents');
+			for (let event of saturdayEvents) {
+				html += createEventItem(event);
+			}
+			saturdayEventsList.innerHTML += html;
+			html = '';
+			// sunday section
+			const sundayEventsList = document.getElementById('sundayEvents');
+			for (let event of sundayEvents) {
+				html += createEventItem(event);
+			}
+			sundayEventsList.innerHTML += html;
+		}
 
 		function disableTransportForm() {
 			$("#mce-EMAIL").addClass("disabled");
@@ -1191,6 +1256,10 @@
 		}
 		listHtml += '<option value="Other">Other</option>';
 		schools.innerHTML += listHtml;
+
+		// setup schedule
+		setupSchedule();
+
 		// send unlogged users to login page
 		firebase.auth().onAuthStateChanged(function(currentUser) {
 			if (currentUser && currentUser.emailVerified) {
@@ -2569,6 +2638,19 @@
 		// hide card TODO: delete instead?
 		$('#listItem'+index.toString()).addClass('hide');
 	}
+	// %%%%%%%%%%%%% Schedule Functions %%%%%%%%%%%%% //
+	function toggleFridayEvents() {
+		$('#fridayEventContainer').slideToggle();
+	}
+
+	function toggleSaturdayEvents() {
+		$('#saturdayEventContainer').slideToggle();
+	}
+
+	function toggleSundayEvents() {
+		$('#sundayEventContainer').slideToggle();
+	}
+	// %%%%%%%%%%%%% End of Schedule Functions %%%%%%%%%%%%% //
 
 	// %%%%%%%%%%%%% Menu Functions %%%%%%%%%%%%% //
 	function createListElement(index, userData) {

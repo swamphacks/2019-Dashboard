@@ -834,7 +834,65 @@ select.minimal {
   max-height: 300px;
   resize: none;
 }
+/* Schedule event */
+.eventButton {
+  width: 100%;
+  font-family: 'Trebuchet MS',  sans-serif;
+  font-size: 30px;
+  border-radius: 0;
+  border-bottom: #1C3444 solid 3px;
+  color: #1C3444;
+}
 
+.eventButton:hover {
+  color: rgb(80, 112, 77);
+}
+
+.eventButton:focus {
+  opacity: 1;
+}
+
+.eventList {
+  padding: 0;
+  list-style-type: none;
+}
+
+.scheduleEvent {
+  transition: 0.3s;
+  /* remove row margin */
+  margin-right: 0!important;
+  margin-left: 0!important;
+  padding: 5px 10px;
+  text-align: center;
+  font-family: 'Trebuchet MS',  sans-serif;
+  color: white;
+}
+
+.eventName {
+  margin-top: 10px;
+}
+
+.eventTime {
+  margin-top: 10px;
+}
+
+.foodColor {
+  background-color: #6C9668;
+}
+
+.generalColor {
+  background-color: #A3D3F2;
+}
+
+.activityColor {
+  background-color: #6DBFE7;
+}
+
+.workshopColor {
+  background-color: #1C3444;
+}
+
+/* User Info card */
 .userInfoItem {
   list-style: none;
    /* Add shadows to create the "card" effect */
