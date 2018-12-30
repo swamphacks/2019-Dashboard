@@ -1260,9 +1260,23 @@
 		// setup schedule
 		setupSchedule();
 
+		function updateUserData(uid) {
+			const userRef = ref.child('users/'+uid);
+			userRef.once('value').then(function(snapshot){
+				let childData = snapshot.val();
+				localStorage.setItem('loggedInUser', JSON.stringify(childData));
+				localStorage.setItem('loggedInUserKey', snapshot.key);
+
+				userObj = childData;
+				loggedInUserKey = snapshot.key;
+			});
+		}
+
 		// send unlogged users to login page
 		firebase.auth().onAuthStateChanged(function(currentUser) {
 			if (currentUser && currentUser.emailVerified) {
+				// keep user info updated
+				updateUserData(currentUser.uid)
 			} else if(localStorage.getItem('provider') != 'facebook'){
 				window.location.href = "login.html";
 			}
@@ -1431,28 +1445,6 @@
 		input.addEventListener( 'blur', function(){ input.classList.remove( 'has-focus' ); });
 		});
 
-		// checkedInRef.on('value', function(snapshot) {
-
-      	// 	$("#checkIns").text(snapshot.numChildren());
-
-    	// });
-
-		// eventsDataRef.on('value', function(snapshot) {
-		// 	var info = snapshot.val();
-		// 	if (!info) {return;}
-		// 	// Sizes
-      	// 	$("#teamOneSize").text(info.people.dragonflies);
-		// 	$("#teamTwoSize").text(info.people.turtles);
-		// 	$("#teamThreeSize").text(info.people.herons);
-		// 	$("#teamFourSize").text(info.people.gators);
-
-		// 	// Points
-		// 	$("#teamOnePoints").text(info.points.dragonflies);
-		// 	$("#teamTwoPoints").text(info.points.turtles);
-		// 	$("#teamThreePoints").text(info.points.herons);
-		// 	$("#teamFourPoints").text(info.points.gators);
-
-		// });
 		// Set Welcome message
 		if (!userObj.fname) {
 			$("#welcomeMessage").text("Welcome, " + userObj.email + "!");
@@ -1513,13 +1505,13 @@
 				$("#confirmedCircle").addClass("lightGreen");
 				$("#confirmedTimelineText").text("Confirmed");
 
-				// $("#dashStatus").addClass("green");
-				// $("#dashStatus").removeClass("dark");
+				$('#qrcode').addClass('show');
+				$('#qrcode').removeClass('hide');
 
-				// $("#confirmCon").addClass("hide");
-				// $("#confirmCon").removeClass("show");
-				// $("#rejectCon").addClass("show");
-				// $("#rejectCon").removeClass("hide");
+				$("#confirmCon").addClass("hide");
+				$("#confirmCon").removeClass("show");
+				$("#rejectCon").addClass("show");
+				$("#rejectCon").removeClass("hide");
 			} else if (userObj.status === "ACCEPTED") {
 				// TODO: Uncomment when ready to notify users
 				// // update timeline
@@ -1543,12 +1535,12 @@
 				$('#qrcode').addClass('hide');	
 			} else if (userObj.status === "NOT ATTENDING")  {
 				// update timeline
-				$("#confirmedTimelineText").text("Not Attending");
+				// $("#statusTimeline").addClass("red");
+				// $("#statusCircle").addClass("red");
+				//$("#confirmedTimelineText").text("Not Attending");
 				
 				// hide qrcode if they haven't been confirmed yet
 				$('#qrcode').addClass('hide');	
-				// $("#dashStatus").removeClass("green");
-				// $("#dashStatus").addClass("dark");
 
 				// $("#confirmCon").addClass("show");
 				// $("#confirmCon").removeClass("hide");
@@ -1598,105 +1590,81 @@
 			// Fill application page with user information
 			addApplicationInfo();
 		}
-		// TODO: update reject and confirm buttons
-		function rejectSpotBtnClicked() {
 
-			if (userObj.dietaryRestrictions === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
+	function rejectSpotBtnClicked() {
+		const userId = loggedInUserKey;
+		// add to accepted list
+		const rejectedRef = ref.child('rejectedApplicants');
+		const data = { 'email': email };
+		let rejectedUpdates = {};
+		rejectedUpdates[userId] = data;
+		rejectedRef.update(rejectedUpdates);
+		// Update status
+		const applicantRef = ref.child('users/'+userId);
+		let statusUpdates = {};
+		statusUpdates['status'] = 'NOT ATTENDING';
+		applicantRef.update(statusUpdates);
+		// Show the popup
+		$("#confirmedPopup").removeClass("hide");
+		$("#confirmedPopup").addClass("showflex");
 
-			} else {
+		updateUserData(userId);
+		// update timeline
+		$("#statusTimeline").addClass("red");
+		$("#statusCircle").addClass("red");
+		$("#confirmedTimelineText").text("Not Attending");
+		// hide confirm button
+		$("#confirmCon").addClass("hide");
+		$("#confirmCon").removeClass("show");
+		// hide reject button
+		$("#rejectCon").addClass("hide");
+		$("#rejectCon").removeClass("show");
+		setTimeout(function() {
 
-				$("#dashStatus").text("NOT ATTENDING");
-				$("#dashStatus").addClass("dark");
-				$("#dashStatus").removeClass("green");
-				$("#confirmCon").addClass("show");
-				$("#confirmCon").removeClass("hide");
-				$("#rejectCon").addClass("hide");
-				$("#rejectCon").removeClass("show");
+			$("#confirmedPopup").removeClass("showflex");
+			$("#confirmedPopup").addClass("hide");
 
-				var loggedInUserRef = acceptedRef.child(loggedInUserKey);
+		}, 3000);	
+	}
 
-				loggedInUserRef.update({
-					status: "NOT ATTENDING"
-				});
+	function confirmSpotBtnClicked() {
+		const userId = loggedInUserKey;
+		// add to accepted list
+		const confirmedRef = ref.child('confirmedApplicants');
+		const data = { 'email': email };
+		let confirmedUpdates = {};
+		confirmedUpdates[userId] = data;
+		confirmedRef.update(confirmedUpdates);
+		// Update status
+		const applicantRef = ref.child('users/'+userId);
+		let statusUpdates = {};
+		statusUpdates['status'] = 'CONFIRMED';
+		applicantRef.update(statusUpdates);
+		// Show the popup
+		$("#confirmedPopup").removeClass("hide");
+		$("#confirmedPopup").addClass("showflex");
 
-				acceptedRef.orderByChild("email").equalTo(userObj.email).on("value", function(snapshot) {
+		updateUserData(userId);
+		// update timeline
+		$("#confirmedTimeline").addClass("limeGreen");
+		$("#confirmedCircle").addClass("lightGreen");
+		$("#confirmedTimelineText").text("Confirmed");
+		// hide confirm button
+		$("#confirmCon").addClass("hide");
+		$("#confirmCon").removeClass("show");
+		// hide reject button
+		$("#rejectCon").addClass("hide");
+		$("#rejectCon").removeClass("show");
+		// show qr code
+		$('#qrcode').removeClass('hide');
+		$('#qrcode').addClass('show');
+		setTimeout(function() {
 
-					 // Getting the info of the found user and storing it in local storage
-					 snapshot.forEach(function(childSnapshot) {
+			$("#confirmedPopup").removeClass("showflex");
+			$("#confirmedPopup").addClass("hide");
 
-						 var key = childSnapshot.key;
-						 var childData = childSnapshot.val();
-						 localStorage.setItem('loggedInUser', JSON.stringify(childData));
-						 localStorage.setItem('loggedInUserKey', key);
-
-						 userObj = JSON.parse(localStorage.getItem('loggedInUser'));
-						 loggedInUserKey = localStorage.getItem('loggedInUserKey');
-
-					 });
-
-				});
-
-			}
-
-		}
-
-		function confirmSpotBtnClicked() {
-
-			if (userObj.dietaryRestrictions === undefined && userObj.tshirtSize === undefined && userObj.extraInfo === undefined) {
-
-			} else {
-
-				var delay = 3000;
-
-				if (userObj.status !== "CONFIRMED") {
-
-					// Show the popup
-					$("#confirmedPopup").removeClass("hide");
-					$("#confirmedPopup").addClass("showflex");
-
-					setTimeout(function() {
-
-						$("#confirmedPopup").removeClass("showflex");
-						$("#confirmedPopup").addClass("hide");
-
-					}, delay);
-
-				}
-
-				$("#dashStatus").text("CONFIRMED");
-				$("#dashStatus").addClass("green");
-				$("#dashStatus").removeClass("dark");
-				$("#confirmCon").addClass("hide");
-				$("#confirmCon").removeClass("show");
-				$("#rejectCon").addClass("show");
-				$("#rejectCon").removeClass("hide");
-
-				var loggedInUserRef = acceptedRef.child(loggedInUserKey);
-
-				loggedInUserRef.update({
-					status: "CONFIRMED"
-				});
-
-				acceptedRef.orderByChild("email").equalTo(userObj.email).on("value", function(snapshot) {
-
-					 // Getting the info of the found user and storing it in local storage
-					 snapshot.forEach(function(childSnapshot) {
-
-						 var key = childSnapshot.key;
-						 var childData = childSnapshot.val();
-						 localStorage.setItem('loggedInUser', JSON.stringify(childData));
-						 localStorage.setItem('loggedInUserKey', key);
-
-						 userObj = JSON.parse(localStorage.getItem('loggedInUser'));
-						 loggedInUserKey = localStorage.getItem('loggedInUserKey');
-
-					 });
-
-				});
-
-			}
-
-		}
+		}, 3000);
+	}
 	// %%%%%%%%%%%%% Application Functions %%%%%%%%%%%%% //
 	function genderRadioClicked(state) {
 		if (state) {
