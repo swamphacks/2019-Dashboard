@@ -1379,8 +1379,10 @@
 		// initial setup
 		appStatusRef.on('child_added', function(data) {
 			let status = data.val();
-			// if false hide application
+			// if false hide application and its tab
 			if (!status) {
+				$('#op0').addClass('hide');
+				$('#op0').removeClass('show');
 				$('#openApp').addClass('hide');
 				$('#closedApp').removeClass('hide');
 			}
@@ -1388,12 +1390,16 @@
 		// update visibility
 		appStatusRef.on('child_changed', function(data) {
 			let status = data.val();
-			// if true show application
-			// if false hide application
+			// if true show application and its tab
+			// if false hide application and its tab
 			if (!status) {
+				$('#op0').addClass('hide');
+				$('#op0').removeClass('show');
 				$('#openApp').addClass('hide');
 				$('#closedApp').removeClass('hide');
 			} else {
+				$('#op0').addClass('show');
+				$('#op0').removeClass('hide');
 				$('#openApp').removeClass('hide');
 				$('#closedApp').addClass('hide');
 			}
