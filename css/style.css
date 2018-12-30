@@ -764,6 +764,11 @@ td b {
   text-decoration: none;
 }
 
+.closedAppText {
+  font-size: 30px;
+  color: #EE2229;
+}
+
 .otherInput {
   visibility: hidden;
   width: 90%;

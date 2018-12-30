@@ -158,8 +158,8 @@
 		<h1 class="header-main-type">Application</h1>
 		<div class="container-fluid notif-con">
 			<div class="row hide" id="closedApp">
-				<div class="col-md-12">
-					<p>Applications have been closed.</p>
+				<div class="col-md-12" align="center">
+					<p class="closedAppText">Applications have been closed.</p>
 				</div>
 			</div>
 			<div class="row" id="openApp">
@@ -1379,7 +1379,7 @@
 		// initial setup
 		appStatusRef.on('child_added', function(data) {
 			let status = data.val();
-			// if false hide application and its tab
+			// if false hide application
 			if (!status) {
 				$('#openApp').addClass('hide');
 				$('#closedApp').removeClass('hide');
@@ -1388,8 +1388,8 @@
 		// update visibility
 		appStatusRef.on('child_changed', function(data) {
 			let status = data.val();
-			// if true show application and its tab
-			// if false hide application and its tab
+			// if true show application
+			// if false hide application
 			if (!status) {
 				$('#openApp').addClass('hide');
 				$('#closedApp').removeClass('hide');
