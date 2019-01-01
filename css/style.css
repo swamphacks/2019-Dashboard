@@ -796,6 +796,10 @@ td b {
   font-family: 'Poppins', sans-serif;
 }
 
+.largeTopMargin {
+  margin-top: 400px;
+}
+
 select {
 
   /* styling */
@@ -1792,6 +1796,10 @@ select.minimal {
   #layout.active {
     position: relative;
     left: 250px;
+  }
+
+  .largeTopMargin {
+    margin-top: 100px;
   }
 
 }

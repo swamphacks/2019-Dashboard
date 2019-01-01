@@ -474,12 +474,12 @@
 							<p class="dashboardInfo">
 								Thank you for submitting an application to SwampHacks V. The timeline below shows you where you are in the application process. We will be reviewing applications on a rolling basis and you should receive a response from us soon. Until then, sit tight. We can’t wait to see you at SwampHacks in 2019!
 							</p>
-							<p class="dashboardInfo">
+							<!-- <p class="dashboardInfo">
 								Deadline to apply for travel reimbursement: <b>11:59PM November 18th, 2018</b>
 							</p>
 							<p class="dashboardInfo">
 								Deadline to finish application for SwampHacks: <b>11:59PM December 21st, 2018</b>
-							</p>
+							</p> -->
 							<p class="dashboardInfo hide redTxt" id="transportFormReminder">
 								Please fill out the <b>Transportation Form</b> in order to get considered for travel reimbursement!
 							</p>
@@ -520,7 +520,7 @@
 							your status if you decide you cannot attend.
 						</div> -->
 
-						<div class="row" style="margin: 0">
+						<div class="row largeTopMargin" style="margin-left: 0; margin-right: 0">
 							<div class="col-md-12 top-margin" id="confirmCon">
 								<button id="confirmBtn" class="button green hide" onclick="confirmSpotBtnClicked()">
 									<p id="confirmSpot">Confirm my spot!</p>
@@ -1510,6 +1510,10 @@
 
 			if (userObj.status === "CONFIRMED") {
 				// update timeline
+				$("#statusTimeline").addClass("limeGreen");
+				$("#statusCircle").addClass("lightGreen");
+				$("#statusTimelineText").text("Accepted!");	
+
 				$("#confirmedTimeline").addClass("limeGreen");
 				$("#confirmedCircle").addClass("lightGreen");
 				$("#confirmedTimelineText").text("Confirmed");
@@ -1517,36 +1521,42 @@
 				$('#qrcode').addClass('show');
 				$('#qrcode').removeClass('hide');
 
-				$("#confirmCon").addClass("hide");
-				$("#confirmCon").removeClass("show");
-				$("#rejectCon").addClass("show");
-				$("#rejectCon").removeClass("hide");
+				// $("#confirmCon").addClass("hide");
+				// $("#confirmCon").removeClass("show");
+				$("#rejectSpot").addClass("show");
+				$("#rejectSpot").removeClass("hide");
+
+				// show qr code
+				$('#qrcode').removeClass('hide');
+				$('#qrcode').addClass('show');
 			} else if (userObj.status === "ACCEPTED") {
-				// TODO: Uncomment when ready to notify users
 				// // update timeline
-				// $("#statusTimeline").addClass("limeGreen");
-				// $("#statusCircle").addClass("lightGreen");
-				// $("#statusTimelineText").text("Accepted!");	
-				// // Show Confirm and Deny buttons
-				// $("#confirmBtn").addClass("show");
-				// $("#rejectSpot").addClass("show");
+				$("#statusTimeline").addClass("limeGreen");
+				$("#statusCircle").addClass("lightGreen");
+				$("#statusTimelineText").text("Accepted!");	
+				// Show Confirm and Deny buttons
+				$("#confirmBtn").addClass("show");
+				$("#rejectSpot").addClass("show");
 
 				// hide qrcode if they haven't been confirmed yet
 				$('#qrcode').addClass('hide');
 			} else if (userObj.status === "NOT ACCEPTED") {
-				// TODO: Uncomment when ready to notify users
 				// // update timeline
-				// $("#statusTimeline").addClass("red");
-				// $("#statusCircle").addClass("red");
-				// $("#statusTimelineText").text("Not Accepted");
+				$("#statusTimeline").addClass("red");
+				$("#statusCircle").addClass("red");
+				$("#statusTimelineText").text("Not Accepted");
 				
 				// hide qrcode if they haven't been confirmed yet
 				$('#qrcode').addClass('hide');	
 			} else if (userObj.status === "NOT ATTENDING")  {
 				// update timeline
-				// $("#statusTimeline").addClass("red");
-				// $("#statusCircle").addClass("red");
-				//$("#confirmedTimelineText").text("Not Attending");
+				$("#statusTimeline").addClass("limeGreen");
+				$("#statusCircle").addClass("lightGreen");
+				$("#statusTimelineText").text("Accepted!");	
+
+				$("#confirmedTimeline").addClass("red");
+				$("#confirmedCircle").addClass("red");
+				$("#confirmedTimelineText").text("Not Attending");
 				
 				// hide qrcode if they haven't been confirmed yet
 				$('#qrcode').addClass('hide');	
@@ -1604,7 +1614,7 @@
 		const userId = loggedInUserKey;
 		// add to accepted list
 		const rejectedRef = ref.child('rejectedApplicants');
-		const data = { 'email': email };
+		const data = { 'email': userObj.email };
 		let rejectedUpdates = {};
 		rejectedUpdates[userId] = data;
 		rejectedRef.update(rejectedUpdates);
@@ -1614,33 +1624,40 @@
 		statusUpdates['status'] = 'NOT ATTENDING';
 		applicantRef.update(statusUpdates);
 		// Show the popup
-		$("#confirmedPopup").removeClass("hide");
-		$("#confirmedPopup").addClass("showflex");
+		// $("#confirmedPopup").removeClass("hide");
+		// $("#confirmedPopup").addClass("showflex");
 
 		updateUserData(userId);
 		// update timeline
-		$("#statusTimeline").addClass("red");
-		$("#statusCircle").addClass("red");
+		$("#statusTimeline").addClass("limeGreen");
+		$("#statusCircle").addClass("lightGreen");
+		$("#statusTimelineText").text("Accepted!");	
+
+		$("#confirmedTimeline").addClass("red");
+		$("#confirmedCircle").addClass("red");
 		$("#confirmedTimelineText").text("Not Attending");
 		// hide confirm button
 		$("#confirmCon").addClass("hide");
 		$("#confirmCon").removeClass("show");
 		// hide reject button
-		$("#rejectCon").addClass("hide");
-		$("#rejectCon").removeClass("show");
-		setTimeout(function() {
+		$("#rejectSpot").addClass("hide");
+		$("#rejectSpot").removeClass("show");
+		// hide qr code
+		$('#qrcode').removeClass('show');
+		$('#qrcode').addClass('hide');
+		// setTimeout(function() {
 
-			$("#confirmedPopup").removeClass("showflex");
-			$("#confirmedPopup").addClass("hide");
+		// 	$("#confirmedPopup").removeClass("showflex");
+		// 	$("#confirmedPopup").addClass("hide");
 
-		}, 3000);	
+		// }, 3000);	
 	}
 
 	function confirmSpotBtnClicked() {
 		const userId = loggedInUserKey;
 		// add to accepted list
 		const confirmedRef = ref.child('confirmedApplicants');
-		const data = { 'email': email };
+		const data = { 'email': userObj.email };
 		let confirmedUpdates = {};
 		confirmedUpdates[userId] = data;
 		confirmedRef.update(confirmedUpdates);
@@ -1662,8 +1679,8 @@
 		$("#confirmCon").addClass("hide");
 		$("#confirmCon").removeClass("show");
 		// hide reject button
-		$("#rejectCon").addClass("hide");
-		$("#rejectCon").removeClass("show");
+		// $("#rejectSpot").addClass("hide");
+		// $("#rejectSpot").removeClass("show");
 		// show qr code
 		$('#qrcode').removeClass('hide');
 		$('#qrcode').addClass('show');
@@ -2434,8 +2451,10 @@
 			let users = snapshot.val();
 			let index = 0;
 			for (let userId in users) {
-				acceptUser(userId, users[userId]['email'], index);
-				index++;
+				if (users[userId]['applied']) {
+					acceptUser(userId, users[userId]['email'], index);
+					index++;
+				}
 			}
 		});
 	}
