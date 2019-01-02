@@ -160,6 +160,7 @@
 			<div class="row hide" id="closedApp">
 				<div class="col-md-12" align="center">
 					<p class="closedAppText">Applications have been closed.</p>
+					<button class="button green" onclick="confirmLogoutClicked()">Logout</button>
 				</div>
 			</div>
 			<div class="row" id="openApp">
@@ -1420,14 +1421,6 @@
 		$("#qrcode > img").css({"margin":"auto"});
 
 		$("#mainBody").css("visibility", "visible");
-
-		if (userObj.isVolunteer !== undefined && userObj.isVolunteer === true) {
-
-			// Show link to event check in page
-			$("#sign-in-link").removeClass("hide");
-			$("#sign-in-link").addClass("show");
-
-		}
 
 		// add events to styled file input
 		var inputs = document.querySelectorAll( '.inputfile' );
