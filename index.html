@@ -1272,6 +1272,8 @@
 
 				userObj = childData;
 				loggedInUserKey = snapshot.key;
+
+				updateUserStatus();
 			});
 		}
 
@@ -1494,75 +1496,79 @@
 		// 	$("#extraInfoCol").addClass("hide");
 		// }
 
-		if (userObj.status !== undefined) {
-			var statusText = userObj.status.toLowerCase();
-			// Capitalize First Letter
-			statusText = statusText.charAt(0).toUpperCase() + statusText.slice(1);
-			$("#statusTimelineText").text(statusText);
+		function updateUserStatus() {
+			if (userObj.status !== undefined) {
+				var statusText = userObj.status.toLowerCase();
+				// Capitalize First Letter
+				statusText = statusText.charAt(0).toUpperCase() + statusText.slice(1);
+				$("#statusTimelineText").text(statusText);
 
-			if (userObj.status === "CONFIRMED") {
-				// update timeline
-				$("#statusTimeline").addClass("limeGreen");
-				$("#statusCircle").addClass("lightGreen");
-				$("#statusTimelineText").text("Accepted!");	
+				if (userObj.status === "CONFIRMED") {
+					// update timeline
+					$("#statusTimeline").addClass("limeGreen");
+					$("#statusCircle").addClass("lightGreen");
+					$("#statusTimelineText").text("Accepted!");	
 
-				$("#confirmedTimeline").addClass("limeGreen");
-				$("#confirmedCircle").addClass("lightGreen");
-				$("#confirmedTimelineText").text("Confirmed");
+					$("#confirmedTimeline").addClass("limeGreen");
+					$("#confirmedCircle").addClass("lightGreen");
+					$("#confirmedTimelineText").text("Confirmed");
 
-				$('#qrcode').addClass('show');
-				$('#qrcode').removeClass('hide');
+					$('#qrcode').addClass('show');
+					$('#qrcode').removeClass('hide');
 
-				// $("#confirmCon").addClass("hide");
-				// $("#confirmCon").removeClass("show");
-				$("#rejectSpot").addClass("show");
-				$("#rejectSpot").removeClass("hide");
+					// $("#confirmCon").addClass("hide");
+					// $("#confirmCon").removeClass("show");
+					$("#rejectSpot").addClass("show");
+					$("#rejectSpot").removeClass("hide");
 
-				// show qr code
-				$('#qrcode').removeClass('hide');
-				$('#qrcode').addClass('show');
-			} else if (userObj.status === "ACCEPTED") {
-				// // update timeline
-				$("#statusTimeline").addClass("limeGreen");
-				$("#statusCircle").addClass("lightGreen");
-				$("#statusTimelineText").text("Accepted!");	
-				// Show Confirm and Deny buttons
-				$("#confirmBtn").addClass("show");
-				$("#rejectSpot").addClass("show");
+					// show qr code
+					$('#qrcode').removeClass('hide');
+					$('#qrcode').addClass('show');
+				} else if (userObj.status === "ACCEPTED") {
+					// // update timeline
+					$("#statusTimeline").addClass("limeGreen");
+					$("#statusCircle").addClass("lightGreen");
+					$("#statusTimelineText").text("Accepted!");	
+					// Show Confirm and Deny buttons
+					$("#confirmBtn").addClass("show");
+					$("#rejectSpot").addClass("show");
 
-				// hide qrcode if they haven't been confirmed yet
-				$('#qrcode').addClass('hide');
-			} else if (userObj.status === "NOT ACCEPTED") {
-				// // update timeline
-				$("#statusTimeline").addClass("red");
-				$("#statusCircle").addClass("red");
-				$("#statusTimelineText").text("Not Accepted");
-				
-				// hide qrcode if they haven't been confirmed yet
-				$('#qrcode').addClass('hide');	
-			} else if (userObj.status === "NOT ATTENDING")  {
-				// update timeline
-				$("#statusTimeline").addClass("limeGreen");
-				$("#statusCircle").addClass("lightGreen");
-				$("#statusTimelineText").text("Accepted!");	
+					// hide qrcode if they haven't been confirmed yet
+					$('#qrcode').addClass('hide');
+				} else if (userObj.status === "NOT ACCEPTED") {
+					// // update timeline
+					$("#statusTimeline").addClass("red");
+					$("#statusCircle").addClass("red");
+					$("#statusTimelineText").text("Not Accepted");
+					
+					// hide qrcode if they haven't been confirmed yet
+					$('#qrcode').addClass('hide');	
+				} else if (userObj.status === "NOT ATTENDING")  {
+					// update timeline
+					$("#statusTimeline").addClass("limeGreen");
+					$("#statusCircle").addClass("lightGreen");
+					$("#statusTimelineText").text("Accepted!");	
 
-				$("#confirmedTimeline").addClass("red");
-				$("#confirmedCircle").addClass("red");
-				$("#confirmedTimelineText").text("Not Attending");
-				
-				// hide qrcode if they haven't been confirmed yet
-				$('#qrcode').addClass('hide');	
+					$("#confirmedTimeline").addClass("red");
+					$("#confirmedCircle").addClass("red");
+					$("#confirmedTimelineText").text("Not Attending");
+					
+					// hide qrcode if they haven't been confirmed yet
+					$('#qrcode').addClass('hide');	
 
-				// $("#confirmCon").addClass("show");
-				// $("#confirmCon").removeClass("hide");
-				// $("#rejectCon").addClass("hide");
-				// $("#rejectCon").removeClass("show");
-			} else if (userObj.status === "PENDING") {
-				// hide qrcode if they haven't been confirmed yet
-				$('#qrcode').addClass('hide');
+					// $("#confirmCon").addClass("show");
+					// $("#confirmCon").removeClass("hide");
+					// $("#rejectCon").addClass("hide");
+					// $("#rejectCon").removeClass("show");
+				} else if (userObj.status === "PENDING") {
+					// hide qrcode if they haven't been confirmed yet
+					$('#qrcode').addClass('hide');
+				}
+
 			}
-
 		}
+
+		updateUserStatus();
 
 		function showMenu() {
 			// Show side menu

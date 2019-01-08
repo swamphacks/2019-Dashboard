@@ -274,7 +274,6 @@
 		}
 
 		function sendToSignUp() {
-			console.log('called');
 			window.location.href = 'makeaccount.html';
 		}
 
@@ -403,7 +402,7 @@
 					console.log(error.message);
 				});
 		}
-
+		// TODO: Fix permission error, check for any more bugs
 		function signInUser(user, email, emailVerified, userId) {
 			// Save login info in local storage
 			var userRef = firebase.database().ref("users/"+user.uid);
