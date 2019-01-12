@@ -107,7 +107,7 @@
 							<a href="#" class="pure-menu-link" onclick="menuClick(1)">Dashboard</a>
 					</li>
 
-					<li id="op0" class="pure-menu-item top-ln pure-menu-selected">
+					<li id="op0" class="pure-menu-item top-ln pure-menu-selected hide">
 							<a href="#" class="pure-menu-link" onclick="menuClick(0)">Application</a>
 					</li>
 
@@ -374,32 +374,32 @@
 									<span class="radioBtn"></span>
 								</label>
 						</div>
-						<div class="col-md-12 homeStateInput" id="homeStateContainer">
+						<div class="col-md-12 homeStateInput hide" id="homeStateContainer">
 								<label class="form-lbl" for="q1" name="">Where will you be traveling from? <span class=" redTxt">* </span> </label>  
 								<input class="form-field" id="homeState" name="homeState" type="text" value=""/>
 						</div>
 						
-						<div class="col-md-12 top-margin reduce-top-2" id="interestContainer">
+						<div class="col-md-12 top-margin reduce-top-2 hide" id="interestContainer">
 								<label class="form-lbl" for="q1" name="">Why would you like to participate in SwampHacks? <span class=" redTxt">* </span> </label>                    
 								<textarea class="form-field form-textbox" id="interest" name="interest" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
-						<div class="col-md-12 top-margin">
+						<div class="col-md-12 top-margin hide">
 								<label class="form-lbl" for="q1" name="">What’s an everyday problem that tech could solve? <span class=" redTxt">* </span> </label>                              
 								<textarea class="form-field form-textbox" id="everydayProblem" name="everydayProblem" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
-						<div class="col-md-12 top-margin">
+						<div class="col-md-12 top-margin hide">
 								<label class="form-lbl" for="q1" name="">What do you hope to gain out of SwampHacks? <span class=" redTxt">* </span></label>                            
 								<textarea class="form-field form-textbox" id="hopes" name="hopes" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
-						<div class="col-md-12 top-margin">
+						<div class="col-md-12 top-margin hide">
 								<label class="form-lbl" for="q1" name="">Other comments? - what workshops, mentors, activities, etc. would you want to see? <span class=" redTxt">* </span></label>
 								<textarea class="form-field form-textbox" id="comments" name="comments" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
 
-						<div class="col-md-12 top-margin">
+						<div class="col-md-12 top-margin hide">
 								<label class="form-lbl" for="q1" name="">How did you hear about SwampHacks? <span class=" redTxt">* </span></label>
 								<textarea class="form-field form-textbox" id="news" name="news" type="text" placeholder="" rows="5" cols="20"></textarea>
 						</div>
@@ -1403,8 +1403,8 @@
 				$('#openApp').addClass('hide');
 				$('#closedApp').removeClass('hide');
 			} else {
-				$('#op0').addClass('show');
-				$('#op0').removeClass('hide');
+				// $('#op0').addClass('show');
+				// $('#op0').removeClass('hide');
 				$('#openApp').removeClass('hide');
 				$('#closedApp').addClass('hide');
 			}
@@ -1534,7 +1534,7 @@
 					$("#statusCircle").addClass("lightGreen");
 					$("#statusTimelineText").text("Accepted!");	
 					// Show Confirm and Deny buttons
-					// $("#confirmBtn").addClass("show");
+					$("#confirmBtn").addClass("show");
 					$("#rejectSpot").addClass("show");
 
 					// hide qrcode if they haven't been confirmed yet
@@ -2239,13 +2239,18 @@
 			if (transportation === 'yes') {
 				transportationState = $("#homeState").val().trim();
 			}
-            const interestReason = $('textarea[name="interest"]').val();
-            const everydayProblem = $('textarea[name="everydayProblem"]').val();
-            const hopeToGain =  $('textarea[name="hopes"]').val();
-            const comments =  $('textarea[name="comments"]').val();
-            const hearAbout =  $('textarea[name="news"]').val();
-            const codeOfConduct = $('input[name="codeOfConduct"]:checked').val();
-			const authorizeOption = $('input[name="authorizeOption"]:checked').val();
+            // const interestReason = $('textarea[name="interest"]').val();
+            // const everydayProblem = $('textarea[name="everydayProblem"]').val();
+            // const hopeToGain =  $('textarea[name="hopes"]').val();
+            // const comments =  $('textarea[name="comments"]').val();
+            // const hearAbout =  $('textarea[name="news"]').val();
+			const interestReason = 'N/A';
+            const everydayProblem = 'N/A';
+            const hopeToGain =  'N/A';
+            const comments = 'N/A';
+            const hearAbout = 'N/A';
+            const codeOfConduct =  'N/A';
+			const authorizeOption =  'N/A';
 
             var canSubmit = checkFields(email, fname, lname, gender, genderDesc, phoneNumber, birthdate, raceEthnicity, raceDesc,
 				$('#resume').get(0).files[0], firstTimeHacker, transportation, transportationState, major,
@@ -2287,7 +2292,7 @@
                         extraInfo: comments,
 						authorizeOption: authorizeOption,
                         isVolunteer: false,
-                        status: "PENDING",
+                        status: "ACCEPTED",
 						applied: true,
 						appliedTime: firebase.database.ServerValue.TIMESTAMP
                     };
@@ -2394,11 +2399,18 @@
 			if (transportation === 'yes') {
 				transportationState = $("#homeState").val().trim();
 			}
-            const interestReason = $('textarea[name="interest"]').val();
-            const everydayProblem = $('textarea[name="everydayProblem"]').val();
-            const hopeToGain =  $('textarea[name="hopes"]').val();
-            const comments =  $('textarea[name="comments"]').val();
-            const hearAbout =  $('textarea[name="news"]').val();
+            // const interestReason = $('textarea[name="interest"]').val();
+            // const everydayProblem = $('textarea[name="everydayProblem"]').val();
+            // const hopeToGain =  $('textarea[name="hopes"]').val();
+            // const comments =  $('textarea[name="comments"]').val();
+            // const hearAbout =  $('textarea[name="news"]').val();
+			const interestReason = 'N/A';
+            const everydayProblem = 'N/A';
+            const hopeToGain =  'N/A';
+            const comments = 'N/A';
+            const hearAbout = 'N/A';
+            const codeOfConduct =  'N/A';
+			const authorizeOption =  'N/A';
 			const codeOfConduct = $('input[name="codeOfConduct"]:checked').val();
 			const authorizeOption = $('input[name="authorizeOption"]:checked').val();
 			const savedForm = {
