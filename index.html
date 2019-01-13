@@ -2344,6 +2344,17 @@
 						$("#dashboard").addClass("show");
 						$("#dashboard").removeClass("hide");
 
+						// update timeline
+						$("#statusTimeline").addClass("limeGreen");
+						$("#statusCircle").addClass("lightGreen");
+						$("#statusTimelineText").text("Accepted!");	
+						// Show Confirm and Deny buttons
+						$("#confirmBtn").addClass("show");
+						$("#rejectSpot").addClass("show");
+
+						// hide qrcode if they haven't been confirmed yet
+						$('#qrcode').addClass('hide');
+
 						$("#info").addClass("hide");
 						$("#info").removeClass("show");
 						
