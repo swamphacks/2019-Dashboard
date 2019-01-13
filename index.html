@@ -139,6 +139,10 @@
 						<a href="#" class="pure-menu-link" onclick="menuClick(9)">Sponsors</a>
 					</li>
 
+					<li id="op10" class="pure-menu-item top-ln hide">
+						<a href="#" class="pure-menu-link" onclick="menuClick(10)">Stand by</a>
+					</li>
+
                     <li id="op3" class="pure-menu-item top-ln">
                         <a href="#" class="pure-menu-link" onclick="menuClick(3)">Logout</a>
                     </li>
@@ -562,6 +566,26 @@
 				</div>
 
 		</div>
+		<!-- %%%%%%%%%%%%%% Stand by %%%%%%%%%%%%%% -->
+		<div id="standby" class="hide">
+
+			<h1 class="header-main-type">Stand by</button></h1>
+	
+					<div class="container-fluid notif-con">
+						<div class="row">
+							<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="EMAIL" name="">Email <span class="redTxt"> * </span></label>
+								<input class="form-field required" id="standbyEmail" name="EMAIL" type="email" placeholder="" required/>
+							</div>
+						</div>
+						<div class="row top-margin">
+							<div class="col-md-12">
+									<button id="standbySubmitBtn" class="button green" onclick="standbySubmit()">Submit</button>
+							</div>
+						</div>
+					</div>
+	
+			</div>
 		<!-- %%%%%%%%%%%%%% Transportation Form %%%%%%%%%%%%%% -->
 		<div id="transportationForm" class="hide">
 
@@ -1299,6 +1323,9 @@
 
 			$("#op2").removeClass("hide");
 			$("#op2").addClass("show");
+
+			$("#op10").removeClass("hide");
+			$("#op10").addClass("show");
 
 			// $("#op5").removeClass("hide");
 			// $("#op5").addClass("show");
@@ -2444,7 +2471,20 @@
 		}
 
 	// %%%%%%%%%%%%% End of Application Functions %%%%%%%%%%%%% //
-
+	function standbySubmit() {
+		const email = $("#standbyEmail").val().trim();
+		if (validateEmail(email)) {
+			const standbyWaitingRef = ref.child('standbyWaiting');
+			let data = {
+				'email': email,
+				'appliedTime': firebase.database.ServerValue.TIMESTAMP
+			};
+			ref.child('standbySize').once('value').then(function(snapshot) {
+				console.log(snapshot.val());
+			});
+			// standbyWaitingRef.update({})
+		}
+	}
 	// %%%%%%%%%%%%% Admin Functions %%%%%%%%%%%%% //
 	function acceptAll() {
 		const usersRef = ref.child('users');
@@ -2775,6 +2815,7 @@
 		$("#op7").removeClass("pure-menu-selected");
 		$("#op8").removeClass("pure-menu-selected");
 		$("#op9").removeClass("pure-menu-selected");
+		$("#op10").removeClass("pure-menu-selected");
 
 		$("#application").addClass("show");
         $("#application").removeClass("hide");
@@ -2811,6 +2852,7 @@
 		$("#op7").removeClass("pure-menu-selected");
 		$("#op8").removeClass("pure-menu-selected");
 		$("#op9").removeClass("pure-menu-selected");
+		$("#op10").removeClass("pure-menu-selected");
 
         $("#dashboard").addClass("show");
 		$("#dashboard").removeClass("hide");
@@ -2835,6 +2877,9 @@
 
 		$("#sponsors").addClass("hide");
 		$("#sponsors").removeClass("show");
+
+		$("#standby").addClass("hide");
+		$("#standby").removeClass("show");
 
 		if (userObj.status !== undefined) {
 
@@ -2868,6 +2913,7 @@
 		$("#op7").removeClass("pure-menu-selected");
 		$("#op8").removeClass("pure-menu-selected");
 		$("#op9").removeClass("pure-menu-selected");
+		$("#op10").removeClass("pure-menu-selected");
 
 		$("#info").addClass("show");
         $("#info").removeClass("hide");
@@ -2893,6 +2939,9 @@
 		$("#sponsors").addClass("hide");
 		$("#sponsors").removeClass("show");
 
+		$("#standby").addClass("hide");
+		$("#standby").removeClass("show");
+
 		if (!userInfoLoaded) {
 			// Show the loader
 			$("#animationWindow").removeClass("hide");
@@ -2916,6 +2965,7 @@
 		$("#op7").removeClass("pure-menu-selected");
 		$("#op8").removeClass("pure-menu-selected");
 		$("#op9").removeClass("pure-menu-selected");
+		$("#op10").removeClass("pure-menu-selected");
 
 		$("#application").addClass("hide");
         $("#application").removeClass("show");
@@ -2941,6 +2991,9 @@
 		$("#sponsors").addClass("hide");
 		$("#sponsors").removeClass("show");
 
+		$("#standby").addClass("hide");
+		$("#standby").removeClass("show");
+
 		// appliedSchools = [];
 		// schoolsAndCount = {};
 		// topTenSchools = {};
@@ -2960,6 +3013,7 @@
 		$("#op7").removeClass("pure-menu-selected");
 		$("#op8").removeClass("pure-menu-selected");
 		$("#op9").removeClass("pure-menu-selected");
+		$("#op10").removeClass("pure-menu-selected");
 
 		$("#application").addClass("hide");
         $("#application").removeClass("show");
@@ -2985,6 +3039,9 @@
 		$("#sponsors").addClass("hide");
 		$("#sponsors").removeClass("show");
 
+		$("#standby").addClass("hide");
+		$("#standby").removeClass("show");
+
 	  } else if (item === 7) {
 		$("#op7").addClass("pure-menu-selected");
 		$("#op6").removeClass("pure-menu-selected");
@@ -2995,7 +3052,7 @@
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op8").removeClass("pure-menu-selected");
 		$("#op9").removeClass("pure-menu-selected");
-
+		$("#op10").removeClass("pure-menu-selected");
 
 		$("#transportationForm").addClass("show");
 		$("#transportationForm").removeClass("hide");
@@ -3021,6 +3078,9 @@
 		$("#sponsors").addClass("hide");
 		$("#sponsors").removeClass("show");
 
+		$("#standby").addClass("hide");
+		$("#standby").removeClass("show");
+
 	   } else if (item === 8) {
 		$("#op8").addClass("pure-menu-selected");
 		$("#op7").removeClass("pure-menu-selected");
@@ -3031,6 +3091,7 @@
 		$("#op3").removeClass("pure-menu-selected");
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op9").removeClass("pure-menu-selected");
+		$("#op10").removeClass("pure-menu-selected");
 
 		$("#schedule").addClass("show");
 		$("#schedule").removeClass("hide");
@@ -3056,6 +3117,9 @@
 		$("#sponsors").addClass("hide");
 		$("#sponsors").removeClass("show");
 
+		$("#standby").addClass("hide");
+		$("#standby").removeClass("show");
+
 	   } else if (item === 9) {
 		$("#op9").addClass("pure-menu-selected");
 		$("#op7").removeClass("pure-menu-selected");
@@ -3066,9 +3130,52 @@
 		$("#op3").removeClass("pure-menu-selected");
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op8").removeClass("pure-menu-selected");
+		$("#op10").removeClass("pure-menu-selected");
 
 		$("#sponsors").addClass("show");
 		$("#sponsors").removeClass("hide");
+
+		$("#transportationForm").addClass("hide");
+		$("#transportationForm").removeClass("show");
+
+		$("#application").addClass("hide");
+		$("#application").removeClass("show");
+
+		$("#info").addClass("hide");
+		$("#info").removeClass("show");
+
+		$("#dashboard").addClass("hide");
+		$("#dashboard").removeClass("show");
+
+		$("#login").addClass("hide");
+		$("#login").removeClass("show");
+
+		$("#notif").addClass("hide");
+		$("#notif").removeClass("show");
+
+		$("#schedule").addClass("hide");
+		$("#schedule").removeClass("show");
+
+		$("#standby").addClass("hide");
+		$("#standby").removeClass("show");
+
+	   } else if (item === 10) {
+		$("#op10").addClass("pure-menu-selected");
+		$("#op9").removeClass("pure-menu-selected");
+		$("#op7").removeClass("pure-menu-selected");
+		$("#op6").removeClass("pure-menu-selected");
+		$("#op0").removeClass("pure-menu-selected");
+		$("#op1").removeClass("pure-menu-selected");
+		$("#op2").removeClass("pure-menu-selected");
+		$("#op3").removeClass("pure-menu-selected");
+		$("#op5").removeClass("pure-menu-selected");
+		$("#op8").removeClass("pure-menu-selected");
+
+		$("#standby").addClass("show");
+		$("#standby").removeClass("hide");
+
+		$("#sponsors").addClass("hide");
+		$("#sponsors").removeClass("show");
 
 		$("#transportationForm").addClass("hide");
 		$("#transportationForm").removeClass("show");
@@ -3345,6 +3452,10 @@
 			} else if (selected == 9) {
 
 				$("#headertxt").text("Sponsors");
+
+			} else if (selected == 10) {
+
+				$("#headertxt").text("Stand by");
 
 			}
 
