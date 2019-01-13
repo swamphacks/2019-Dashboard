@@ -469,6 +469,9 @@
 							<div class="col-md-12 top-margin">
 								<button id="resetAcceptBtn" class="button lightRed" onclick="resetAllAcceptance()"><p class="makeactbtn">Reset All Acceptance</p></button>
 							</div>
+							<div class="col-md-12 top-margin">
+								<button id="countConfirmBtn" class="button green" onclick="countConfirmed()"><p class="makeactbtn">Show Confirmed Count: <span id="confirmCountTxt"></span></p></button>
+							</div>
 						</div>
 						<div class="col-md-12" id="userDashboard">
 							<h3 class="header-sub-type" id="welcomeMessage">Welcome, Albert!</h3>
@@ -2506,6 +2509,21 @@
 			userRef.once('value').then(function(snapshot) {
 				resolve(snapshot.val().status);
 			});
+		});
+	}
+
+	function countConfirmed() {
+		const userRef = ref.child('users');
+		userRef.once('value').then(function(snapshot){
+			let users = snapshot.val();
+			let count = 0;
+			for (let uid in users) {
+				let user = users[uid];
+				if (user['status'] === 'CONFIRMED') {
+					count += 1;
+				}
+			}
+			$('#confirmCountTxt').text(count.toString());
 		});
 	}
 
