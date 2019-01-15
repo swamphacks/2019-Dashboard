@@ -2475,14 +2475,21 @@
 		const email = $("#standbyEmail").val().trim();
 		if (validateEmail(email)) {
 			const standbyWaitingRef = ref.child('standbyWaiting');
-			let data = {
-				'email': email,
-				'appliedTime': firebase.database.ServerValue.TIMESTAMP
-			};
 			ref.child('standbySize').once('value').then(function(snapshot) {
-				console.log(snapshot.val());
+				let size = snapshot.val().size;
+				let data = {
+					'email': email,
+					'appliedTime': firebase.database.ServerValue.TIMESTAMP,
+					'spot': size
+				};
+				let updates = {};
+				updates[size] = data;
+				// add email to list
+				standbyWaitingRef.update(updates);
+				size += 1;
+				// update size
+				ref.child('standbySize').update({'size': size});
 			});
-			// standbyWaitingRef.update({})
 		}
 	}
 	// %%%%%%%%%%%%% Admin Functions %%%%%%%%%%%%% //
@@ -2596,13 +2603,11 @@
 		statusUpdates['status'] = 'ACCEPTED';
 		applicantRef.update(statusUpdates);
 		// remove from list
-		// hide card TODO: delete instead?
 		$('#listItem'+index.toString()).addClass('hide');
 	}
 
 	function rejectUser(userId, email, index) {
 		// remove from list
-		// hide card TODO: delete instead?
 		$('#listItem'+index.toString()).addClass('hide');
 		// delete from hidden list in db
 		// add to rejected list
@@ -2673,7 +2678,6 @@
 		// make hidden card and add to hidden list
 		// var hiddenUserList = document.getElementById("hiddenUserList");
 		// hiddenUserList.innerHTML += createHiddenUserCard(index, userData);
-		// hide card TODO: delete instead?
 		$('#listItem'+index.toString()).addClass('hide');
 	}
 	// %%%%%%%%%%%%% Schedule Functions %%%%%%%%%%%%% //
@@ -2741,8 +2745,91 @@
 		});
 	}
 
+	function acceptStandbyUser(email, index) {
+		console.log('standby email', email);
+		const usersRef = ref.child('users');
+		usersRef.once('value').then(function(snapshot) {
+			// add loading screen, might take a while
+			let users = snapshot.val();
+			let haveAccount = false;
+			let userId = null;
+			// check to make sure they have an account
+			for (let key in users) {
+				let user = users[key];
+				if (user['email'] == email) {
+					haveAccount = true;
+					userId = key;
+					break;
+				}
+			}
+			if (haveAccount && userId) {
+				// change user status to confirm
+				const userRef = ref.child('users/'+userId);
+				// userref.update({'status': 'CONFIRMED'});
+				// add them to check in list
+				const checkinRef = ref.child('events/-LW6uJlNdMhS9hBOTZPe/');
+				checkinRef.once('value').then(function(snapshot) {
+					let attendants = snapshot.val();
+					console.log('attendants', attendants);
+					attendants.push(userId);
+					checkinRef.update({'attendants': attendants});
+					// Hide the loader
+					$("#animationWindow").removeClass("showflex");
+					$("#animationWindow").addClass("hide");
+					// remove from list
+					$('#listItem'+index.toString()).addClass('hide');
+				});
+				// TODO: give them team, update next team type
+			} else {
+				// alert user that account does nto exist
+			}
+		});
+	}
+
+	function createStandbyElement(index, user) {
+		var openLi = '<li class="userInfoItem" id="listItem'+ index.toString() +'">';
+		var closeLi = '</li>';
+		var openDiv = '<div class="row">';
+		var openHeader = '<div class="row cardHeader">';
+		var openContent = '<div class="row cardContent">';
+		var closeDiv = '</div>';
+		var closeP = '</p>';
+		// Setup header for card
+		var list = openLi + openHeader + '<div class="col-md-5 cardHeaderTitle">'
+			+ user.email + closeDiv + closeDiv;
+		// Setup card content 
+		// list += openContent;
+		// add accept button
+		list += openDiv + '<button class="button cardBtn" style="float: right; margin-left: 10px" onclick="acceptStandbyUser(\''+user.email+'\','++index+')"> Accept!</button>';
+		// Close content tag
+		// list += closeDiv;
+		// close list tag
+		list += closeLi;
+		return list;
+	}
+
 	var userInfoLoaded = false;
-	
+
+	function loadStandbyInfo() {
+		var standbyWaitingRef = ref.child("standbyWaiting");
+		standbyWaitingRef.orderByChild("appliedTime").once('value').then(function(snapshot) {
+			var userList = document.getElementById("userList");
+			var itemNumber = 0;
+			snapshot.forEach(function(childSnapshot) {
+				let userId = childSnapshot.key;
+				let user = childSnapshot.val();
+				console.log('user', user);
+				userList.innerHTML += createStandbyElement(itemNumber, user);
+				itemNumber += 1;
+			});
+			// Hide the loader
+			$("#animationWindow").removeClass("showflex");
+			$("#animationWindow").addClass("hide");
+
+			userInfoLoaded = true;
+		});
+	}
+
 	function loadUserInfo() {
 		var userRef = ref.child("users");
 		userRef.orderByChild("appliedTime").once('value').then(function(snapshot) {
