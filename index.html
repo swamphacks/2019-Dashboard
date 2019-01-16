@@ -546,9 +546,12 @@
 		<!-- %%%%%%%%%%%%%% Applicant Info %%%%%%%%%%%%%% -->
 	  <div id="info" class="hide">
 
-		<h1 class="header-main-type">Applicant information 	<button id="switchInfoBtn" class="button dark infoSwitchBtn" onclick="toggleUserInfo()">Show Hidden</button></h1>
+		<h1 class="header-main-type">Applicant information</h1>
 
 				<div class="container-fluid notif-con">
+					<div class="row">
+						<h3 style="text-align: center">In line: <span id="standbyCount"></span></h3>
+					</div>
 					<div class="row">
 						<button class="button green" id="acceptAllBtn" onclick="acceptAll()">
 							<p>Accept All</p>
@@ -572,6 +575,9 @@
 			<h1 class="header-main-type">Stand by</button></h1>
 	
 					<div class="container-fluid notif-con">
+						<div class="row">
+							<h3 style="text-align: center">In line: <span id="standbyCount2"></span></h3>
+						</div>
 						<div class="row">
 							<div class="col-md-12 top-margin">
 								<label class="form-lbl" for="EMAIL" name="">Email <span class="redTxt"> * </span></label>
@@ -2471,12 +2477,35 @@
 		}
 
 	// %%%%%%%%%%%%% End of Application Functions %%%%%%%%%%%%% //
+	const standbySizeGRef = ref.child('standbySize');
+	standbySizeGRef.on('child_added', function(data) {
+		let size = data.val();
+		if (size) {
+			$('#standbyCount').text(size.toString());
+			$('#standbyCount2').text(size.toString());
+		} else {
+			$('#standbyCount').text('0');
+			$('#standbyCount2').text('0');
+		}
+	});
+	standbySizeGRef.on('child_changed', function(data) {
+		let size = data.val();
+		if (size) {
+			$('#standbyCount').text(size.toString());
+			$('#standbyCount2').text(size.toString());
+		} else {
+			$('#standbyCount').text('0');
+			$('#standbyCount2').text('0');
+		}
+	});
+
 	function standbySubmit() {
 		const email = $("#standbyEmail").val().trim();
-		if (validateEmail(email)) {
+		if (email && validateEmail(email)) {
 			const standbyWaitingRef = ref.child('standbyWaiting');
-			ref.child('standbySize').once('value').then(function(snapshot) {
-				let size = snapshot.val().size;
+			standbyWaitingRef.once('value').then(function(snapshot) {
+				let users = snapshot.val();
+				let size = users.length;
 				let data = {
 					'email': email,
 					'appliedTime': firebase.database.ServerValue.TIMESTAMP,
@@ -2484,12 +2513,24 @@
 				};
 				let updates = {};
 				updates[size] = data;
-				// add email to list
-				standbyWaitingRef.update(updates);
 				size += 1;
 				// update size
-				ref.child('standbySize').update({'size': size});
+				let actualSize = 0;
+				for (let user of users) {
+					if (user) {
+						actualSize += 1;
+					}
+				}
+				actualSize += 1;
+				// add email to list
+				standbyWaitingRef.update(updates);
+				ref.child('standbySize').update({'size': actualSize});
+				// reset field
+				$("#standbyEmail").val('');
+				$("#standbyEmail").removeClass('requiredField');
 			});
+		} else {
+			$("#standbyEmail").addClass('requiredField');
 		}
 	}
 	// %%%%%%%%%%%%% Admin Functions %%%%%%%%%%%%% //
@@ -2745,8 +2786,7 @@
 		});
 	}
 
-	function acceptStandbyUser(email, index) {
-		console.log('standby email', email);
+	function acceptStandbyUser(email, spot, index) {
 		const usersRef = ref.child('users');
 		usersRef.once('value').then(function(snapshot) {
 			// add loading screen, might take a while
@@ -2769,7 +2809,7 @@
 				// add them to check in list
 				const checkinRef = ref.child('events/-LW6uJlNdMhS9hBOTZPe/');
 				checkinRef.once('value').then(function(snapshot) {
-					let attendants = snapshot.val();
+					let attendants = snapshot.val().attendants;
 					console.log('attendants', attendants);
 					attendants.push(userId);
 					checkinRef.update({'attendants': attendants});
@@ -2778,10 +2818,19 @@
 					$("#animationWindow").addClass("hide");
 					// remove from list
 					$('#listItem'+index.toString()).addClass('hide');
+					// remove from standbyWaiting, and update size
+					const standbyWaitingRef = ref.child("standbyWaiting");
+					standbyWaitingRef.child(spot).remove();
+					const standbySizeRef = ref.child('standbySize');
+					standbySizeRef.once('value').then(function(snapshot) {
+						let size = snapshot.val().size;
+						size -= 1;
+						standbySizeRef.update({'size': size});
+					});
 				});
 				// TODO: give them team, update next team type
 			} else {
-				// alert user that account does nto exist
+				// alert user that account does not exist
 			}
 		});
 	}
@@ -2800,7 +2849,7 @@
 		// Setup card content 
 		// list += openContent;
 		// add accept button
-		list += openDiv + '<button class="button cardBtn" style="float: right; margin-left: 10px" onclick="acceptStandbyUser(\''+user.email+'\','++index+')"> Accept!</button>';
+		list += openDiv + '<button class="button cardBtn" style="float: right; margin-left: 10px" onclick="acceptStandbyUser(\''+user.email+'\','+user.spot+ ',' +index+')"> Accept!</button>';
 		// Close content tag
 		// list += closeDiv;
 		// close list tag
@@ -2816,9 +2865,8 @@
 			var userList = document.getElementById("userList");
 			var itemNumber = 0;
 			snapshot.forEach(function(childSnapshot) {
-				let userId = childSnapshot.key;
+				let index = childSnapshot.key;
 				let user = childSnapshot.val();
-				console.log('user', user);
 				userList.innerHTML += createStandbyElement(itemNumber, user);
 				itemNumber += 1;
 			});
@@ -3034,7 +3082,8 @@
 			$("#animationWindow").removeClass("hide");
 			$("#animationWindow").addClass("showflex");
 			// load user's information
-			loadUserInfo();
+			// loadUserInfo();
+			loadStandbyInfo();
 		}
 	  } else if (item === 3) {
 
