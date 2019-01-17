@@ -552,7 +552,7 @@
 					<div class="row">
 						<h3 style="text-align: center">In line: <span id="standbyCount"></span></h3>
 					</div>
-					<div class="row">
+					<div class="row hide">
 						<button class="button green" id="acceptAllBtn" onclick="acceptAll()">
 							<p>Accept All</p>
 						</button>
@@ -586,7 +586,7 @@
 						</div>
 						<div class="row top-margin">
 							<div class="col-md-12">
-									<button id="standbySubmitBtn" class="button green" onclick="standbySubmit()">Submit</button>
+									<button id="standbySubmitBtn" class="button green" style="color: white" onclick="standbySubmit()">Submit</button>
 							</div>
 						</div>
 					</div>
@@ -1082,6 +1082,7 @@
 		var appliedSchools = [];
 		var schoolsAndCount = {};
 		var topTenSchools = {};
+		const VOLUNTEER_EMAIL = 'volunteer@swamphacks.com';
 
 		// Stats
 
@@ -1309,7 +1310,10 @@
 
 		// send unlogged users to login page
 		firebase.auth().onAuthStateChanged(function(currentUser) {
-			if (currentUser && currentUser.emailVerified) {
+			if (currentUser.email === 'sponsors@swamphacks.com' 
+				|| currentUser.email === VOLUNTEER_EMAIL) {
+					// don't do anything for now
+			} else if (currentUser && currentUser.emailVerified) {
 				// keep user info updated
 				updateUserData(currentUser.uid)
 			} else if(localStorage.getItem('provider') != 'facebook'){
@@ -1346,7 +1350,7 @@
 			// reloadStats();
 		}
 
-		if (userObj.applied || userObj.email === "sponsors@swamphacks.com") {
+		if (userObj.applied || userObj.email === "sponsors@swamphacks.com" || userObj.email == VOLUNTEER_EMAIL) {
 			this.showMenu();
 			if (userObj.transportation == 'yes') { // Deadline passed
 				//show form on menu
@@ -1410,6 +1414,37 @@
 			// show saved form info
 			if (savedFormData.email == userObj.email)
 				addSavedFormData();
+		}
+
+		if (userObj.email === VOLUNTEER_EMAIL) {
+
+			$('#dashboard').addClass('hide');
+			$('#dashboard').removeClass('show');
+			$('#qrcode').addClass('hide');
+			// hide dashboard tab
+			$("#op1").removeClass("show");
+			$("#op1").addClass("hide");
+			// show applicant info?
+			// $("#op2").removeClass("hide");
+			// $("#op2").addClass("show");
+
+			$("#op10").removeClass("hide");
+			$("#op10").addClass("show");
+
+			$('#standby').addClass('show');
+			$('#standby').removeClass('hide');
+
+			// $("#op5").removeClass("hide");
+			// $("#op5").addClass("show");
+
+			// $("#op6").removeClass("hide");
+			// $("#op6").addClass("show");
+
+			$("#op0").removeClass("show");
+			$("#op0").addClass("hide");
+
+			// getStats();
+			// reloadStats();
 		}
 
 		// Disable application if needed
@@ -2791,26 +2826,23 @@
 		usersRef.once('value').then(function(snapshot) {
 			// add loading screen, might take a while
 			let users = snapshot.val();
-			let haveAccount = false;
 			let userId = null;
 			// check to make sure they have an account
 			for (let key in users) {
 				let user = users[key];
 				if (user['email'] == email) {
-					haveAccount = true;
 					userId = key;
 					break;
 				}
 			}
-			if (haveAccount && userId) {
+			if (userId) {
 				// change user status to confirm
 				const userRef = ref.child('users/'+userId);
-				// userref.update({'status': 'CONFIRMED'});
+				userRef.update({'status': 'CONFIRMED'});
 				// add them to check in list
 				const checkinRef = ref.child('events/-LW6uJlNdMhS9hBOTZPe/');
 				checkinRef.once('value').then(function(snapshot) {
 					let attendants = snapshot.val().attendants;
-					console.log('attendants', attendants);
 					attendants.push(userId);
 					checkinRef.update({'attendants': attendants});
 					// Hide the loader
@@ -2828,9 +2860,20 @@
 						standbySizeRef.update({'size': size});
 					});
 				});
-				// TODO: give them team, update next team type
+				// give them team, update next team type
+				const teamType = ['Gator', 'Heron', 'Dragonfly', 'Turtle'];
+				const teamTable = {'Gator': 0, 'Heron': 1, 'Dragonfly': 2, 'Turtle': 3};
+				const maxSize = teamType.length;
+				ref.child('nextTeam').once('value').then(function(snapshot) {
+					let type = snapshot.val().type;
+					let nextTypeIndex = teamTable[type] + 1 >= maxSize ? 0: teamTable[type] + 1;
+					let nextType = teamType[nextTypeIndex];
+					userRef.update({'team': type});
+					ref.child('nextTeam').update({'type': nextType});
+				});
 			} else {
 				// alert user that account does not exist
+				alert('No account exists with this email');
 			}
 		});
 	}
