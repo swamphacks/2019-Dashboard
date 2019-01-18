@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+		<title>SwampHacks Dashboard - Create Account</title>
+		<meta name="description" content="
+
+		SwampHacks is a 36 hour open coding event where students become creators.
+		In the time allotted, students from around the country come together at the
+		University of Florida to collaborate on projects, mingle in activities, and
+		network with sponsors for a fully immersive experience.
+
+		"/>
+		<!-- Stylesheets
+    ================================================== -->
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+		<!-- <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"> -->
+		<!-- Favicon
+    ================================================== -->
+	<link rel="icon" type="image/ico" href="favicon.ico"/>
+		<!-- Icons & Fonts
+		================================================== -->
+		<!-- <link rel="stylesheet" href="css/font-awesome.css"> -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<!-- MLH Badge
+		================================================== -->
+		<!-- <a id="mlh-trust-badge" style="display:block;max-width:100px;min-width:60px;position:absolute;right:50px;top:0;width:10%;z-index:0" href="https://mlh.io/seasons/na-2018/events?utm_source=na-2018&utm_medium=TrustBadge&utm_campaign=na-2018&utm_content=white" target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/2018/white.svg" alt="Major League Hacking 2017 Hackathon Season" style="width:100%"></a> -->
+	</head>
+
+  <body>
+
+	<div id="animationWindow" class="hide">
+		<div class="loader"></div>
+	</div>
+
+  <div id="layout" class="">
+      <div id="menuLogin" class="">
+
+				<div class="pure-menu-heading" href="#">
+					<h1 id="mainheader">swamp<b>hacks V</b></h1>
+					<!-- <img id="logo" class="" src="img/logoblue.svg"></img> -->
+				</div>
+
+				<div class="hide" id="loginStatusTxt">
+					Please fill in all fields!
+				</div>
+
+				<div class="menu-items-con-login">
+
+					<div class="row log" id="regOpen">
+						<form id="loginForm" class="" autocomplete="off">
+							<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Email</label>
+								<input class="form-field" id="email" name="q1" type="text" placeholder="" required/>
+							</div>
+
+							<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Password</label>
+								<i class="fa fa-lock pass-visibility" aria-hidden="true" id="pv1" onclick="showPassPressed(pass1, pv1)"></i>
+								<input class="form-field" id="pass1" name="q1" type="password" placeholder="" required/>
+							</div>
+
+							<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="q1" name="">Confirm Password</label>
+								<i class="fa fa-lock pass-visibility" aria-hidden="true" id="pv2" onclick="showPassPressed(pass2, pv2)"></i>
+								<input class="form-field" id="pass2" name="q1" type="password" placeholder="" required/>
+							</div>
+
+							<div class="col-md-12 top-margin">
+								<button class="button green" id="createAccountBtn"><a href=""><p class="makeactbtn">Create Account</p></a></button>
+							</div>
+
+						</form>
+
+						<div class="margin-buffer">
+
+							<div class="col-md-12" style="margin-top: 11px; text-align: center">
+								<button class="button txtbtnouter" onclick="sendToSignIn()">
+									<!-- <span class="line"></span> -->
+									<a href="#" style="display: inline-block"><p class="textbtn">or <b>Sign In</b></p></a>
+									<!-- <span class="line"></span> -->
+								</button>
+							</div>
+
+							<div class="col-md-12">
+									<button class="button google" onclick="googleSignIn()">Google Sign In</button>
+							</div>
+
+							<!-- <div class="col-md-12 top-margin">
+									<button class="button facebook" onclick="facebookSignIn()">Facebook Sign In</button>
+							</div> -->
+							<!-- <div class="col-md-12 descrip-txt login-txt">
+								Create your account with the email you applied with. This form will not let
+								you do otherwise!
+							</div> -->
+
+						</div>
+
+					</div>
+
+				</div>
+
+      </div>
+
+	  <div id="login-side">
+		<!-- <img class="clock" src="img/clock.jpg"></img> -->
+		<div class="imgcon">
+			<img class="colorlogo" src="img/colorlogo.svg"></img>
+		</div>
+
+		<div class="top-blk">
+
+		</div>
+		<div class="bottom-blk">
+
+		</div>
+
+      </div>
+
+  </div>
+
+
+
+
+  <!-- <script src="js/menu.js"></script> -->
+  <script src="js/jquery.js"></script>
+  <script src="js/classie.js"></script>
+	<script src='js/bodymovin.min.js'></script>
+
+  </body>
+
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
+	<script src="firebaseconfig.js"></script>
+	<script src="facebookconfig.js"></script>
+
+	<script>
+
+		var ref = firebase.database().ref();
+		// var usersRef = ref.child("applicants");
+		var userVerified = false;
+		var firstClick = true;
+		var userExists = true;
+		var repeatCheck = true;
+
+		$("form").submit(function() {
+			repeatCheck = true;
+			createActBtnClicked();
+			return false;
+		});
+
+		function createActBtnClicked() {
+
+			var email = $("#email").val().trim();
+			var password = $("#pass1").val();
+			var confirmPassword = $("#pass2").val();
+
+			if (password !== "" && confirmPassword !== "" && email !== "") {
+
+				if ((confirmPassword === password)) {
+
+					//checkIfUserExists(email);
+
+					if (repeatCheck) {
+
+						repeatCheck = false;
+
+						// Show the loader
+						$("#animationWindow").removeClass("hide");
+						$("#animationWindow").addClass("showflex");
+
+						setTimeout(function() {
+
+							// Hide the loader
+							$("#animationWindow").removeClass("showflex");
+							$("#animationWindow").addClass("hide");
+
+							//createActBtnClicked();
+
+						}, 600);
+
+						checkDelay = 0;
+					} else {
+						checkDelay = 0;
+					}
+
+					setTimeout(function() {
+
+                        if (userExists === true) {
+                                var emailSent = false;
+                                // only allow people in standby to register late
+                                const standbyAcceptedRef = ref.child('standbyAccepted');
+                                standbyAcceptedRef.once('value').then(function(snapshot) {
+                                    let emails = snapshot.val();
+                                    let accepted = false;
+                                    for (let key in emails) {
+                                        if (emails[key].email == email) {
+                                            accepted = true;
+                                            // Creating user in firebase
+                                            firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
+
+                                            // You can save the user data here.
+                                            if (user) {
+                                                var userEmail = user.email;
+                                                var key = user.uid;
+                                                ref.child('users/'+key).set({'email': userEmail, 'applied': false});
+                                                localStorage.setItem('loggedInUserKey', key);
+                                            } else {
+
+                                            }
+                                            firebase.auth().currentUser.sendEmailVerification().then(function() {
+
+                                                // STATUS
+                                                $("#loginStatusTxt").text("Verification email sent. Click the link and sign in!");
+                                                $("#loginStatusTxt").addClass("show");
+                                                this.emailSent = true;
+                                                var delay = 2000;
+
+                                                setTimeout(function() {
+
+                                                    window.location.href = "login.html";
+
+                                                }, delay);
+
+                                            }.bind(this), function(error) {
+
+                                                if (error !== null) {  }
+
+                                            });
+
+                                            }).catch(function(error) {
+
+                                            var errorCode = error.code;
+                                            var errorMessage = error.message;
+
+                                            // Handling different types of errors
+                                            if (!this.emailSent) {
+                                                if (errorCode.includes("weak-password")) {
+                                                // ERROR
+                                                $("#loginStatusTxt").text("Password should be at least 6 characters!");
+                                                $("#loginStatusTxt").addClass("show");
+                                                } else if (errorCode.includes("email-already-in-use")) {
+                                                // ERROR
+                                                $("#loginStatusTxt").text("Email already in use! Please Login.");
+                                                $("#loginStatusTxt").addClass("show");
+                                                } else if (errorCode.includes("invalid-email")) {
+                                                // ERROR
+                                                $("#loginStatusTxt").text("Invalid email!");
+                                                $("#loginStatusTxt").addClass("show");
+                                                } else {
+                                                // ERROR
+                                                $("#loginStatusTxt").text("Unknown error making your account. Try again");
+                                                $("#loginStatusTxt").addClass("show");
+                                                }
+                                            } 
+                                            this.emailSent = false;
+                                            }.bind(this));
+                                        }
+                                    }
+
+                                    if (!accepted) {
+                                        // STATUS
+                                        $("#loginStatusTxt").text("You do not have permission to register late.");
+                                        $("#loginStatusTxt").addClass("show");
+                                    }
+                                });
+
+                    } else {
+
+                        // ERROR
+                        $("#loginStatusTxt").text("Please use the email you applied with.");
+                        $("#loginStatusTxt").addClass("show");
+
+                    }
+
+                }, checkDelay);
+
+				} else {
+
+					// ERROR
+					$("#loginStatusTxt").text("Passwords do not match!");
+					$("#loginStatusTxt").addClass("show");
+
+				}
+
+			} else {
+
+				// ERROR
+				$("#loginStatusTxt").text("Please fill in all fields!");
+				$("#loginStatusTxt").addClass("show");
+
+			}
+
+		}
+
+		function sendToSignIn() {
+			console.log('called');
+			window.location.href = 'login.html';
+		}
+
+		function showPassPressed(field, icon) {
+
+			if (field.type === "password") {
+				field.type = "text";
+				$(icon).removeClass("fa-lock");
+				$(icon).addClass("fa-unlock-alt");
+			} else {
+				field.type = "password";
+				$(icon).addClass("fa-lock");
+				$(icon).removeClass("fa-unlock-alt");
+			}
+
+		}
+
+		function googleSignIn() {
+			var provider = new firebase.auth.GoogleAuthProvider();
+			provider.addScope('email');
+			firebase.auth().signInWithPopup(provider).then(function(result) {
+				if (!result.user) {return;}
+				// Show the loader
+				$("#animationWindow").removeClass("hide");
+				$("#animationWindow").addClass("showflex");
+
+				const email = result.user.email;
+				const emailVerified = result.user.emailVerified;
+				const userId = result.user.uid;
+				signInUser(result.user, email, emailVerified, userId);
+			});
+		}
+
+		function facebookSignIn() {
+			var provider = new firebase.auth.FacebookAuthProvider();
+			firebase.auth().signInWithPopup(provider)
+				.then(function(result) {
+					var token = result.credential.accessToken;
+					if (!result.user) {return;}
+					// Show the loader
+					$("#animationWindow").removeClass("hide");
+					$("#animationWindow").addClass("showflex");
+					var user = result.user;
+					const email = result.user.email;
+					const emailVerified = result.user.emailVerified;
+					const userId = result.user.uid;
+					localStorage.setItem('provider', 'facebook');
+					signInUser(user, email, emailVerified, userId);
+				}).catch(function(error) {
+					console.log(error.code);
+					console.log(error.message);
+				});
+		}
+
+		function signInUser(user, email, emailVerified, userId) {
+			// Save login info in local storage
+			var userRef = firebase.database().ref("users/"+user.uid);
+			userRef.once('value').then(function(snapshot) {
+				localStorage.setItem('loggedInUserKey', user.uid);
+				if (!snapshot.val()) {
+                    // only allow people in standby to register late
+                    const standbyAcceptedRef = ref.child('standbyAccepted');
+                    standbyAcceptedRef.once('value').then(function(snapshot) {
+                        let emails = snapshot.val();
+                        for (let key in emails) {
+                            if (emails[key].email == email) {
+                                // create user in database
+                                var currentUser = {email: email, applied: false};
+                                ref.child('users/'+userId).set(currentUser);
+                                localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
+                            }
+                        }
+                    });
+				} else {
+					localStorage.setItem('loggedInUser', JSON.stringify(snapshot.val()));
+				}
+				const delay = 1000;
+				setTimeout(function() {
+					// Hide the loader
+					$("#animationWindow").removeClass("showflex");
+					$("#animationWindow").addClass("hide");
+
+					window.location.href = "index.html";
+
+				}, delay);
+			});
+		}
+
+	</script>
+
+</html>

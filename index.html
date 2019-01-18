@@ -139,6 +139,10 @@
 						<a href="#" class="pure-menu-link" onclick="menuClick(9)">Sponsors</a>
 					</li>
 
+					<li id="op10" class="pure-menu-item top-ln hide">
+						<a href="#" class="pure-menu-link" onclick="menuClick(10)">Stand by</a>
+					</li>
+
                     <li id="op3" class="pure-menu-item top-ln">
                         <a href="#" class="pure-menu-link" onclick="menuClick(3)">Logout</a>
                     </li>
@@ -545,10 +549,13 @@
 		<!-- %%%%%%%%%%%%%% Applicant Info %%%%%%%%%%%%%% -->
 	  <div id="info" class="hide">
 
-		<h1 class="header-main-type">Applicant information 	<button id="switchInfoBtn" class="button dark infoSwitchBtn" onclick="toggleUserInfo()">Show Hidden</button></h1>
+		<h1 class="header-main-type">Applicant information</h1>
 
 				<div class="container-fluid notif-con">
 					<div class="row">
+						<h3 style="text-align: center">In line: <span id="standbyCount"></span></h3>
+					</div>
+					<div class="row hide">
 						<button class="button green" id="acceptAllBtn" onclick="acceptAll()">
 							<p>Accept All</p>
 						</button>
@@ -565,6 +572,29 @@
 				</div>
 
 		</div>
+		<!-- %%%%%%%%%%%%%% Stand by %%%%%%%%%%%%%% -->
+		<div id="standby" class="hide">
+
+			<h1 class="header-main-type">Stand by</button></h1>
+	
+					<div class="container-fluid notif-con">
+						<div class="row">
+							<h3 style="text-align: center">In line: <span id="standbyCount2"></span></h3>
+						</div>
+						<div class="row">
+							<div class="col-md-12 top-margin">
+								<label class="form-lbl" for="EMAIL" name="">Email <span class="redTxt"> * </span></label>
+								<input class="form-field required" id="standbyEmail" name="EMAIL" type="email" placeholder="" required/>
+							</div>
+						</div>
+						<div class="row top-margin">
+							<div class="col-md-12">
+									<button id="standbySubmitBtn" class="button green" style="color: white" onclick="standbySubmit()">Submit</button>
+							</div>
+						</div>
+					</div>
+	
+			</div>
 		<!-- %%%%%%%%%%%%%% Transportation Form %%%%%%%%%%%%%% -->
 		<div id="transportationForm" class="hide">
 
@@ -1055,6 +1085,8 @@
 		var appliedSchools = [];
 		var schoolsAndCount = {};
 		var topTenSchools = {};
+		const VOLUNTEER_EMAIL = 'volunteer@swamphacks.com';
+		const SPONSOR_EMAIL = 'sponsorsonly@swamphacks.com';
 
 		// Stats
 
@@ -1282,7 +1314,10 @@
 
 		// send unlogged users to login page
 		firebase.auth().onAuthStateChanged(function(currentUser) {
-			if (currentUser && currentUser.emailVerified) {
+			if (currentUser.email === 'sponsors@swamphacks.com' 
+				|| currentUser.email === VOLUNTEER_EMAIL || currentUser.email === SPONSOR_EMAIL) {
+					// don't do anything for now
+			} else if (currentUser && currentUser.emailVerified) {
 				// keep user info updated
 				updateUserData(currentUser.uid)
 			} else if(localStorage.getItem('provider') != 'facebook'){
@@ -1303,6 +1338,9 @@
 			$("#op2").removeClass("hide");
 			$("#op2").addClass("show");
 
+			$("#op10").removeClass("hide");
+			$("#op10").addClass("show");
+
 			// $("#op5").removeClass("hide");
 			// $("#op5").addClass("show");
 
@@ -1316,7 +1354,7 @@
 			// reloadStats();
 		}
 
-		if (userObj.applied || userObj.email === "sponsors@swamphacks.com") {
+		if (userObj.applied || userObj.email === "sponsors@swamphacks.com" || userObj.email == VOLUNTEER_EMAIL || currentUser.email === SPONSOR_EMAIL) {
 			this.showMenu();
 			if (userObj.transportation == 'yes') { // Deadline passed
 				//show form on menu
@@ -1380,6 +1418,59 @@
 			// show saved form info
 			if (savedFormData.email == userObj.email)
 				addSavedFormData();
+		}
+
+		if (userObj.email === VOLUNTEER_EMAIL) {
+
+			$('#dashboard').addClass('hide');
+			$('#dashboard').removeClass('show');
+			$('#qrcode').addClass('hide');
+			// hide dashboard tab
+			$("#op1").removeClass("show");
+			$("#op1").addClass("hide");
+			// show applicant info?
+			// $("#op2").removeClass("hide");
+			// $("#op2").addClass("show");
+
+			$("#op10").removeClass("hide");
+			$("#op10").addClass("show");
+
+			$('#standby').addClass('show');
+			$('#standby').removeClass('hide');
+
+			// $("#op5").removeClass("hide");
+			// $("#op5").addClass("show");
+
+			// $("#op6").removeClass("hide");
+			// $("#op6").addClass("show");
+
+			$("#op0").removeClass("show");
+			$("#op0").addClass("hide");
+
+			// getStats();
+			// reloadStats();
+		}
+
+		if (userObj.email === SPONSOR_EMAIL) {
+
+			$('#dashboard').addClass('hide');
+			$('#dashboard').removeClass('show');
+			$('#qrcode').addClass('hide');
+			// hide dashboard tab
+			$("#op1").removeClass("show");
+			$("#op1").addClass("hide");
+
+			// $("#op5").removeClass("hide");
+			// $("#op5").addClass("show");
+
+			// $("#op6").removeClass("hide");
+			// $("#op6").addClass("show");
+
+			$("#op0").removeClass("show");
+			$("#op0").addClass("hide");
+
+			// getStats();
+			// reloadStats();
 		}
 
 		// Disable application if needed
@@ -2470,7 +2561,62 @@
 		}
 
 	// %%%%%%%%%%%%% End of Application Functions %%%%%%%%%%%%% //
+	const standbySizeGRef = ref.child('standbySize');
+	standbySizeGRef.on('child_added', function(data) {
+		let size = data.val();
+		if (size) {
+			$('#standbyCount').text(size.toString());
+			$('#standbyCount2').text(size.toString());
+		} else {
+			$('#standbyCount').text('0');
+			$('#standbyCount2').text('0');
+		}
+	});
+	standbySizeGRef.on('child_changed', function(data) {
+		let size = data.val();
+		if (size) {
+			$('#standbyCount').text(size.toString());
+			$('#standbyCount2').text(size.toString());
+		} else {
+			$('#standbyCount').text('0');
+			$('#standbyCount2').text('0');
+		}
+	});
 
+	function standbySubmit() {
+		const email = $("#standbyEmail").val().trim();
+		if (email && validateEmail(email)) {
+			const standbyWaitingRef = ref.child('standbyWaiting');
+			standbyWaitingRef.once('value').then(function(snapshot) {
+				let users = snapshot.val();
+				let size = users.length;
+				let data = {
+					'email': email,
+					'appliedTime': firebase.database.ServerValue.TIMESTAMP,
+					'spot': size
+				};
+				let updates = {};
+				updates[size] = data;
+				size += 1;
+				// update size
+				let actualSize = 0;
+				for (let user of users) {
+					if (user) {
+						actualSize += 1;
+					}
+				}
+				actualSize += 1;
+				// add email to list
+				standbyWaitingRef.update(updates);
+				ref.child('standbySize').update({'size': actualSize});
+				// reset field
+				$("#standbyEmail").val('');
+				$("#standbyEmail").removeClass('requiredField');
+			});
+		} else {
+			$("#standbyEmail").addClass('requiredField');
+		}
+	}
 	// %%%%%%%%%%%%% Admin Functions %%%%%%%%%%%%% //
 	function acceptAll() {
 		const usersRef = ref.child('users');
@@ -2597,13 +2743,11 @@
 		statusUpdates['status'] = 'ACCEPTED';
 		applicantRef.update(statusUpdates);
 		// remove from list
-		// hide card TODO: delete instead?
 		$('#listItem'+index.toString()).addClass('hide');
 	}
 
 	function rejectUser(userId, email, index) {
 		// remove from list
-		// hide card TODO: delete instead?
 		$('#listItem'+index.toString()).addClass('hide');
 		// delete from hidden list in db
 		// add to rejected list
@@ -2674,7 +2818,6 @@
 		// make hidden card and add to hidden list
 		// var hiddenUserList = document.getElementById("hiddenUserList");
 		// hiddenUserList.innerHTML += createHiddenUserCard(index, userData);
-		// hide card TODO: delete instead?
 		$('#listItem'+index.toString()).addClass('hide');
 	}
 	// %%%%%%%%%%%%% Schedule Functions %%%%%%%%%%%%% //
@@ -2742,8 +2885,106 @@
 		});
 	}
 
+	function acceptStandbyUser(email, spot, index) {
+		const usersRef = ref.child('users');
+		usersRef.once('value').then(function(snapshot) {
+			// add loading screen, might take a while
+			let users = snapshot.val();
+			let userId = null;
+			// check to make sure they have an account
+			for (let key in users) {
+				let user = users[key];
+				if (user['email'] == email) {
+					userId = key;
+					break;
+				}
+			}
+			if (userId) {
+				// change user status to confirm
+				const userRef = ref.child('users/'+userId);
+				userRef.update({'status': 'CONFIRMED'});
+				// add them to check in list
+				const checkinRef = ref.child('events/-LW6uJlNdMhS9hBOTZPe/');
+				checkinRef.once('value').then(function(snapshot) {
+					let attendants = snapshot.val().attendants;
+					attendants.push(userId);
+					checkinRef.update({'attendants': attendants});
+					// Hide the loader
+					$("#animationWindow").removeClass("showflex");
+					$("#animationWindow").addClass("hide");
+					// remove from list
+					$('#listItem'+index.toString()).addClass('hide');
+					// remove from standbyWaiting, and update size
+					const standbyWaitingRef = ref.child("standbyWaiting");
+					standbyWaitingRef.child(spot).remove();
+					const standbySizeRef = ref.child('standbySize');
+					standbySizeRef.once('value').then(function(snapshot) {
+						let size = snapshot.val().size;
+						size -= 1;
+						standbySizeRef.update({'size': size});
+					});
+				});
+				// give them team, update next team type
+				const teamType = ['Gator', 'Heron', 'Dragonfly', 'Turtle'];
+				const teamTable = {'Gator': 0, 'Heron': 1, 'Dragonfly': 2, 'Turtle': 3};
+				const maxSize = teamType.length;
+				ref.child('nextTeam').once('value').then(function(snapshot) {
+					let type = snapshot.val().type;
+					let nextTypeIndex = teamTable[type] + 1 >= maxSize ? 0: teamTable[type] + 1;
+					let nextType = teamType[nextTypeIndex];
+					userRef.update({'team': type});
+					ref.child('nextTeam').update({'type': nextType});
+				});
+			} else {
+				// alert user that account does not exist
+				alert('No account exists with this email');
+			}
+		});
+	}
+
+	function createStandbyElement(index, user) {
+		var openLi = '<li class="userInfoItem" id="listItem'+ index.toString() +'">';
+		var closeLi = '</li>';
+		var openDiv = '<div class="row">';
+		var openHeader = '<div class="row cardHeader">';
+		var openContent = '<div class="row cardContent">';
+		var closeDiv = '</div>';
+		var closeP = '</p>';
+		// Setup header for card
+		var list = openLi + openHeader + '<div class="col-md-5 cardHeaderTitle">'
+			+ user.email + closeDiv + closeDiv;
+		// Setup card content 
+		// list += openContent;
+		// add accept button
+		list += openDiv + '<button class="button cardBtn" style="float: right; margin-left: 10px" onclick="acceptStandbyUser(\''+user.email+'\','+user.spot+ ',' +index+')"> Accept!</button>';
+		// Close content tag
+		// list += closeDiv;
+		// close list tag
+		list += closeLi;
+		return list;
+	}
+
 	var userInfoLoaded = false;
-	
+
+	function loadStandbyInfo() {
+		var standbyWaitingRef = ref.child("standbyWaiting");
+		standbyWaitingRef.orderByChild("appliedTime").once('value').then(function(snapshot) {
+			var userList = document.getElementById("userList");
+			var itemNumber = 0;
+			snapshot.forEach(function(childSnapshot) {
+				let index = childSnapshot.key;
+				let user = childSnapshot.val();
+				userList.innerHTML += createStandbyElement(itemNumber, user);
+				itemNumber += 1;
+			});
+			// Hide the loader
+			$("#animationWindow").removeClass("showflex");
+			$("#animationWindow").addClass("hide");
+
+			userInfoLoaded = true;
+		});
+	}
+
 	function loadUserInfo() {
 		var userRef = ref.child("users");
 		userRef.orderByChild("appliedTime").once('value').then(function(snapshot) {
@@ -2816,6 +3057,7 @@
 		$("#op7").removeClass("pure-menu-selected");
 		$("#op8").removeClass("pure-menu-selected");
 		$("#op9").removeClass("pure-menu-selected");
+		$("#op10").removeClass("pure-menu-selected");
 
 		$("#application").addClass("show");
         $("#application").removeClass("hide");
@@ -2852,6 +3094,7 @@
 		$("#op7").removeClass("pure-menu-selected");
 		$("#op8").removeClass("pure-menu-selected");
 		$("#op9").removeClass("pure-menu-selected");
+		$("#op10").removeClass("pure-menu-selected");
 
         $("#dashboard").addClass("show");
 		$("#dashboard").removeClass("hide");
@@ -2876,6 +3119,9 @@
 
 		$("#sponsors").addClass("hide");
 		$("#sponsors").removeClass("show");
+
+		$("#standby").addClass("hide");
+		$("#standby").removeClass("show");
 
 		if (userObj.status !== undefined) {
 
@@ -2909,6 +3155,7 @@
 		$("#op7").removeClass("pure-menu-selected");
 		$("#op8").removeClass("pure-menu-selected");
 		$("#op9").removeClass("pure-menu-selected");
+		$("#op10").removeClass("pure-menu-selected");
 
 		$("#info").addClass("show");
         $("#info").removeClass("hide");
@@ -2934,12 +3181,16 @@
 		$("#sponsors").addClass("hide");
 		$("#sponsors").removeClass("show");
 
+		$("#standby").addClass("hide");
+		$("#standby").removeClass("show");
+
 		if (!userInfoLoaded) {
 			// Show the loader
 			$("#animationWindow").removeClass("hide");
 			$("#animationWindow").addClass("showflex");
 			// load user's information
-			loadUserInfo();
+			// loadUserInfo();
+			loadStandbyInfo();
 		}
 	  } else if (item === 3) {
 
@@ -2957,6 +3208,7 @@
 		$("#op7").removeClass("pure-menu-selected");
 		$("#op8").removeClass("pure-menu-selected");
 		$("#op9").removeClass("pure-menu-selected");
+		$("#op10").removeClass("pure-menu-selected");
 
 		$("#application").addClass("hide");
         $("#application").removeClass("show");
@@ -2982,6 +3234,9 @@
 		$("#sponsors").addClass("hide");
 		$("#sponsors").removeClass("show");
 
+		$("#standby").addClass("hide");
+		$("#standby").removeClass("show");
+
 		// appliedSchools = [];
 		// schoolsAndCount = {};
 		// topTenSchools = {};
@@ -3001,6 +3256,7 @@
 		$("#op7").removeClass("pure-menu-selected");
 		$("#op8").removeClass("pure-menu-selected");
 		$("#op9").removeClass("pure-menu-selected");
+		$("#op10").removeClass("pure-menu-selected");
 
 		$("#application").addClass("hide");
         $("#application").removeClass("show");
@@ -3026,6 +3282,9 @@
 		$("#sponsors").addClass("hide");
 		$("#sponsors").removeClass("show");
 
+		$("#standby").addClass("hide");
+		$("#standby").removeClass("show");
+
 	  } else if (item === 7) {
 		$("#op7").addClass("pure-menu-selected");
 		$("#op6").removeClass("pure-menu-selected");
@@ -3036,7 +3295,7 @@
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op8").removeClass("pure-menu-selected");
 		$("#op9").removeClass("pure-menu-selected");
-
+		$("#op10").removeClass("pure-menu-selected");
 
 		$("#transportationForm").addClass("show");
 		$("#transportationForm").removeClass("hide");
@@ -3062,6 +3321,9 @@
 		$("#sponsors").addClass("hide");
 		$("#sponsors").removeClass("show");
 
+		$("#standby").addClass("hide");
+		$("#standby").removeClass("show");
+
 	   } else if (item === 8) {
 		$("#op8").addClass("pure-menu-selected");
 		$("#op7").removeClass("pure-menu-selected");
@@ -3072,6 +3334,7 @@
 		$("#op3").removeClass("pure-menu-selected");
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op9").removeClass("pure-menu-selected");
+		$("#op10").removeClass("pure-menu-selected");
 
 		$("#schedule").addClass("show");
 		$("#schedule").removeClass("hide");
@@ -3097,6 +3360,9 @@
 		$("#sponsors").addClass("hide");
 		$("#sponsors").removeClass("show");
 
+		$("#standby").addClass("hide");
+		$("#standby").removeClass("show");
+
 	   } else if (item === 9) {
 		$("#op9").addClass("pure-menu-selected");
 		$("#op7").removeClass("pure-menu-selected");
@@ -3107,9 +3373,52 @@
 		$("#op3").removeClass("pure-menu-selected");
 		$("#op5").removeClass("pure-menu-selected");
 		$("#op8").removeClass("pure-menu-selected");
+		$("#op10").removeClass("pure-menu-selected");
 
 		$("#sponsors").addClass("show");
 		$("#sponsors").removeClass("hide");
+
+		$("#transportationForm").addClass("hide");
+		$("#transportationForm").removeClass("show");
+
+		$("#application").addClass("hide");
+		$("#application").removeClass("show");
+
+		$("#info").addClass("hide");
+		$("#info").removeClass("show");
+
+		$("#dashboard").addClass("hide");
+		$("#dashboard").removeClass("show");
+
+		$("#login").addClass("hide");
+		$("#login").removeClass("show");
+
+		$("#notif").addClass("hide");
+		$("#notif").removeClass("show");
+
+		$("#schedule").addClass("hide");
+		$("#schedule").removeClass("show");
+
+		$("#standby").addClass("hide");
+		$("#standby").removeClass("show");
+
+	   } else if (item === 10) {
+		$("#op10").addClass("pure-menu-selected");
+		$("#op9").removeClass("pure-menu-selected");
+		$("#op7").removeClass("pure-menu-selected");
+		$("#op6").removeClass("pure-menu-selected");
+		$("#op0").removeClass("pure-menu-selected");
+		$("#op1").removeClass("pure-menu-selected");
+		$("#op2").removeClass("pure-menu-selected");
+		$("#op3").removeClass("pure-menu-selected");
+		$("#op5").removeClass("pure-menu-selected");
+		$("#op8").removeClass("pure-menu-selected");
+
+		$("#standby").addClass("show");
+		$("#standby").removeClass("hide");
+
+		$("#sponsors").addClass("hide");
+		$("#sponsors").removeClass("show");
 
 		$("#transportationForm").addClass("hide");
 		$("#transportationForm").removeClass("show");
@@ -3386,6 +3695,10 @@
 			} else if (selected == 9) {
 
 				$("#headertxt").text("Sponsors");
+
+			} else if (selected == 10) {
+
+				$("#headertxt").text("Stand by");
 
 			}
 
