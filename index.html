@@ -1083,6 +1083,7 @@
 		var schoolsAndCount = {};
 		var topTenSchools = {};
 		const VOLUNTEER_EMAIL = 'volunteer@swamphacks.com';
+		const SPONSOR_EMAIL = 'sponsorsonly@swamphacks.com';
 
 		// Stats
 
@@ -1311,7 +1312,7 @@
 		// send unlogged users to login page
 		firebase.auth().onAuthStateChanged(function(currentUser) {
 			if (currentUser.email === 'sponsors@swamphacks.com' 
-				|| currentUser.email === VOLUNTEER_EMAIL) {
+				|| currentUser.email === VOLUNTEER_EMAIL || currentUser.email === SPONSOR_EMAIL) {
 					// don't do anything for now
 			} else if (currentUser && currentUser.emailVerified) {
 				// keep user info updated
@@ -1350,7 +1351,7 @@
 			// reloadStats();
 		}
 
-		if (userObj.applied || userObj.email === "sponsors@swamphacks.com" || userObj.email == VOLUNTEER_EMAIL) {
+		if (userObj.applied || userObj.email === "sponsors@swamphacks.com" || userObj.email == VOLUNTEER_EMAIL || currentUser.email === SPONSOR_EMAIL) {
 			this.showMenu();
 			if (userObj.transportation == 'yes') { // Deadline passed
 				//show form on menu
@@ -1433,6 +1434,28 @@
 
 			$('#standby').addClass('show');
 			$('#standby').removeClass('hide');
+
+			// $("#op5").removeClass("hide");
+			// $("#op5").addClass("show");
+
+			// $("#op6").removeClass("hide");
+			// $("#op6").addClass("show");
+
+			$("#op0").removeClass("show");
+			$("#op0").addClass("hide");
+
+			// getStats();
+			// reloadStats();
+		}
+
+		if (userObj.email === SPONSOR_EMAIL) {
+
+			$('#dashboard').addClass('hide');
+			$('#dashboard').removeClass('show');
+			$('#qrcode').addClass('hide');
+			// hide dashboard tab
+			$("#op1").removeClass("show");
+			$("#op1").addClass("hide");
 
 			// $("#op5").removeClass("hide");
 			// $("#op5").addClass("show");

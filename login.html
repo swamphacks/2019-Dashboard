@@ -156,6 +156,8 @@
 		// var acceptedRef = ref.child("accepted");
 		// var confirmedRef = ref.child("confirmed");
 		const VOLUNTEER_EMAIL = 'volunteer@swamphacks.com';
+		const SPONSOR_EMAIL = 'sponsorsonly@swamphacks.com';
+
 		$("form").submit(function() { return false; });
 
     function loginBtnClicked() {
@@ -172,7 +174,7 @@
 				// Login user
 				firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
 					 // User signed in
-					if (user.email != VOLUNTEER_EMAIL && !user.emailVerified) {
+					if (user.email != VOLUNTEER_EMAIL && user.email != SPONSOR_EMAIL && !user.emailVerified) {
 						// Hide the loader
 						$("#animationWindow").removeClass("showflex");
 						$("#animationWindow").addClass("hide");
@@ -188,7 +190,7 @@
 					 var smallDelay = 500;
 					
 						setTimeout(function() {
-							if (user.email != VOLUNTEER_EMAIL) {
+							if (user.email != VOLUNTEER_EMAIL && user.email != SPONSOR_EMAIL) {
 								var userRef = firebase.database().ref("users/"+user.uid);
 								userRef.once('value').then(function(snapshot) {
 									localStorage.setItem('loggedInUser', JSON.stringify(snapshot.val()));
