@@ -1190,99 +1190,99 @@
 			return list;
 		}
 
-		function setupSponsors() {
-			let html = '';
-			// Realtruck section
-			let list = document.getElementById('realtruck');
-			for (let sponsor of realtruckSponsor) {
-				html += createSponsorItem(sponsor);
-			}
-			list.innerHTML += html;
-			html = '';
-			// Citi section
-			list = document.getElementById('citi');
-			for (let sponsor of citiSponsor) {
-				html += createSponsorItem(sponsor);
-			}
-			list.innerHTML += html;
-			html = '';
-			// AMEX section
-			list = document.getElementById('amex');
-			for (let sponsor of amexSponsor) {
-				html += createSponsorItem(sponsor);
-			}
-			list.innerHTML += html;
-			html = '';
-			// infinite section
-			list = document.getElementById('infinite');
-			for (let sponsor of infiniteSponsor) {
-				html += createSponsorItem(sponsor);
-			}
-			list.innerHTML += html;
-			html = '';
-			// jp section
-			list = document.getElementById('jpMorgan');
-			for (let sponsor of jpSponsor) {
-				html += createSponsorItem(sponsor);
-			}
-			list.innerHTML += html;
-			html = '';
-			// infoTech section
-			list = document.getElementById('infoTech');
-			for (let sponsor of infoTechSponsor) {
-				html += createSponsorItem(sponsor);
-			}
-			list.innerHTML += html;
-			html = '';
-			// homeDepot section
-			list = document.getElementById('homeDepot');
-			for (let sponsor of homeDepotSponsor) {
-				html += createSponsorItem(sponsor);
-			}
-			list.innerHTML += html;
-			html = '';
-			// microsoft section
-			list = document.getElementById('microsoft');
-			for (let sponsor of microsoftSponsor) {
-				html += createSponsorItem(sponsor);
-			}
-			list.innerHTML += html;
-			html = '';
-			// google section
-			list = document.getElementById('google');
-			for (let sponsor of googleSponsor) {
-				html += createSponsorItem(sponsor);
-			}
-			list.innerHTML += html;
-			html = '';
-			// facebook section
-			list = document.getElementById('facebook');
-			for (let sponsor of facebookSponsor) {
-				html += createSponsorItem(sponsor);
-			}
-			list.innerHTML += html;
-			html = '';
-			// linode section
-			list = document.getElementById('linode');
-			for (let sponsor of linodeSponsor) {
-				html += createSponsorItem(sponsor);
-			}
-			list.innerHTML += html;
-			html = '';
-			// ultimate section
-			list = document.getElementById('ultimate');
-			for (let sponsor of ultimateSponsor) {
-				html += createSponsorItem(sponsor);
-			}
-			list.innerHTML += html;
-			html = '';
-			// exxon section
-			list = document.getElementById('exxon');
-			for (let sponsor of exxonSponsor) {
-				html += createSponsorItem(sponsor);
-			}
-			list.innerHTML += html;
-		}
+		// function setupSponsors() {
+		// 	let html = '';
+		// 	// Realtruck section
+		// 	let list = document.getElementById('realtruck');
+		// 	for (let sponsor of realtruckSponsor) {
+		// 		html += createSponsorItem(sponsor);
+		// 	}
+		// 	list.innerHTML += html;
+		// 	html = '';
+		// 	// Citi section
+		// 	list = document.getElementById('citi');
+		// 	for (let sponsor of citiSponsor) {
+		// 		html += createSponsorItem(sponsor);
+		// 	}
+		// 	list.innerHTML += html;
+		// 	html = '';
+		// 	// AMEX section
+		// 	list = document.getElementById('amex');
+		// 	for (let sponsor of amexSponsor) {
+		// 		html += createSponsorItem(sponsor);
+		// 	}
+		// 	list.innerHTML += html;
+		// 	html = '';
+		// 	// infinite section
+		// 	list = document.getElementById('infinite');
+		// 	for (let sponsor of infiniteSponsor) {
+		// 		html += createSponsorItem(sponsor);
+		// 	}
+		// 	list.innerHTML += html;
+		// 	html = '';
+		// 	// jp section
+		// 	list = document.getElementById('jpMorgan');
+		// 	for (let sponsor of jpSponsor) {
+		// 		html += createSponsorItem(sponsor);
+		// 	}
+		// 	list.innerHTML += html;
+		// 	html = '';
+		// 	// infoTech section
+		// 	list = document.getElementById('infoTech');
+		// 	for (let sponsor of infoTechSponsor) {
+		// 		html += createSponsorItem(sponsor);
+		// 	}
+		// 	list.innerHTML += html;
+		// 	html = '';
+		// 	// homeDepot section
+		// 	list = document.getElementById('homeDepot');
+		// 	for (let sponsor of homeDepotSponsor) {
+		// 		html += createSponsorItem(sponsor);
+		// 	}
+		// 	list.innerHTML += html;
+		// 	html = '';
+		// 	// microsoft section
+		// 	list = document.getElementById('microsoft');
+		// 	for (let sponsor of microsoftSponsor) {
+		// 		html += createSponsorItem(sponsor);
+		// 	}
+		// 	list.innerHTML += html;
+		// 	html = '';
+		// 	// google section
+		// 	list = document.getElementById('google');
+		// 	for (let sponsor of googleSponsor) {
+		// 		html += createSponsorItem(sponsor);
+		// 	}
+		// 	list.innerHTML += html;
+		// 	html = '';
+		// 	// facebook section
+		// 	list = document.getElementById('facebook');
+		// 	for (let sponsor of facebookSponsor) {
+		// 		html += createSponsorItem(sponsor);
+		// 	}
+		// 	list.innerHTML += html;
+		// 	html = '';
+		// 	// linode section
+		// 	list = document.getElementById('linode');
+		// 	for (let sponsor of linodeSponsor) {
+		// 		html += createSponsorItem(sponsor);
+		// 	}
+		// 	list.innerHTML += html;
+		// 	html = '';
+		// 	// ultimate section
+		// 	list = document.getElementById('ultimate');
+		// 	for (let sponsor of ultimateSponsor) {
+		// 		html += createSponsorItem(sponsor);
+		// 	}
+		// 	list.innerHTML += html;
+		// 	html = '';
+		// 	// exxon section
+		// 	list = document.getElementById('exxon');
+		// 	for (let sponsor of exxonSponsor) {
+		// 		html += createSponsorItem(sponsor);
+		// 	}
+		// 	list.innerHTML += html;
+		// }
 
 		function disableTransportForm() {
 			$("#mce-EMAIL").addClass("disabled");
@@ -1431,7 +1431,7 @@
 		schools.innerHTML += listHtml;
 
 		setupSchedule();
-		setupSponsors();
+		// setupSponsors();
 
 		function updateUserData(uid) {
 			const userRef = ref.child('users/'+uid);
