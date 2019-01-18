@@ -877,6 +877,10 @@ select.minimal {
   color: white;
 }
 
+.sponsorImg {
+  border-radius: 5px;
+}
+
 .eventName {
   margin-top: 10px;
 }

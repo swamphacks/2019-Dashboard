@@ -135,7 +135,7 @@
 						<a href="http://2019.swamphacks.com" target="_blank" class="pure-menu-link" onclick="menuClick(4)">2019 Website</a>
 					</li>
 
-					<li id="op9" class="pure-menu-item top-ln hide">
+					<li id="op9" class="pure-menu-item top-ln">
 						<a href="#" class="pure-menu-link" onclick="menuClick(9)">Sponsors</a>
 					</li>
 
@@ -1179,110 +1179,100 @@
 			var closeDiv = '</div>';
 			var closeP = '</p>';
 			var list = openLi;
-			// add sponsor image
-			list += '<div class="col-md-4"> <img src="img/sponsorImgs/' + sponsor.imgURL + '"/>';
+			if (sponsor.imageURL !== '') {
+				// add sponsor image
+				list += '<div class="col-md-2"> <img class="sponsorImg" src="img/sponsorImgs/' + sponsor.imageURL + '" width="100px" height="100px"/>' + '</div>';
+			} else {
+				list += '<div class="col-md-2"> </div>';
+			}
 			// add sponsor name
-			list += '<div class="col-md-4"> <h3 class="sponsorName">' + sponsor.name + '</h3> </div>';
+			list += '<div class="col-md-2"> <h3 class="sponsorName">' + sponsor.name + '</h3> </div>';
 			// add sponsor skill
-			list += '<div class="col-md-4"> <h3 class="sponsorSkills">' + sponsor.skills + '</h3> </div>';
+			list += '<div class="col-md-8"> <h4>Skills</h4> <p class="sponsorSkills">' + sponsor.skills + '</p> </div>';
 			// close list tag
 			list += closeLi;
 			return list;
 		}
 
-		// function setupSponsors() {
-		// 	let html = '';
-		// 	// Realtruck section
-		// 	let list = document.getElementById('realtruck');
-		// 	for (let sponsor of realtruckSponsor) {
-		// 		html += createSponsorItem(sponsor);
-		// 	}
-		// 	list.innerHTML += html;
-		// 	html = '';
-		// 	// Citi section
-		// 	list = document.getElementById('citi');
-		// 	for (let sponsor of citiSponsor) {
-		// 		html += createSponsorItem(sponsor);
-		// 	}
-		// 	list.innerHTML += html;
-		// 	html = '';
-		// 	// AMEX section
-		// 	list = document.getElementById('amex');
-		// 	for (let sponsor of amexSponsor) {
-		// 		html += createSponsorItem(sponsor);
-		// 	}
-		// 	list.innerHTML += html;
-		// 	html = '';
-		// 	// infinite section
-		// 	list = document.getElementById('infinite');
-		// 	for (let sponsor of infiniteSponsor) {
-		// 		html += createSponsorItem(sponsor);
-		// 	}
-		// 	list.innerHTML += html;
-		// 	html = '';
-		// 	// jp section
-		// 	list = document.getElementById('jpMorgan');
-		// 	for (let sponsor of jpSponsor) {
-		// 		html += createSponsorItem(sponsor);
-		// 	}
-		// 	list.innerHTML += html;
-		// 	html = '';
-		// 	// infoTech section
-		// 	list = document.getElementById('infoTech');
-		// 	for (let sponsor of infoTechSponsor) {
-		// 		html += createSponsorItem(sponsor);
-		// 	}
-		// 	list.innerHTML += html;
-		// 	html = '';
-		// 	// homeDepot section
-		// 	list = document.getElementById('homeDepot');
-		// 	for (let sponsor of homeDepotSponsor) {
-		// 		html += createSponsorItem(sponsor);
-		// 	}
-		// 	list.innerHTML += html;
-		// 	html = '';
-		// 	// microsoft section
-		// 	list = document.getElementById('microsoft');
-		// 	for (let sponsor of microsoftSponsor) {
-		// 		html += createSponsorItem(sponsor);
-		// 	}
-		// 	list.innerHTML += html;
-		// 	html = '';
-		// 	// google section
-		// 	list = document.getElementById('google');
-		// 	for (let sponsor of googleSponsor) {
-		// 		html += createSponsorItem(sponsor);
-		// 	}
-		// 	list.innerHTML += html;
-		// 	html = '';
-		// 	// facebook section
-		// 	list = document.getElementById('facebook');
-		// 	for (let sponsor of facebookSponsor) {
-		// 		html += createSponsorItem(sponsor);
-		// 	}
-		// 	list.innerHTML += html;
-		// 	html = '';
-		// 	// linode section
-		// 	list = document.getElementById('linode');
-		// 	for (let sponsor of linodeSponsor) {
-		// 		html += createSponsorItem(sponsor);
-		// 	}
-		// 	list.innerHTML += html;
-		// 	html = '';
-		// 	// ultimate section
-		// 	list = document.getElementById('ultimate');
-		// 	for (let sponsor of ultimateSponsor) {
-		// 		html += createSponsorItem(sponsor);
-		// 	}
-		// 	list.innerHTML += html;
-		// 	html = '';
-		// 	// exxon section
-		// 	list = document.getElementById('exxon');
-		// 	for (let sponsor of exxonSponsor) {
-		// 		html += createSponsorItem(sponsor);
-		// 	}
-		// 	list.innerHTML += html;
-		// }
+		function setupSponsors() {
+			let html = '';
+			// Realtruck section
+			let list = document.getElementById('realtruck');
+			for (let sponsor of realtruckSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// Citi section
+			list = document.getElementById('citi');
+			for (let sponsor of citiSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// AMEX section
+			list = document.getElementById('amex');
+			for (let sponsor of amexSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// infinite section
+			list = document.getElementById('infinite');
+			for (let sponsor of infiniteSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// jp section
+			list = document.getElementById('jpMorgan');
+			for (let sponsor of jpSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// infoTech section
+			list = document.getElementById('infoTech');
+			for (let sponsor of infoTechSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// homeDepot section
+			list = document.getElementById('homeDepot');
+			for (let sponsor of homeDepotSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// microsoft section
+			list = document.getElementById('microsoft');
+			for (let sponsor of microsoftSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// google section
+			list = document.getElementById('google');
+			for (let sponsor of googleSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// facebook section
+			list = document.getElementById('facebook');
+			for (let sponsor of facebookSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// exxon section
+			list = document.getElementById('exxon');
+			for (let sponsor of exxonSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+		}
 
 		function disableTransportForm() {
 			$("#mce-EMAIL").addClass("disabled");
@@ -1431,7 +1421,7 @@
 		schools.innerHTML += listHtml;
 
 		setupSchedule();
-		// setupSponsors();
+		setupSponsors();
 
 		function updateUserData(uid) {
 			const userRef = ref.child('users/'+uid);
@@ -1460,7 +1450,7 @@
 			}
 		});
 		// add email to application and disable field
-		// $('#appEmail').val(userObj.email);
+		$('#appEmail').val(userObj.email);
 		// $('#appEmail').prop("disabled", true);
 		// Show admin options
 		if (userObj.email === "sponsors@swamphacks.com") {
@@ -2524,7 +2514,7 @@
                         extraInfo: comments,
 						authorizeOption: authorizeOption,
                         isVolunteer: false,
-                        status: "ACCEPTED",
+                        status: "PENDING",
 						applied: true,
 						appliedTime: firebase.database.ServerValue.TIMESTAMP
                     };
