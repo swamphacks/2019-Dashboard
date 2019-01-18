@@ -885,6 +885,23 @@ select.minimal {
   margin-top: 10px;
 }
 
+.sponsorItem {
+  transition: 0.3s;
+  /* remove row margin */
+  margin-right: 0!important;
+  margin-left: 0!important;
+  padding: 5px 10px;
+  text-align: center;
+  font-family: 'Trebuchet MS',  sans-serif;
+  color: black;
+}
+
+.sponsorName {
+}
+
+.sponsorSkills {
+}
+
 .foodColor {
   background-color: #6C9668;
 }

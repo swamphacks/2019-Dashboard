@@ -135,7 +135,7 @@
 						<a href="http://2019.swamphacks.com" target="_blank" class="pure-menu-link" onclick="menuClick(4)">2019 Website</a>
 					</li>
 
-					<li id="op9" class="pure-menu-item top-ln">
+					<li id="op9" class="pure-menu-item top-ln hide">
 						<a href="#" class="pure-menu-link" onclick="menuClick(9)">Sponsors</a>
 					</li>
 
@@ -1003,47 +1003,72 @@
 		<h1 class="header-main-type">Sponsors</h1>
 
 		<div class="container-fluid notif-con">
-			<div class="sponsorContainer">
-				<a class="sponsorAnchor" href="https://www.realtruck.com/" target="_blank">
-					<img class="sponsorLogo" src="./img/sponsorLogos/realTruckColor.png" width="70%" height="70%">
-				</a>
-				<a class="sponsorAnchor" href="https://online.citi.com/US/login.do?locale=en_US" target="_blank">
-					<img class="sponsorLogo" src="./img/sponsorLogos/citiBlack.png" width="35%" height="35%">
-				</a>
-				<a class="sponsorAnchor" href="https://www.americanexpress.com/" target="_blank">
-					<img class="sponsorLogo" src="./img/sponsorLogos/amexColor.png" width="20%" height="20%">
-				</a>
-				<a class="sponsorAnchor" href="https://www.infiniteenergy.com/" target="_blank">
-					<img class="sponsorLogo" src="./img/sponsorLogos/infiniteColor.png" width="30%" height="30%">
-				</a>
-				<a class="sponsorAnchor" href="https://www.jpmorgan.com/country/US/en/jpmorgan" target="_blank">
-					<img class="sponsorLogo" src="./img/sponsorLogos/JPColor.png" width="30%" height="30%">
-				</a>
-				<a class="sponsorAnchor" href="https://www.infotechfl.com/" target="_blank">
-					<img class="sponsorLogo" src="./img/sponsorLogos/infoTechColor.png" width="30%" height="30%">
-				</a>
-				<a class="sponsorAnchor" href="https://www.homedepot.com/" target="_blank">
-					<img class="sponsorLogo" src="./img/sponsorLogos/homeDepotColor.png" width="20%" height="20%">
-				</a>
-				<a class="sponsorAnchor" href="https://www.microsoft.com/en-us/"target="_blank">
-					<img class="sponsorLogo" src="./img/sponsorLogos/microsoftColor.png" width="20%" height="20%">
-				</a>
-				<a class="sponsorAnchor" href="https://www.google.com/" target="_blank">
-					<img class="sponsorLogo" src="./img/sponsorLogos/googleColor.png" width="15%" height="15%">
-				</a>
-				<a class="sponsorAnchor" href="https://www.facebook.com/" target="_blank">
-					<img class="sponsorLogo" src="./img/sponsorLogos/facebookColor.png" width="15%" height="15%">
-				</a>
-				<a class="sponsorAnchor" href="https://www.linode.com/" target="_blank">
-					<img class="sponsorLogo" src="./img/sponsorLogos/linodeColor.png" width="15%" height="15%">
-				</a>
-				<a class="sponsorAnchor" href="https://www.ultimatesoftware.com/" target="_blank">
-					<img class="sponsorLogo" src="./img/sponsorLogos/ultimateColor.png" width="15%" height="15%">
-				</a>
-				<a class="sponsorAnchor" href="https://www.exxon.com/en/my-account" target="_blank">
-					<img class="sponsorLogo" src="./img/sponsorLogos/exxonColor.png" width="15%" height="15%">
-				</a>
-			</div>
+				<!-- RealTruck -->
+				<button class="button eventButton" onclick="toggleSponsor('realtruckContainer')">RealTruck Sponsors</button>
+				<div id="realtruckContainer">
+					<ul class="eventList" id="realtruck"></ul>
+				</div>
+				<!-- Citi -->
+				<button class="button eventButton" onclick="toggleSponsor('citiContainer')">Citi Sponsors</button>
+				<div id="citiContainer">
+					<ul class="eventList" id="citi"></ul>
+				</div>
+				<!-- AMEX -->
+				<button class="button eventButton" onclick="toggleSponsor('amexContainer')">AMEX Sponsors</button>
+				<div id="amexContainer">
+					<ul class="eventList" id="amex"></ul>
+				</div>
+				<!-- Infinite -->
+				<button class="button eventButton" onclick="toggleSponsor('infiniteContainer')">Infinite Energy Sponsors</button>
+				<div id="infiniteContainer">
+					<ul class="eventList" id="infinite"></ul>
+				</div>
+				<!-- JP -->
+				<button class="button eventButton" onclick="toggleSponsor('jpMorganContainer')">JP Morgan Sponsors</button>
+				<div id="jpMorganContainer">
+					<ul class="eventList" id="jpMorgan"></ul>
+				</div>
+				<!-- InfoTech -->
+				<button class="button eventButton" onclick="toggleSponsor('infoTechContainer')">Info Tech Sponsors</button>
+				<div id="infoTechContainer">
+					<ul class="eventList" id="infoTech"></ul>
+				</div>
+				<!-- HomeDepot -->
+				<button class="button eventButton" onclick="toggleSponsor('homeDepotContainer')">Home Depot Sponsors</button>
+				<div id="homeDepotContainer">
+					<ul class="eventList" id="homeDepot"></ul>
+				</div>
+				<!-- Microsoft -->
+				<button class="button eventButton" onclick="toggleSponsor('microsoftContainer')">Microsoft Sponsors</button>
+				<div id="microsoftContainer">
+					<ul class="eventList" id="microsoft"></ul>
+				</div>
+				<!-- Google -->
+				<button class="button eventButton" onclick="toggleSponsor('googleContainer')">Google Sponsors</button>
+				<div id="googleContainer">
+					<ul class="eventList" id="google"></ul>
+				</div>
+				<!-- Facebook -->
+				<button class="button eventButton" onclick="toggleSponsor('facebookContainer')">Facebook Sponsors</button>
+				<div id="facebookContainer">
+					<ul class="eventList" id="facebook"></ul>
+				</div>
+				<!-- Linode -->
+				<button class="button eventButton" onclick="toggleSponsor('linodeContainer')">Linode Sponsors</button>
+				<div id="linodeContainer">
+					<ul class="eventList" id="linode"></ul>
+				</div>
+				<!-- Ultimate -->
+				<button class="button eventButton" onclick="toggleSponsor('ultimateContainer')">Ultimate Software Sponsors</button>
+				<div id="ultimateContainer">
+					<ul class="eventList" id="ultimate"></ul>
+				</div>
+				<!-- Exxon -->
+				<button class="button eventButton" onclick="toggleSponsor('exxonContainer')">Exxon Mobile Sponsors</button>
+				<div id="exxonContainer">
+					<ul class="eventList" id="exxon"></ul>
+				</div>
+
 		</div>
 
 	</div>
@@ -1065,6 +1090,7 @@
 	<script src="firebaseconfig.js"></script>
 	<script src="js/schoolList.js"></script>
 	<script src="js/eventList.js"></script>
+	<script src="js/sponsorInfo.js"></script>
 
   <script>
 		var ref = firebase.database().ref();
@@ -1145,6 +1171,117 @@
 				html += createEventItem(event);
 			}
 			sundayEventsList.innerHTML += html;
+		}
+
+		function createSponsorItem(sponsor) {
+			var openLi = '<li class="sponsorItem row">';
+			var closeLi = '</li>';
+			var closeDiv = '</div>';
+			var closeP = '</p>';
+			var list = openLi;
+			// add sponsor image
+			list += '<div class="col-md-4"> <img src="img/sponsorImgs/' + sponsor.imgURL + '"/>';
+			// add sponsor name
+			list += '<div class="col-md-4"> <h3 class="sponsorName">' + sponsor.name + '</h3> </div>';
+			// add sponsor skill
+			list += '<div class="col-md-4"> <h3 class="sponsorSkills">' + sponsor.skills + '</h3> </div>';
+			// close list tag
+			list += closeLi;
+			return list;
+		}
+
+		function setupSponsors() {
+			let html = '';
+			// Realtruck section
+			let list = document.getElementById('realtruck');
+			for (let sponsor of realtruckSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// Citi section
+			list = document.getElementById('citi');
+			for (let sponsor of citiSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// AMEX section
+			list = document.getElementById('amex');
+			for (let sponsor of amexSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// infinite section
+			list = document.getElementById('infinite');
+			for (let sponsor of infiniteSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// jp section
+			list = document.getElementById('jpMorgan');
+			for (let sponsor of jpSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// infoTech section
+			list = document.getElementById('infoTech');
+			for (let sponsor of infoTechSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// homeDepot section
+			list = document.getElementById('homeDepot');
+			for (let sponsor of homeDepotSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// microsoft section
+			list = document.getElementById('microsoft');
+			for (let sponsor of microsoftSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// google section
+			list = document.getElementById('google');
+			for (let sponsor of googleSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// facebook section
+			list = document.getElementById('facebook');
+			for (let sponsor of facebookSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// linode section
+			list = document.getElementById('linode');
+			for (let sponsor of linodeSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// ultimate section
+			list = document.getElementById('ultimate');
+			for (let sponsor of ultimateSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
+			html = '';
+			// exxon section
+			list = document.getElementById('exxon');
+			for (let sponsor of exxonSponsor) {
+				html += createSponsorItem(sponsor);
+			}
+			list.innerHTML += html;
 		}
 
 		function disableTransportForm() {
@@ -1294,6 +1431,7 @@
 		schools.innerHTML += listHtml;
 
 		setupSchedule();
+		setupSponsors();
 
 		function updateUserData(uid) {
 			const userRef = ref.child('users/'+uid);
@@ -2834,6 +2972,12 @@
 		$('#sundayEventContainer').slideToggle();
 	}
 	// %%%%%%%%%%%%% End of Schedule Functions %%%%%%%%%%%%% //
+
+	// %%%%%%%%%%%%% Sponsor Functions %%%%%%%%%%%%% //
+	function toggleSponsor(id) {
+		$('#'+id).slideToggle();
+	}
+	// %%%%%%%%%%%%% End of Sponsor Functions %%%%%%%%%%%%% //
 
 	// %%%%%%%%%%%%% Menu Functions %%%%%%%%%%%%% //
 	function createListElement(index, userData) {
