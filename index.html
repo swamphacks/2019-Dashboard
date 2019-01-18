@@ -1455,7 +1455,7 @@
 			} else if (currentUser && currentUser.emailVerified) {
 				// keep user info updated
 				updateUserData(currentUser.uid)
-			} else if(localStorage.getItem('provider') != 'facebook'){
+			} else if(!currentUser){
 				window.location.href = "login.html";
 			}
 		});
