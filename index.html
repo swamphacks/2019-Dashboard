@@ -1449,14 +1449,14 @@
 
 		// send unlogged users to login page
 		firebase.auth().onAuthStateChanged(function(currentUser) {
-			if (currentUser.email === 'sponsors@swamphacks.com' 
+			if(!currentUser){
+				window.location.href = "login.html";
+			} else if (currentUser.email === 'sponsors@swamphacks.com' 
 				|| currentUser.email === VOLUNTEER_EMAIL || currentUser.email === SPONSOR_EMAIL) {
 					// don't do anything for now
 			} else if (currentUser && currentUser.emailVerified) {
 				// keep user info updated
 				updateUserData(currentUser.uid)
-			} else if(!currentUser){
-				window.location.href = "login.html";
 			}
 		});
 		// add email to application and disable field
