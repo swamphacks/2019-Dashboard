@@ -2589,24 +2589,24 @@
 			const standbyWaitingRef = ref.child('standbyWaiting');
 			standbyWaitingRef.once('value').then(function(snapshot) {
 				let users = snapshot.val();
-				let size = users.length;
+				let spot = 0;
 				// update size
 				let actualSize = 0;
 				for (let index in users) {
 					if (users[index]) {
 						actualSize += 1;
-						size = parseInt(index);
+						spot = parseInt(index);
 					}
 				}
-				size += 1;
+				spot += 1;
 				actualSize += 1;
 				let data = {
 					'email': email,
 					'appliedTime': firebase.database.ServerValue.TIMESTAMP,
-					'spot': size
+					'spot': spot
 				};
 				let updates = {};
-				updates[size] = data;
+				updates[spot] = data;
 				// add email to list
 				standbyWaitingRef.update(updates);
 				ref.child('standbySize').update({'size': actualSize});
@@ -2907,7 +2907,7 @@
 				// add them to check in list
 				const checkinRef = ref.child('events/-LW6uJlNdMhS9hBOTZPe/');
 				checkinRef.once('value').then(function(snapshot) {
-					let attendants = snapshot.val().attendants;
+					let attendants =  snapshot.val() && snapshot.val().attendants ? snapshot.val().attendants : [];
 					attendants.push(userId);
 					checkinRef.update({'attendants': attendants});
 					// Hide the loader
