@@ -471,9 +471,6 @@
 								<button id="enableAppBtn" class="button green" onclick="enableApplications()"><p class="makeactbtn">Enable Applications</p></button>
 							</div>
 							<div class="col-md-12 top-margin">
-								<button id="resetAcceptBtn" class="button lightRed" onclick="resetAllAcceptance()"><p class="makeactbtn">Reset All Acceptance</p></button>
-							</div>
-							<div class="col-md-12 top-margin">
 								<button id="countConfirmBtn" class="button green" onclick="countConfirmed()"><p class="makeactbtn">Show Confirmed Count: <span id="confirmCountTxt"></span></p></button>
 							</div>
 						</div>
@@ -1354,7 +1351,7 @@
 			// reloadStats();
 		}
 
-		if (userObj.applied || userObj.email === "sponsors@swamphacks.com" || userObj.email == VOLUNTEER_EMAIL || currentUser.email === SPONSOR_EMAIL) {
+		if (userObj.applied || userObj.email === "sponsors@swamphacks.com" || userObj.email == VOLUNTEER_EMAIL || userObj.email === SPONSOR_EMAIL) {
 			this.showMenu();
 			if (userObj.transportation == 'yes') { // Deadline passed
 				//show form on menu
@@ -1465,6 +1462,9 @@
 
 			// $("#op6").removeClass("hide");
 			// $("#op6").addClass("show");
+
+			$('#schedule').removeClass('hide');
+			$('#schedule').addClass('show');
 
 			$("#op0").removeClass("show");
 			$("#op0").addClass("hide");
@@ -2590,6 +2590,16 @@
 			standbyWaitingRef.once('value').then(function(snapshot) {
 				let users = snapshot.val();
 				let size = users.length;
+				// update size
+				let actualSize = 0;
+				for (let index in users) {
+					if (users[index]) {
+						actualSize += 1;
+						size = parseInt(index);
+					}
+				}
+				size += 1;
+				actualSize += 1;
 				let data = {
 					'email': email,
 					'appliedTime': firebase.database.ServerValue.TIMESTAMP,
@@ -2597,15 +2607,6 @@
 				};
 				let updates = {};
 				updates[size] = data;
-				size += 1;
-				// update size
-				let actualSize = 0;
-				for (let user of users) {
-					if (user) {
-						actualSize += 1;
-					}
-				}
-				actualSize += 1;
 				// add email to list
 				standbyWaitingRef.update(updates);
 				ref.child('standbySize').update({'size': actualSize});
