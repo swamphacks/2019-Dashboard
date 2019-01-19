@@ -476,6 +476,7 @@
 						</div>
 						<div class="col-md-12" id="userDashboard">
 							<h3 class="header-sub-type" id="welcomeMessage">Welcome, Albert!</h3>
+							<h1 class="teamText">Team: <span id="teamDisplay"></span></h1>
 							<p class="dashboardInfo">
 								Thank you for submitting an application to SwampHacks V. The timeline below shows you where you are in the application process. We will be reviewing applications on a rolling basis and you should receive a response from us soon. Until then, sit tight. We can’t wait to see you at SwampHacks in 2019!
 							</p>
@@ -1832,6 +1833,13 @@
 
 			// Fill application page with user information
 			addApplicationInfo();
+
+			// show team
+			if (loggedInUserKey) {
+				ref.child('users/'+loggedInUserKey+'/team').once('value').then(function(snapshot) {
+					$('#teamDisplay').text(snapshot.val());
+				});
+			}
 		}
 
 	function rejectSpotBtnClicked() {

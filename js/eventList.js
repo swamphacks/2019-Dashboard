@@ -148,7 +148,7 @@
             description: '',
             endTime: 1547872500000,
             location: 'CSE E119',
-            name: 'Survival Guide/Spring Framework w/ JP Morgan',
+            name: 'Survival Guide w/ JP Morgan',
             startTime: 1547870400000,
             type: 'workshop',
             winnerSet: false,

@@ -877,6 +877,10 @@ select.minimal {
   color: white;
 }
 
+.teamText {
+  color: #6C9668;
+}
+
 .sponsorImg {
   border-radius: 5px;
 }
